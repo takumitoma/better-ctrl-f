@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Better Ctrl F",
+  "version": "1.0.0",
+  "icons": {
+		"128": "public/icons/128.png",
+		"16": "public/icons/16.png",
+		"32": "public/icons/32.png",
+		"48": "public/icons/48.png"
+	},
+  "action": { "default_popup": "index.html" },
+  "background": {
+    "service_worker": "src/background/background.ts"
+  },
+  "options_page" : "src/optionsPage/optionsPage.html",
+  "content_scripts": [
+    {
+      "js": ["src/content/content.tsx"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
