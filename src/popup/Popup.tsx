@@ -1,5 +1,5 @@
-import SearchBar from "./SearchBar"
-import MatchCounter from "./MatchCounter"
+import SearchBar from './SearchBar';
+import MatchCounter from './MatchCounter';
 
 export default function Popup() {
   return (

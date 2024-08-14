@@ -4,7 +4,7 @@ import {
   highlightTextContent, 
   replaceTextNode,
   isElementNode,
-  removeHighlightFromElement
+  unhighlightElement
 } from './utils';
 
 console.log('hello world from content script');
@@ -13,8 +13,8 @@ chrome.runtime.onMessage.addListener(
   (message: { target: string; action: string; searchQuery: string }) => {
     if (message.target === 'content' && message.action === 'highlight') {
       if (document.body) {
-        unhighlightTextNodes();
-        const totalMatches = highlightTextNodes(message.searchQuery);
+        unhighlight();
+        const totalMatches = highlight(message.searchQuery);
         sendTotalMatches(totalMatches);
       }
     }
@@ -44,7 +44,7 @@ function getTextNodes(): Text[] {
 }
 
 // return total matches ie number of highlights added
-function highlightTextNodes(searchQuery: string): number {
+function highlight(searchQuery: string): number {
   const textNodes = getTextNodes();
   const searchRegex = getSearchRegex(searchQuery);
   let count = 0;
@@ -63,14 +63,14 @@ function highlightTextNodes(searchQuery: string): number {
   return count;
 }
 
-function unhighlightTextNodes(): void {
+function unhighlight(): void {
   const textNodes = getTextNodes();
 
   textNodes.forEach(textNode => {
     const parent = textNode.parentNode;
 
     if (isElementNode(parent)) {
-      removeHighlightFromElement(parent);
+      unhighlightElement(parent);
     }
   });
 }
