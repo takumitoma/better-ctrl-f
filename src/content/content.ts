@@ -14,11 +14,20 @@ chrome.runtime.onMessage.addListener(
     if (message.target === 'content' && message.action === 'highlight') {
       if (document.body) {
         unhighlightTextNodes();
-        highlightTextNodes(message.searchQuery);
+        const totalMatches = highlightTextNodes(message.searchQuery);
+        sendTotalMatches(totalMatches);
       }
     }
   }
 );
+
+function sendTotalMatches(count: number) {
+  chrome.runtime.sendMessage({
+    target: 'popup',
+    action: 'updateTotalMatches',
+    count
+  });
+}
 
 function getTextNodes(): Text[] {
   const textNodes: Text[] = [];
@@ -34,20 +43,24 @@ function getTextNodes(): Text[] {
   return textNodes;
 }
 
-function highlightTextNodes(searchQuery: string): void {
+// return total matches ie number of highlights added
+function highlightTextNodes(searchQuery: string): number {
   const textNodes = getTextNodes();
   const searchRegex = getSearchRegex(searchQuery);
+  let count = 0;
 
   // for each textNode, try to find and highlight the textContent using regex, and if a span
   // is added ie the text was highlighted, replace the textNode with the highlight applied
   textNodes.forEach(textNode => {
     const textContent = textNode.textContent || '';
-    const highlightedTextContent = highlightTextContent(textContent, searchRegex);
+    const highlightedTextContent = highlightTextContent(textContent, searchRegex, count);
 
     if (textContent !== highlightedTextContent) {
       replaceTextNode(textNode, highlightedTextContent);
+      count++;
     }
   });
+  return count;
 }
 
 function unhighlightTextNodes(): void {

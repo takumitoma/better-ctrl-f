@@ -14,7 +14,7 @@ export default function SearchBar() {
   }
 
   useEffect(() => {
-    if (!isMounted.current) {
+    if (isMounted.current) {
       chrome.runtime.sendMessage({ 
         target: 'background', 
         action: 'highlight', 
