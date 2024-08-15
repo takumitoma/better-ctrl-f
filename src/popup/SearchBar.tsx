@@ -26,12 +26,12 @@ export default function SearchBar() {
   }, [searchQuery]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="search-bar">
       <input
         type="text"
-        placeholder="Search"
         value={searchQuery}
         onChange={handleChange}
+        autoFocus
       />
     </form>
   )

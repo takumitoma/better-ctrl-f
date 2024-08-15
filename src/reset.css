@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  text-size-adjust: none;
+}
+
+/* textarea, select */
+input, button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+  outline: none;
+  background: transparent;
+  appearance: none; 
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus {
+  outline: none;
+}

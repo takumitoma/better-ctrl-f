@@ -1,12 +1,10 @@
-import './App.css'
-import Popup from "./popup/Popup"
+import './App.css';
+import Popup from "./popup/Popup";
 
-function App() { // start bilding your popup app here 
+export default function App() { 
   return (
     <>
       <Popup />
     </>
   )
 }
-
-export default App

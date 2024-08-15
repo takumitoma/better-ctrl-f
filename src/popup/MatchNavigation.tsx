@@ -4,11 +4,11 @@ import { HiChevronDown } from 'react-icons/hi';
 export default function MatchNavigation() {
   return (
     <>
-      <button>
-        <HiChevronUp />
+      <button className="icon-button" id="temp">
+        <HiChevronUp className="icon" />
       </button>
-      <button>
-        <HiChevronDown />
+      <button className="icon-button">
+        <HiChevronDown className="icon" />
       </button>
     </>
   )

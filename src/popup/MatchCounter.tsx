@@ -16,9 +16,9 @@ export default function MatchCounter() {
   }, []);
 
 
-  return (totalMatches > 0) ? (
-    <p>
+  return (
+    <span id="match-counter">
       {currentMatch}/{totalMatches}
-    </p>
-  ) : null;
+    </span>
+  );
 }
