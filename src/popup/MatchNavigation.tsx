@@ -1,17 +1,9 @@
-import { HiChevronUp } from 'react-icons/hi';
-import { HiChevronDown } from 'react-icons/hi';
+import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
+import { usePopupContext } from './PopupContext';
 
-type MatchNavigationProps = {
-  searchQuery: string;
-  incrementMatch: () => void;
-  decrementMatch: () => void;
-};
+export default function MatchNavigation() {
+  const { searchQuery, incrementMatch, decrementMatch } = usePopupContext();
 
-export default function MatchNavigation({
-  searchQuery,
-  incrementMatch,
-  decrementMatch,
-}: MatchNavigationProps) {
   return (
     <>
       <button 

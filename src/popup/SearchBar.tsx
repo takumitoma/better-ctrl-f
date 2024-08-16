@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import { usePopupContext } from './PopupContext';
 
-interface SearchBarProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}
-
-export default function SearchBar({ searchQuery, setSearchQuery }: SearchBarProps) {
+export default function SearchBar() {
+  const { searchQuery, setSearchQuery } = usePopupContext();
   const isMounted = useRef(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

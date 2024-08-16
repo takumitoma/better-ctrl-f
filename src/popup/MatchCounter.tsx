@@ -1,18 +1,8 @@
 import { useEffect } from 'react';
+import { usePopupContext } from './PopupContext';
 
-interface MatchCounterProps {
-  searchQuery: string;
-  currentMatch: number;
-  totalMatches: number;
-  setTotalMatches: (totalMatches: number) => void;
-}
-
-export default function MatchCounter({ 
-  searchQuery, 
-  currentMatch, 
-  totalMatches, 
-  setTotalMatches 
-}: MatchCounterProps) {
+export default function MatchCounter() {
+  const { searchQuery, currentMatch, totalMatches, setTotalMatches } = usePopupContext();
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener(
@@ -22,9 +12,9 @@ export default function MatchCounter({
         }
       }
     );
-  }, []);
+  }, [setTotalMatches]);
 
-  const visibility = searchQuery ? 'visible': 'hidden';
+  const visibility = searchQuery ? 'visible' : 'hidden';
 
   return (
     <span id="match-counter" style={{ visibility }}>
