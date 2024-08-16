@@ -1,8 +1,11 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+interface SearchBarProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+
+export default function SearchBar({ searchQuery, setSearchQuery }: SearchBarProps) {
   const isMounted = useRef(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

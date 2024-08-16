@@ -1,9 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-export default function MatchCounter() {
-  // @ts-ignore
-  const [currentMatch, setCurrentMatch] = useState<number>(0); 
-  const [totalMatches, setTotalMatches] = useState<number>(0);
+interface MatchCounterProps {
+  searchQuery: string;
+  currentMatch: number;
+  totalMatches: number;
+  setTotalMatches: (totalMatches: number) => void;
+}
+
+export default function MatchCounter({ 
+  searchQuery, 
+  currentMatch, 
+  totalMatches, 
+  setTotalMatches 
+}: MatchCounterProps) {
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener(
@@ -15,9 +24,10 @@ export default function MatchCounter() {
     );
   }, []);
 
+  const visibility = searchQuery ? 'visible': 'hidden';
 
   return (
-    <span id="match-counter">
+    <span id="match-counter" style={{ visibility }}>
       {currentMatch}/{totalMatches}
     </span>
   );
