@@ -29,7 +29,8 @@ function sendTotalMatches(count: number) {
   });
 }
 
-function getTextNodes(): Text[] {
+/** @private */
+export function getTextNodes(body: Element): Text[] {
   const textNodes: Text[] = [];
   
   function traverse(node: Node): void {
@@ -39,13 +40,13 @@ function getTextNodes(): Text[] {
     node.childNodes.forEach(child => traverse(child));
   }
   
-  traverse(document.body);
+  traverse(body);
   return textNodes;
 }
 
 // return total matches ie number of highlights added
 function highlight(searchQuery: string): number {
-  const textNodes = getTextNodes();
+  const textNodes = getTextNodes(document.body); //fix later
   const searchRegex = getSearchRegex(searchQuery);
   let count = 0;
 
@@ -64,7 +65,7 @@ function highlight(searchQuery: string): number {
 }
 
 function unhighlight(): void {
-  const textNodes = getTextNodes();
+  const textNodes = getTextNodes(document.body); //fix later
 
   textNodes.forEach(textNode => {
     const parent = textNode.parentNode;
