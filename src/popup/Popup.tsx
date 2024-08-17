@@ -2,7 +2,7 @@ import SearchBar from './SearchBar';
 import MatchCounter from './MatchCounter';
 import Divider from './Divider';
 import MatchNavigation from './MatchNavigation';
-import CloseButton from './CloseButton';
+import PopupClose from './PopupClose';
 import { PopupProvider } from './PopupContext';
 
 export default function Popup() {
@@ -13,7 +13,7 @@ export default function Popup() {
         <MatchCounter />
         <Divider />
         <MatchNavigation />
-        <CloseButton />
+        <PopupClose />
       </div>
     </PopupProvider>
   );

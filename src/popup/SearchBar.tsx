@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { usePopupContext } from './PopupContext';
 
 export default function SearchBar() {
-  const { searchQuery, setSearchQuery } = usePopupContext();
+  const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
   const isMounted = useRef(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -10,7 +10,8 @@ export default function SearchBar() {
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); 
+    event.preventDefault();
+    incrementMatch();
   }
 
   useEffect(() => {

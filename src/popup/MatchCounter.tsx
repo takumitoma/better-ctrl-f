@@ -12,7 +12,7 @@ export default function MatchCounter() {
         }
       }
     );
-  }, [setTotalMatches]);
+  }, []);
 
   const visibility = searchQuery ? 'visible' : 'hidden';
 
