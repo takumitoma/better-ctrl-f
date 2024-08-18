@@ -1,3 +1,5 @@
+const { TextEncoder, TextDecoder } = require('util')
+
 global.chrome = {
   runtime: {
     onMessage: {
@@ -5,3 +7,6 @@ global.chrome = {
     },
   },
 };
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
