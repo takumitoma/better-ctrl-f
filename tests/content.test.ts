@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import { getTextNodes } from '../src/content/content';
+import { getTextNodes, findTextNodes } from '../src/content/content';
 
 const dom = new JSDOM(`
   <!DOCTYPE html>
@@ -78,7 +78,8 @@ const dom = new JSDOM(`
   contentType: "text/html"
 });
 
-const textNodes = getTextNodes(dom.window.document.body);
+findTextNodes(dom.window.document.body);
+const textNodes = getTextNodes();
 
 test('getTextNodes recognizes nested elements and returns text nodes in correct order', () => {
   function ignoreWhitespace(text: string | null): string {

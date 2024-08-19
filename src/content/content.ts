@@ -18,23 +18,31 @@ chrome.runtime.onMessage.addListener((
       console.error('document.body does not exist');
     }
 
+    findTextNodes();
+    unhighlight();
+
     let totalMatches = 0
     if (message.searchQuery) {
-      unhighlight();
+      findTextNodes();
       totalMatches = highlight(message.searchQuery);
-    }
-    else {
-      unhighlight();
     }
     sendResponse({ totalMatches: totalMatches });
   }
 );
 
+let textNodes: Node[] = []
+
+export function getTextNodes() {
+  return textNodes;
+}
+
 /** @private */
-export function getTextNodes(body: Element): Node[] {
-  const textNodes: Node[] = [];
+export function findTextNodes(body: Element = document.body) {
+  textNodes = [];
   
+  // pre order dfs
   function traverse(node: Node): void {
+    // filter out nodes with just newlines/whitespace 
     if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '') {
       textNodes.push(node);
     }
@@ -42,17 +50,16 @@ export function getTextNodes(body: Element): Node[] {
   }
   
   traverse(body);
-  return textNodes;
 }
 
 // return total matches ie number of highlights added
 function highlight(searchQuery: string): number {
-  const textNodes = getTextNodes(document.body); //fix later
   const searchRegex = getSearchRegex(searchQuery);
   let count = 0;
 
   // for each textNode, try to find and highlight the textContent using regex, and if a span
-  // is added ie the text was highlighted, replace the textNode with the highlight applied
+  // is added ie the text was highlighted, replace the textNode with the new node in which
+  // the highlight was applied
   textNodes.forEach(textNode => {
     const textContent = textNode.textContent || '';
     const highlightedTextContent = highlightTextContent(textContent, searchRegex, count);
@@ -66,8 +73,6 @@ function highlight(searchQuery: string): number {
 }
 
 function unhighlight(): void {
-  const textNodes = getTextNodes(document.body); //fix later
-
   textNodes.forEach(textNode => {
     const parent = textNode.parentNode;
 

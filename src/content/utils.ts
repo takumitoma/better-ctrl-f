@@ -1,3 +1,4 @@
+/* highlight util functions */
 function escapeSpecialChars(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -30,6 +31,7 @@ function htmlToDocumentFragment(html: string): DocumentFragment {
   return fragment;
 }
 
+/* unhighlight util functions */
 export function isElementNode(node: Node | null): node is HTMLElement {
   return node !== null && node.nodeType === Node.ELEMENT_NODE;
 }
