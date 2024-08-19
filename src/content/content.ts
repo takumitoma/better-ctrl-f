@@ -9,33 +9,34 @@ import {
 
 console.log('hello world from content script');
 
-chrome.runtime.onMessage.addListener(
-  (message: { target: string; action: string; searchQuery: string }) => {
-    if (message.target === 'content' && message.action === 'highlight') {
-      if (document.body) {
-        unhighlight();
-        const totalMatches = highlight(message.searchQuery);
-        sendTotalMatches(totalMatches);
-      }
+chrome.runtime.onMessage.addListener((
+  message: { target: string; action: string; searchQuery: string },
+  _,
+  sendResponse: (response: { totalMatches: number }) => void) => {
+    if (message.target !== 'content' || message.action !== 'highlight') return;
+    if (!document.body) {
+      console.error('document.body does not exist');
     }
+
+    let totalMatches = 0
+    if (message.searchQuery) {
+      unhighlight();
+      totalMatches = highlight(message.searchQuery);
+    }
+    else {
+      unhighlight();
+    }
+    sendResponse({ totalMatches: totalMatches });
   }
 );
 
-function sendTotalMatches(count: number) {
-  chrome.runtime.sendMessage({
-    target: 'popup',
-    action: 'updateTotalMatches',
-    count
-  });
-}
-
 /** @private */
-export function getTextNodes(body: Element): Text[] {
-  const textNodes: Text[] = [];
+export function getTextNodes(body: Element): Node[] {
+  const textNodes: Node[] = [];
   
   function traverse(node: Node): void {
-    if (node.nodeType === Node.TEXT_NODE && (node as Text).textContent?.trim() !== '') {
-      textNodes.push(node as Text);
+    if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '') {
+      textNodes.push(node);
     }
     node.childNodes.forEach(child => traverse(child));
   }

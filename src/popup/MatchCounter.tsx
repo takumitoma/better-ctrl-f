@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { usePopupContext } from './PopupContext';
 
 export default function MatchCounter() {
-  const { searchQuery, currentMatch, totalMatches, setTotalMatches } = usePopupContext();
+  const { searchQuery, currentMatch, totalMatches, setCurrentMatch, setTotalMatches } = usePopupContext();
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener(
-      (message: { target: string; action: string; count: number }) => {
-        if (message.target === 'popup' && message.action === 'updateTotalMatches') {
-          setTotalMatches(message.count);
-        }
+      (message: { target: string; action: string; totalMatches: number }) => {
+        if (message.target !== 'popup' || message.action !== 'updateMatches') return;
+
+        message.totalMatches > 0 ? setCurrentMatch(1) : setCurrentMatch(0);
+        setTotalMatches(message.totalMatches);
       }
     );
   }, []);
