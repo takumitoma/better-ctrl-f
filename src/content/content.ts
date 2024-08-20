@@ -4,7 +4,8 @@ import {
   highlightTextContent, 
   replaceTextNode,
   isElementNode,
-  unhighlightElement
+  unhighlightElement,
+  countMatches
 } from './utils';
 
 console.log('hello world from content script');
@@ -66,7 +67,7 @@ function highlight(searchQuery: string): number {
 
     if (textContent !== highlightedTextContent) {
       replaceTextNode(textNode, highlightedTextContent);
-      count++;
+      count += countMatches(textContent, searchRegex);
     }
   });
   return count;

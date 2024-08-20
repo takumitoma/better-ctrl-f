@@ -11,6 +11,11 @@ export function highlightTextContent(textContent: string, regex: RegExp, count: 
   return textContent.replace(regex, `<span class="better-ctrl-f-highlight better-ctrl-f-${count}">$1</span>`);
 }
 
+export function countMatches(textContent: string, regex: RegExp): number {
+  const matches = textContent.match(regex);
+  return matches ? matches.length : 0;
+}
+
 export function replaceTextNode(textNode: Node, html: string): void {
   const parent = textNode.parentNode;
   if (parent) {
