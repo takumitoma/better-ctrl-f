@@ -35,17 +35,3 @@ function htmlToDocumentFragment(html: string): DocumentFragment {
 
   return fragment;
 }
-
-/* unhighlight util functions */
-export function isElementNode(node: Node | null): node is HTMLElement {
-  return node !== null && node.nodeType === Node.ELEMENT_NODE;
-}
-
-export function unhighlightElement(element: HTMLElement): void {
-  const checkForSpanRegex = /<span class="better-ctrl-f-highlight better-ctrl-f-(\d+)">(.*?)<\/span>/gi;
-  const updatedHTML = element.innerHTML.replace(checkForSpanRegex, '$2');
-
-  if (element.innerHTML !== updatedHTML) {
-    element.innerHTML = updatedHTML;
-  }
-}

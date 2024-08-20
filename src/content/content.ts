@@ -3,8 +3,6 @@ import {
   getSearchRegex, 
   highlightTextContent, 
   replaceTextNode,
-  isElementNode,
-  unhighlightElement,
   countMatches
 } from './utils';
 
@@ -19,7 +17,7 @@ chrome.runtime.onMessage.addListener((
       console.error('document.body does not exist');
     }
 
-    findTextNodes();
+    //findTextNodes();
     unhighlight();
 
     let totalMatches = 0
@@ -74,11 +72,14 @@ function highlight(searchQuery: string): number {
 }
 
 function unhighlight(): void {
-  textNodes.forEach(textNode => {
-    const parent = textNode.parentNode;
+  let highlightSpans = document.querySelectorAll('span.better-ctrl-f-highlight');
 
-    if (isElementNode(parent)) {
-      unhighlightElement(parent);
+  highlightSpans.forEach(span => {
+    let parent = span.parentNode;
+    if (parent && span.firstChild) {
+      parent.replaceChild(span.firstChild, span);
+      // combines back the text nodes that were separated by the span
+      parent.normalize();
     }
   });
 }
