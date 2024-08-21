@@ -1,0 +1,105 @@
+import { highlight } from '../src/content/content';
+
+describe('Content script, highlight function', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('correctly highlights single match', () => {
+    document.body.innerHTML = `<div>Highlight</div>`;
+    const totalMatches: number = highlight('high');
+
+    expect(totalMatches).toBe(1);
+
+    const expected = 
+      `<div><span class="better-ctrl-f-highlight better-ctrl-f-1">High</span>light</div>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('correctly highlights multiple matches', () => {
+    document.body.innerHTML = `<p>Banana</p>`;
+    const totalMatches: number = highlight('a');
+
+    expect(totalMatches).toBe(3);
+
+    const expected = 
+      `<p>` +
+        `B` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-1">a</span>` +
+        `n` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-2">a</span>` +
+        `n` + 
+        `<span class="better-ctrl-f-highlight better-ctrl-f-3">a</span>` +
+      `</p>`;
+    expect(document.body.innerHTML).toBe(expected);    
+  });
+
+  test('correctly highlights text with different cases', () => {
+    document.body.innerHTML = `<div>Abracadabra</div>`;
+    const totalMatches: number = highlight('abra');
+  
+    expect(totalMatches).toBe(2);
+  
+    const expected = 
+      `<div>` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-1">Abra</span>` +
+        `cad` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-2">abra</span>` +
+      `</div>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('returns 0 matches and does nothing for an empty search query', () => {
+    document.body.innerHTML = `<div>Some text</div>`;
+    const totalMatches: number = highlight('');
+  
+    expect(totalMatches).toBe(0);
+    expect(document.body.innerHTML).toBe(`<div>Some text</div>`);
+  });
+
+  test('correctly highlights across multiple elements', () => {
+    document.body.innerHTML = `<div>First div</div><p>Second div</p>`;
+    const totalMatches: number = highlight('div');
+  
+    expect(totalMatches).toBe(2);
+  
+    const expected = 
+      `<div>` +
+        `First ` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-1">div</span>` +
+      `</div>` +
+      `<p>` +
+        `Second ` + 
+        `<span class="better-ctrl-f-highlight better-ctrl-f-2">div</span>` +
+      `</p>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('handles overlaps without errors', () => {
+    document.body.innerHTML = `<div>XOXOXOXO</div>`;
+    const totalMatches: number = highlight('XOX');
+  
+    expect(totalMatches).toBe(2);
+  
+    const expected = 
+      `<div>` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-1">XOX</span>` +
+        `O` +
+        `<span class="better-ctrl-f-highlight better-ctrl-f-2">XOX</span>` +
+        `O` +
+      `</div>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('highlights while maintaining whitespaces', () => {
+    document.body.innerHTML = `<div>  Leading and trailing spaces  </div>`;
+    const totalMatches: number = highlight('spaces');
+  
+    expect(totalMatches).toBe(1);
+  
+    const expected = 
+      `<div>  Leading and trailing <span class="better-ctrl-f-highlight better-ctrl-f-1">` +
+      `spaces</span>  </div>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+});
