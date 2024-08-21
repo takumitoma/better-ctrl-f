@@ -80,7 +80,7 @@ const dom = new JSDOM(`
 
 const textNodes = findTextNodes(dom.window.document.body);
 
-test('getTextNodes recognizes nested elements and returns text nodes in correct order', () => {
+test('findTextNodes recognizes nested elements and returns text nodes in correct order', () => {
   function ignoreWhitespace(text: string | null): string {
     if (!text) return '';
     return text.replace(/\s+/g, ' ').trim();
@@ -92,11 +92,11 @@ test('getTextNodes recognizes nested elements and returns text nodes in correct 
   expect(ignoreWhitespace(textNodes[4].textContent)).toBe('Fifth');
 });
 
-test('getTextNodes skips elements with empty textContent', () => {
+test('findTextNodes skips elements with empty textContent', () => {
   expect(textNodes[5].textContent).toBe('Was the previous line skipped?');
 });
 
-test('getTextNodes works with common HTML tags', () => {
+test('findTextNodes works with common HTML tags', () => {
   expect(textNodes[6].textContent).toBe('This is a div');
   expect(textNodes[7].textContent).toBe('This is a paragraph');
   expect(textNodes[8].textContent).toBe('This is a span');
@@ -111,7 +111,7 @@ test('getTextNodes works with common HTML tags', () => {
   expect(textNodes[17].textContent).toBe('This is a textarea');
 });
 
-test('getTextNodes works with quotation tags', () => {
+test('findTextNodes works with quotation tags', () => {
   expect(textNodes[18].textContent).toBe('This is a blockquote');
   expect(textNodes[19].textContent).toBe('This is an inline quote');
   expect(textNodes[20].textContent).toBe('abbr');
@@ -120,7 +120,7 @@ test('getTextNodes works with quotation tags', () => {
   expect(textNodes[23].textContent).toBe('This is bidirectional text');
 });
 
-test('getTextNodes works with formatting tags', () => {
+test('findTextNodes works with formatting tags', () => {
   expect(textNodes[24].textContent).toBe('This is a bold text');
   expect(textNodes[25].textContent).toBe('This is an important text');
   expect(textNodes[26].textContent).toBe('This is an italic text');
