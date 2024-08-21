@@ -1,35 +1,29 @@
 import { findTextNodes } from '../src/content/content';
 
-function ignoreWhitespace(string: string | null): string {
-  if (!string) return '';
-  return string.replace(/\s+/g, ' ').trim();
-}
-
 describe('Content script, findTextNodes function', () => {
   beforeEach(() => {
     document.body.innerHTML = ''; 
   });
 
   test('recognizes nested elements and returns text nodes in correct order', () => {
-    document.body.innerHTML = `
-      <div>
-        First
-        <div>
-          Second
-          <div>
-            Third
-          </div>
-          Fourth
-        </div>
-        Fifth
-      </div>
-    `;
+    document.body.innerHTML = 
+      `<div>` +
+        `First` +
+        `<div>` +
+          `Second` +
+          `<div>` +
+            `Third` +
+          `</div>` +
+          `Fourth` +
+        `</div>` +
+        `Fifth` +
+      `</div>`;
     const textNodes = findTextNodes();
-    expect(ignoreWhitespace(textNodes[0].textContent)).toBe('First');
-    expect(ignoreWhitespace(textNodes[1].textContent)).toBe('Second');
-    expect(ignoreWhitespace(textNodes[2].textContent)).toBe('Third');
-    expect(ignoreWhitespace(textNodes[3].textContent)).toBe('Fourth');
-    expect(ignoreWhitespace(textNodes[4].textContent)).toBe('Fifth');
+    expect(textNodes[0].textContent).toBe('First');
+    expect(textNodes[1].textContent).toBe('Second');
+    expect(textNodes[2].textContent).toBe('Third');
+    expect(textNodes[3].textContent).toBe('Fourth');
+    expect(textNodes[4].textContent).toBe('Fifth');
   });
 
   test('works with block-level tags', () => {
@@ -93,5 +87,17 @@ describe('Content script, findTextNodes function', () => {
     expect(textNodes[0].textContent).toBe('Were the style and script skipped?');
   });
 
+  test('works with dynamically generated content', async () => {
+    document.body.innerHTML = `
+      <div id="test-div"></div>
+    `
+    const testDiv = document.getElementById('test-div');
+  
+    if (testDiv) {
+      testDiv.innerHTML = 'dynamic';
+      const textNodes = findTextNodes();
+      expect(textNodes[0].textContent).toBe('dynamic');
+    }
+  })
 });
-// also have to add tests for iframe and shadow dom
+// also have to add tests for invisible nodes, iframe, and shadow dom

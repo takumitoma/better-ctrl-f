@@ -50,7 +50,10 @@ export function findTextNodes(body: Element = document.body): Text[] {
 }
 
 // return total matches ie number of highlights added
-function highlight(searchQuery: string): number {
+/** @private */
+export function highlight(searchQuery: string): number {
+  if (!searchQuery) return 0;
+
   const textNodes = findTextNodes();
   const searchRegex = getSearchRegex(searchQuery);
   let matchCount = 0;
@@ -70,13 +73,16 @@ function highlight(searchQuery: string): number {
       // textNode becomes = before the match, after becomes = match + after the match
       const after = textNode.splitText(match.index);
       // after becomes = after the match
-      if (after.nodeValue) {
-        after.nodeValue = after.nodeValue.substring(matchString.length);
+      if (after.textContent) {
+        after.textContent = after.textContent.substring(matchString.length);
       }
       // insert span between textNode and after
       textNode.parentNode?.insertBefore(span, after);
+      if (textNode.parentNode instanceof Element) {
+        console.log(textNode.parentNode.outerHTML);
+    }
 
-      textContent = after.nodeValue || '';
+      textContent = after.textContent || '';
       textNode = after;
       searchRegex.lastIndex = 0; 
     }
@@ -85,6 +91,7 @@ function highlight(searchQuery: string): number {
   return matchCount;
 }
 
+/** @private */
 export function unhighlight(): void {
   let highlightSpans = document.querySelectorAll('span.better-ctrl-f-highlight');
 
