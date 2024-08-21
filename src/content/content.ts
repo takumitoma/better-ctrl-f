@@ -1,9 +1,7 @@
 import './content.css';
 import { 
   getSearchRegex, 
-  highlightTextContent, 
-  replaceTextNode,
-  countMatches
+  createSpan
 } from './utils';
 
 console.log('hello world from content script');
@@ -17,58 +15,67 @@ chrome.runtime.onMessage.addListener((
       console.error('document.body does not exist');
     }
 
-    //findTextNodes();
     unhighlight();
 
     let totalMatches = 0
     if (message.searchQuery) {
-      findTextNodes();
       totalMatches = highlight(message.searchQuery);
     }
     sendResponse({ totalMatches: totalMatches });
   }
 );
 
-let textNodes: Node[] = []
-
-export function getTextNodes() {
-  return textNodes;
-}
-
 /** @private */
-export function findTextNodes(body: Element = document.body) {
-  textNodes = [];
+export function findTextNodes(body: Element = document.body): Text[] {
+  let textNodes: Text[] = [];
   
   // pre order dfs
   function traverse(node: Node): void {
     // filter out nodes with just newlines/whitespace 
     if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '') {
-      textNodes.push(node);
+      textNodes.push(node as Text);
     }
     node.childNodes.forEach(child => traverse(child));
   }
   
   traverse(body);
+  return textNodes
 }
 
 // return total matches ie number of highlights added
 function highlight(searchQuery: string): number {
+  const textNodes = findTextNodes();
   const searchRegex = getSearchRegex(searchQuery);
-  let count = 0;
+  let matchCount = 0;
 
-  // for each textNode, try to find and highlight the textContent using regex, and if a span
-  // is added ie the text was highlighted, replace the textNode with the new node in which
-  // the highlight was applied
   textNodes.forEach(textNode => {
-    const textContent = textNode.textContent || '';
-    const highlightedTextContent = highlightTextContent(textContent, searchRegex, count);
+    let textContent = textNode.textContent || '';
+    if (!textContent) return;
+    let match;
 
-    if (textContent !== highlightedTextContent) {
-      replaceTextNode(textNode, highlightedTextContent);
-      count += countMatches(textContent, searchRegex);
+    searchRegex.lastIndex = 0;
+
+    while ((match = searchRegex.exec(textContent)) !== null) {
+      matchCount++;
+      const matchString = match[0];
+      const span = createSpan(matchCount, matchString);
+
+      // textNode becomes = before the match, after becomes = match + after the match
+      const after = textNode.splitText(match.index);
+      // after becomes = after the match
+      if (after.nodeValue) {
+        after.nodeValue = after.nodeValue.substring(matchString.length);
+      }
+      // insert span between textNode and after
+      textNode.parentNode?.insertBefore(span, after);
+
+      textContent = after.nodeValue || '';
+      textNode = after;
+      searchRegex.lastIndex = 0; 
     }
   });
-  return count;
+  
+  return matchCount;
 }
 
 function unhighlight(): void {
