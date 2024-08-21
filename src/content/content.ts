@@ -31,10 +31,17 @@ export function findTextNodes(body: Element = document.body): Text[] {
   
   // pre order dfs
   function traverse(node: Node): void {
+    // Skip script and style tags
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as HTMLElement;
+      if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
+    }
+
     // filter out nodes with just newlines/whitespace 
     if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '') {
       textNodes.push(node as Text);
     }
+
     node.childNodes.forEach(child => traverse(child));
   }
   
