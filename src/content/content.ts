@@ -78,7 +78,7 @@ function highlight(searchQuery: string): number {
   return matchCount;
 }
 
-function unhighlight(): void {
+export function unhighlight(): void {
   let highlightSpans = document.querySelectorAll('span.better-ctrl-f-highlight');
 
   highlightSpans.forEach(span => {
