@@ -5,7 +5,7 @@ function ignoreWhitespace(string: string | undefined): string {
   return string.replace(/\s+/g, ' ').trim();
 }
 
-describe('unhighlight function', () => {
+describe('Content script, unhighlight function', () => {
   beforeEach(() => {
     document.body.innerHTML = ''; 
   });
