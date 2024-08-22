@@ -11,7 +11,7 @@ global.chrome = {
       removeRules: jest.fn(),
       addRules: jest.fn(),
     },
-  } as Partial<typeof chrome.runtime>, 
+  } as Partial<typeof chrome.runtime>,
 } as typeof chrome;
 
 (global as any).TextEncoder = TextEncoder;

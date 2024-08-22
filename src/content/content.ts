@@ -1,15 +1,14 @@
 import './content.css';
-import { 
-  getSearchRegex, 
-  createSpan
-} from './utils';
+import { getSearchRegex, createSpan } from './utils';
 
 console.log('hello world from content script');
 
-chrome.runtime.onMessage.addListener((
-  message: { target: string; action: string; searchQuery: string },
-  _,
-  sendResponse: (response: { totalMatches: number }) => void) => {
+chrome.runtime.onMessage.addListener(
+  (
+    message: { target: string; action: string; searchQuery: string },
+    _,
+    sendResponse: (response: { totalMatches: number }) => void,
+  ) => {
     if (message.target !== 'content' || message.action !== 'highlight') return;
     if (!document.body) {
       console.error('document.body does not exist');
@@ -17,18 +16,18 @@ chrome.runtime.onMessage.addListener((
 
     unhighlight();
 
-    let totalMatches = 0
+    let totalMatches = 0;
     if (message.searchQuery) {
       totalMatches = highlight(message.searchQuery);
     }
     sendResponse({ totalMatches: totalMatches });
-  }
+  },
 );
 
 /** @private */
 export function findTextNodes(body: Element = document.body): Text[] {
-  let textNodes: Text[] = [];
-  
+  const textNodes: Text[] = [];
+
   // pre order dfs
   function traverse(node: Node): void {
     // Skip script and style tags
@@ -37,16 +36,16 @@ export function findTextNodes(body: Element = document.body): Text[] {
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
     }
 
-    // filter out nodes with just newlines/whitespace 
+    // filter out nodes with just newlines/whitespace
     if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '') {
       textNodes.push(node as Text);
     }
 
-    node.childNodes.forEach(child => traverse(child));
+    node.childNodes.forEach((child) => traverse(child));
   }
-  
+
   traverse(body);
-  return textNodes
+  return textNodes;
 }
 
 // return total matches ie number of highlights added
@@ -58,7 +57,7 @@ export function highlight(searchQuery: string): number {
   const searchRegex = getSearchRegex(searchQuery);
   let matchCount = 0;
 
-  textNodes.forEach(textNode => {
+  textNodes.forEach((textNode) => {
     let textContent = textNode.textContent || '';
     if (!textContent) return;
     let match;
@@ -81,19 +80,21 @@ export function highlight(searchQuery: string): number {
 
       textContent = after.textContent || '';
       textNode = after;
-      searchRegex.lastIndex = 0; 
+      searchRegex.lastIndex = 0;
     }
   });
-  
+
   return matchCount;
 }
 
 /** @private */
 export function unhighlight(): void {
-  let highlightSpans = document.querySelectorAll('span.better-ctrl-f-highlight');
+  const highlightSpans = document.querySelectorAll(
+    'span.better-ctrl-f-highlight',
+  );
 
-  highlightSpans.forEach(span => {
-    let parent = span.parentNode;
+  highlightSpans.forEach((span) => {
+    const parent = span.parentNode;
     if (parent && span.firstChild) {
       parent.replaceChild(span.firstChild, span);
       // combines back the text nodes that were separated by the span

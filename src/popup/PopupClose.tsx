@@ -1,4 +1,4 @@
-import { HiX } from "react-icons/hi";
+import { HiX } from 'react-icons/hi';
 
 export default function PopupClose() {
   function closePopup() {
@@ -9,5 +9,5 @@ export default function PopupClose() {
     <button className="icon-button" onClick={closePopup}>
       <HiX className="icon" />
     </button>
-  )
+  );
 }

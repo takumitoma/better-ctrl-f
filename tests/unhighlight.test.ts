@@ -2,15 +2,15 @@ import { unhighlight } from '../src/content/content';
 
 describe('Content script, unhighlight function', () => {
   beforeEach(() => {
-    document.body.innerHTML = ''; 
+    document.body.innerHTML = '';
   });
 
   test('correctly removes a single highlight', () => {
-    document.body.innerHTML = 
+    document.body.innerHTML =
       `<div id="test-div">` +
-        `This is ` +
-        `<span class="better-ctrl-f-highlight">a basic test</span> ` +
-        `case for the unhighlight function` +
+      `This is ` +
+      `<span class="better-ctrl-f-highlight">a basic test</span> ` +
+      `case for the unhighlight function` +
       `</div>`;
     unhighlight();
 
@@ -19,13 +19,13 @@ describe('Content script, unhighlight function', () => {
   });
 
   test('correctly removes multiple highlights', () => {
-    document.body.innerHTML = 
+    document.body.innerHTML =
       `<div id="test-div">` +
-        `This is ` +
-        `<span class="better-ctrl-f-highlight">a test</span> ` +
-        `case for the ` +
-        `<span class="better-ctrl-f-highlight">unhighlight</span> ` +
-        `function` +
+      `This is ` +
+      `<span class="better-ctrl-f-highlight">a test</span> ` +
+      `case for the ` +
+      `<span class="better-ctrl-f-highlight">unhighlight</span> ` +
+      `function` +
       `</div>`;
     unhighlight();
 
@@ -34,15 +34,15 @@ describe('Content script, unhighlight function', () => {
   });
 
   test('correctly removes highlights on a word with multiple highlights', () => {
-    document.body.innerHTML = 
+    document.body.innerHTML =
       `<div id="test-div">` +
-        `Multiple highlights in one ` +
-        `<span class="better-ctrl-f-highlight">w</span>` +
-        `o` +
-        `<span class="better-ctrl-f-highlight">rd</span>` +
+      `Multiple highlights in one ` +
+      `<span class="better-ctrl-f-highlight">w</span>` +
+      `o` +
+      `<span class="better-ctrl-f-highlight">rd</span>` +
       `</div>`;
     unhighlight();
-  
+
     const expected = 'Multiple highlights in one word';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
   });
@@ -54,4 +54,4 @@ describe('Content script, unhighlight function', () => {
     const expected = 'Nothing should be done';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
   });
-})
+});

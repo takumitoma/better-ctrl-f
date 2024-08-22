@@ -13,19 +13,25 @@ interface PopupContextProps {
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
 
-export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const PopupProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentMatch, setCurrentMatch] = useState<number>(0);
   const [totalMatches, setTotalMatches] = useState<number>(0);
 
   function incrementMatch() {
     if (!searchQuery) return;
-    setCurrentMatch(prevMatch => prevMatch !== totalMatches ? prevMatch + 1 : 1);
+    setCurrentMatch((prevMatch) =>
+      prevMatch !== totalMatches ? prevMatch + 1 : 1,
+    );
   }
 
   function decrementMatch() {
     if (!searchQuery) return;
-    setCurrentMatch(prevMatch => prevMatch === 0 ? totalMatches : prevMatch - 1);
+    setCurrentMatch((prevMatch) =>
+      prevMatch === 0 ? totalMatches : prevMatch - 1,
+    );
   }
 
   return (
@@ -44,7 +50,6 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       {children}
     </PopupContext.Provider>
   );
-  
 };
 
 export const usePopupContext = (): PopupContextProps => {

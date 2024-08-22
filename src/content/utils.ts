@@ -7,7 +7,10 @@ export function getSearchRegex(searchQuery: string): RegExp {
   return new RegExp(`(${escapeSpecialChars(searchQuery)})`, 'gi');
 }
 
-export function createSpan(matchCount: number, matchString: string): HTMLSpanElement {
+export function createSpan(
+  matchCount: number,
+  matchString: string,
+): HTMLSpanElement {
   const span = document.createElement('span');
   span.classList.add('better-ctrl-f-highlight');
   span.classList.add(`better-ctrl-f-${matchCount}`);

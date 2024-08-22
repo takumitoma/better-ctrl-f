@@ -2,21 +2,21 @@ import { findTextNodes } from '../src/content/content';
 
 describe('Content script, findTextNodes function', () => {
   beforeEach(() => {
-    document.body.innerHTML = ''; 
+    document.body.innerHTML = '';
   });
 
   test('recognizes nested elements and returns text nodes in correct order', () => {
-    document.body.innerHTML = 
+    document.body.innerHTML =
       `<div>` +
-        `First` +
-        `<div>` +
-          `Second` +
-          `<div>` +
-            `Third` +
-          `</div>` +
-          `Fourth` +
-        `</div>` +
-        `Fifth` +
+      `First` +
+      `<div>` +
+      `Second` +
+      `<div>` +
+      `Third` +
+      `</div>` +
+      `Fourth` +
+      `</div>` +
+      `Fifth` +
       `</div>`;
     const textNodes = findTextNodes();
     expect(textNodes[0].textContent).toBe('First');
@@ -51,7 +51,7 @@ describe('Content script, findTextNodes function', () => {
     expect(textNodes[0].textContent).toBe('This is a span');
     expect(textNodes[1].textContent).toBe('This is an anchor');
     expect(textNodes[2].textContent).toBe('This is a bold text');
-    expect(textNodes[3].textContent).toBe('This is an important text');    
+    expect(textNodes[3].textContent).toBe('This is an important text');
   });
 
   test('works with HTML entities', () => {
@@ -59,8 +59,8 @@ describe('Content script, findTextNodes function', () => {
       <div>Text with entities like &amp; and &gt;</div>
     `;
     const textNodes = findTextNodes();
-    expect(textNodes[0].textContent).toBe('Text with entities like & and >'); 
-  })
+    expect(textNodes[0].textContent).toBe('Text with entities like & and >');
+  });
 
   test('returns empty array for empty document', () => {
     const textNodes = findTextNodes();
@@ -83,21 +83,21 @@ describe('Content script, findTextNodes function', () => {
       <div>Were the style and script skipped?</div>
     `;
     const textNodes = findTextNodes();
-    expect(textNodes.length).toBe(1); 
+    expect(textNodes.length).toBe(1);
     expect(textNodes[0].textContent).toBe('Were the style and script skipped?');
   });
 
   test('works with dynamically generated content', async () => {
     document.body.innerHTML = `
       <div id="test-div"></div>
-    `
+    `;
     const testDiv = document.getElementById('test-div');
-  
+
     if (testDiv) {
       testDiv.innerHTML = 'dynamic';
       const textNodes = findTextNodes();
       expect(textNodes[0].textContent).toBe('dynamic');
     }
-  })
+  });
 });
 // also have to add tests for invisible nodes, iframe, and shadow dom

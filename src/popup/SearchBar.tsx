@@ -16,10 +16,10 @@ export default function SearchBar() {
 
   useEffect(() => {
     if (isMounted.current) {
-      chrome.runtime.sendMessage({ 
-        target: 'background', 
-        action: 'highlight', 
-        searchQuery: searchQuery 
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'highlight',
+        searchQuery: searchQuery,
       });
     } else {
       isMounted.current = true;
@@ -35,5 +35,5 @@ export default function SearchBar() {
         autoFocus
       />
     </form>
-  )
+  );
 }

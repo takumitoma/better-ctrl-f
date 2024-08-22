@@ -3,7 +3,8 @@ import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
 import { usePopupContext } from './PopupContext';
 
 export default function MatchNavigation() {
-  const { searchQuery, totalMatches, incrementMatch, decrementMatch } = usePopupContext();
+  const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
+    usePopupContext();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent): void {
@@ -21,20 +22,24 @@ export default function MatchNavigation() {
 
   return (
     <>
-      <button 
-        className="icon-button" 
+      <button
+        className="icon-button"
         onClick={incrementMatch}
-        style={{ pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none' }}
+        style={{
+          pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
+        }}
       >
         <HiChevronUp className="icon" />
       </button>
-      <button 
-        className="icon-button" 
+      <button
+        className="icon-button"
         onClick={decrementMatch}
-        style={{ pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none' }}
+        style={{
+          pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
+        }}
       >
         <HiChevronDown className="icon" />
       </button>
     </>
-  )
+  );
 }
