@@ -78,9 +78,6 @@ export function highlight(searchQuery: string): number {
       }
       // insert span between textNode and after
       textNode.parentNode?.insertBefore(span, after);
-      if (textNode.parentNode instanceof Element) {
-        console.log(textNode.parentNode.outerHTML);
-    }
 
       textContent = after.textContent || '';
       textNode = after;

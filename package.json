@@ -45,9 +45,9 @@
       "js"
     ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/tests/styleMock.js"
+      "\\.(css|less)$": "<rootDir>/tests/styleMock.ts"
     },
-    "setupFiles": ["<rootDir>/tests/jest.setup.js"],
+    "setupFiles": ["<rootDir>/tests/jest.setup.ts"],
     "transform": {
       "^.+\\.ts$": "ts-jest"
     },
