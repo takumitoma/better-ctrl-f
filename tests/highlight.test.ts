@@ -1,4 +1,4 @@
-import { highlight } from '../src/content/content';
+import { getTotalMatches, highlight } from '../src/content/content';
 
 describe('Content script, highlight function', () => {
   beforeEach(() => {
@@ -7,7 +7,8 @@ describe('Content script, highlight function', () => {
 
   test('correctly highlights single match', () => {
     document.body.innerHTML = `<div>Highlight</div>`;
-    const totalMatches: number = highlight('high');
+    highlight('high');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(1);
 
@@ -17,7 +18,8 @@ describe('Content script, highlight function', () => {
 
   test('correctly highlights multiple matches', () => {
     document.body.innerHTML = `<p>Banana</p>`;
-    const totalMatches: number = highlight('a');
+    highlight('a');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(3);
 
@@ -35,7 +37,8 @@ describe('Content script, highlight function', () => {
 
   test('correctly highlights text with different cases', () => {
     document.body.innerHTML = `<div>Abracadabra</div>`;
-    const totalMatches: number = highlight('abra');
+    highlight('abra');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(2);
 
@@ -50,7 +53,8 @@ describe('Content script, highlight function', () => {
 
   test('returns 0 matches and does nothing for an empty search query', () => {
     document.body.innerHTML = `<div>Some text</div>`;
-    const totalMatches: number = highlight('');
+    highlight('');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(0);
     expect(document.body.innerHTML).toBe(`<div>Some text</div>`);
@@ -58,7 +62,8 @@ describe('Content script, highlight function', () => {
 
   test('correctly highlights across multiple elements', () => {
     document.body.innerHTML = `<div>First div</div><p>Second div</p>`;
-    const totalMatches: number = highlight('div');
+    highlight('div');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(2);
 
@@ -76,7 +81,8 @@ describe('Content script, highlight function', () => {
 
   test('handles overlaps without errors', () => {
     document.body.innerHTML = `<div>XOXOXOXO</div>`;
-    const totalMatches: number = highlight('XOX');
+    highlight('XOX');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(2);
 
@@ -92,7 +98,8 @@ describe('Content script, highlight function', () => {
 
   test('highlights while maintaining whitespaces', () => {
     document.body.innerHTML = `<div>  Leading and trailing spaces  </div>`;
-    const totalMatches: number = highlight('spaces');
+    highlight('spaces');
+    const totalMatches: number = getTotalMatches();
 
     expect(totalMatches).toBe(1);
 

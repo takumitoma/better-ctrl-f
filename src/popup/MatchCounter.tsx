@@ -12,11 +12,19 @@ export default function MatchCounter() {
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener(
-      (message: { target: string; action: string; totalMatches: number }) => {
-        if (message.target !== 'popup' || message.action !== 'updateMatches')
+      (message: {
+        target: string;
+        action: string;
+        currentMatch: number;
+        totalMatches: number;
+      }) => {
+        if (message.target !== 'popup' || message.action !== 'updateMatches') {
           return;
+        }
 
-        message.totalMatches > 0 ? setCurrentMatch(1) : setCurrentMatch(0);
+        message.totalMatches > 0
+          ? setCurrentMatch(message.currentMatch)
+          : setCurrentMatch(0);
         setTotalMatches(message.totalMatches);
       },
     );

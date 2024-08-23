@@ -3,26 +3,49 @@ import { getSearchRegex, createSpan } from './utils';
 
 console.log('hello world from content script');
 
+// dummy at index 0 for offset because the matches navigation on the popup shows match indexes
+// starting at index 1
+let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
+let focusIndex: number = 0;
+let totalMatches: number = 0;
+
 chrome.runtime.onMessage.addListener(
   (
-    message: { target: string; action: string; searchQuery: string },
+    message: {
+      target: string;
+      action: string;
+      searchQuery: string;
+      index: number;
+    },
     _,
-    sendResponse: (response: { totalMatches: number }) => void,
+    sendResponse: (response: {
+      totalMatches: number;
+      focusIndex: number;
+    }) => void,
   ) => {
-    if (message.target !== 'content' || message.action !== 'highlight') return;
+    if (message.target !== 'content') return;
     if (!document.body) {
       console.error('document.body does not exist');
     }
 
-    unhighlight();
+    if (message.action === 'highlight') {
+      unhighlight();
 
-    let totalMatches = 0;
-    if (message.searchQuery) {
-      totalMatches = highlight(message.searchQuery);
+      if (message.searchQuery) {
+        highlight(message.searchQuery);
+      }
+      focusHighlight(focusIndex);
+      sendResponse({ focusIndex: focusIndex, totalMatches: totalMatches });
+    } else if (message.action === 'focus') {
+      focusHighlight(message.index);
     }
-    sendResponse({ totalMatches: totalMatches });
   },
 );
+
+/** @private */
+export function getTotalMatches() {
+  return totalMatches;
+}
 
 /** @private */
 export function findTextNodes(body: Element = document.body): Text[] {
@@ -48,14 +71,23 @@ export function findTextNodes(body: Element = document.body): Text[] {
   return textNodes;
 }
 
-// return total matches ie number of highlights added
 /** @private */
-export function highlight(searchQuery: string): number {
-  if (!searchQuery) return 0;
+export function highlight(searchQuery: string): void {
+  if (!searchQuery) {
+    totalMatches = 0;
+    focusIndex = 0;
+    return;
+  }
 
+  highlightedNodes = [document.createElement('span')];
   const textNodes = findTextNodes();
   const searchRegex = getSearchRegex(searchQuery);
-  let matchCount = 0;
+  totalMatches = 0;
+  focusIndex = 1;
+
+  const selection = window.getSelection();
+  const selectionNode = selection?.anchorNode;
+  let selectionFound = false;
 
   textNodes.forEach((textNode) => {
     let textContent = textNode.textContent || '';
@@ -65,9 +97,24 @@ export function highlight(searchQuery: string): number {
     searchRegex.lastIndex = 0;
 
     while ((match = searchRegex.exec(textContent)) !== null) {
-      matchCount++;
+      totalMatches++;
       const matchString = match[0];
-      const span = createSpan(matchCount, matchString);
+      const span = createSpan(totalMatches, matchString);
+      highlightedNodes.push(span);
+
+      // Check if we've found the selection node
+      if (
+        !selectionFound &&
+        selectionNode &&
+        (textNode === selectionNode || textNode.contains(selectionNode))
+      ) {
+        selectionFound = true;
+      }
+
+      // If we've just passed the selection, set the focus index
+      if (selectionFound && focusIndex === 1) {
+        focusIndex = totalMatches;
+      }
 
       // textNode becomes = before the match, after becomes = match + after the match
       const after = textNode.splitText(match.index);
@@ -83,8 +130,6 @@ export function highlight(searchQuery: string): number {
       searchRegex.lastIndex = 0;
     }
   });
-
-  return matchCount;
 }
 
 /** @private */
@@ -101,4 +146,10 @@ export function unhighlight(): void {
       parent.normalize();
     }
   });
+}
+
+function focusHighlight(index: number): void {
+  highlightedNodes[focusIndex]?.classList.remove('better-ctrl-f-focus');
+  highlightedNodes[index]?.classList.add('better-ctrl-f-focus');
+  focusIndex = index;
 }

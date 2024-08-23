@@ -22,16 +22,28 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
 
   function incrementMatch() {
     if (!searchQuery) return;
-    setCurrentMatch((prevMatch) =>
-      prevMatch !== totalMatches ? prevMatch + 1 : 1,
-    );
+    setCurrentMatch((prevIndex) => {
+      const newIndex = prevIndex !== totalMatches ? prevIndex + 1 : 1;
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'focus',
+        index: newIndex,
+      });
+      return newIndex;
+    });
   }
 
   function decrementMatch() {
     if (!searchQuery) return;
-    setCurrentMatch((prevMatch) =>
-      prevMatch === 0 ? totalMatches : prevMatch - 1,
-    );
+    setCurrentMatch((prevIndex) => {
+      const newIndex = prevIndex === 1 ? totalMatches : prevIndex - 1;
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'focus',
+        index: newIndex,
+      });
+      return newIndex;
+    });
   }
 
   return (

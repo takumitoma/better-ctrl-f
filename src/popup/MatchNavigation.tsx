@@ -24,7 +24,7 @@ export default function MatchNavigation() {
     <>
       <button
         className="icon-button"
-        onClick={incrementMatch}
+        onClick={decrementMatch}
         style={{
           pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
         }}
@@ -33,7 +33,7 @@ export default function MatchNavigation() {
       </button>
       <button
         className="icon-button"
-        onClick={decrementMatch}
+        onClick={incrementMatch}
         style={{
           pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
         }}
