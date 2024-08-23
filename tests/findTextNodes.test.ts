@@ -99,5 +99,19 @@ describe('Content script, findTextNodes function', () => {
       expect(textNodes[0].textContent).toBe('dynamic');
     }
   });
+
+  test('skips invisible elements', () => {
+    document.body.innerHTML = `
+      <div>Visible text</div>
+      <div style="display: none;">Invisible due to display:none</div>
+      <div style="visibility: hidden;">Invisible due to visibility:hidden</div>
+      <div style="opacity: 0;">Invisible due to opacity:0</div>
+      <div>Another visible text</div>
+    `;
+    const textNodes = findTextNodes();
+    expect(textNodes.length).toBe(2);
+    expect(textNodes[0].textContent).toBe('Visible text');
+    expect(textNodes[1].textContent).toBe('Another visible text');
+  });
 });
 // also have to add tests for invisible nodes, iframe, and shadow dom

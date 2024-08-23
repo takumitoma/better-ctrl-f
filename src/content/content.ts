@@ -1,5 +1,5 @@
 import './content.css';
-import { getSearchRegex, createSpan } from './utils';
+import { isVisible, getSearchRegex, createSpan } from './utils';
 
 console.log('hello world from content script');
 
@@ -56,6 +56,7 @@ export function findTextNodes(body: Element = document.body): Text[] {
     // Skip script and style tags
     if (node.nodeType === Node.ELEMENT_NODE) {
       const element = node as HTMLElement;
+      if (!isVisible(element)) return;
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
     }
 
@@ -151,5 +152,9 @@ export function unhighlight(): void {
 function focusHighlight(index: number): void {
   highlightedNodes[focusIndex]?.classList.remove('better-ctrl-f-focus');
   highlightedNodes[index]?.classList.add('better-ctrl-f-focus');
+  highlightedNodes[index]?.scrollIntoView({
+    block: 'center',
+    inline: 'nearest',
+  });
   focusIndex = index;
 }
