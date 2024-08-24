@@ -14,7 +14,7 @@ let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
 let searchDiacritics: boolean = false;
-let shadowRoots: ShadowRoot[] = []
+let shadowRoots: ShadowRoot[] = [];
 
 chrome.runtime.onMessage.addListener(
   (
@@ -69,19 +69,6 @@ export function findTextNodes(body: Element = document.body): Text[] {
       const element = node as HTMLElement;
       if (!isVisible(element)) return;
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
-      if (element.tagName === 'IFRAME') {
-        try {
-          const iframeDoc =
-            (element as HTMLIFrameElement).contentDocument ||
-            (element as HTMLIFrameElement).contentWindow?.document;
-          if (iframeDoc) {
-            traverse(iframeDoc.body);
-          }
-        } catch (e) {
-          // silently catch cross-origin iframe errors
-        }
-        return;
-      }
 
       if (element.shadowRoot) {
         let style = document.createElement('style');

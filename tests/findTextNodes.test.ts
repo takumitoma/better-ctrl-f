@@ -114,28 +114,6 @@ describe('Content script, findTextNodes function', () => {
     expect(textNodes[1].textContent).toBe('Another visible text');
   });
 
-  test('includes text from iframes if same origin', () => {
-    document.body.innerHTML = `
-      <div>Main document text</div>
-      <iframe id="same-origin-iframe"></iframe>
-    `;
-    const iframe = document.getElementById(
-      'same-origin-iframe',
-    ) as HTMLIFrameElement;
-    const iframeDoc = iframe.contentDocument;
-    if (iframeDoc) {
-      iframeDoc.body.innerHTML = `
-        <div>Iframe</div>
-        <p>text</p>
-      `;
-    }
-    const textNodes = findTextNodes();
-    expect(textNodes.length).toBe(3);
-    expect(textNodes[0].textContent).toBe('Main document text');
-    expect(textNodes[1].textContent).toBe('Iframe');
-    expect(textNodes[2].textContent).toBe('text');
-  });
-
   test('includes text from open mode shadow DOM', () => {
     document.body.innerHTML = `
       <div>Main document text</div>
