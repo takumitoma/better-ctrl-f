@@ -1,4 +1,8 @@
-import { getTotalMatches, highlight } from '../src/content/content';
+import {
+  getTotalMatches,
+  setSearchDiacritics,
+  highlight,
+} from '../src/content/content';
 
 describe('Content script, highlight function', () => {
   beforeEach(() => {
@@ -107,5 +111,27 @@ describe('Content script, highlight function', () => {
       `<div>  Leading and trailing <span class="better-ctrl-f-highlight better-ctrl-f-1">` +
       `spaces</span>  </div>`;
     expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('highlights diacritics when searchDiacritics is true', () => {
+    document.body.innerHTML = '<div>Àgréément Àgréément</div>';
+    setSearchDiacritics(true);
+    highlight('agree');
+    const totalMatches: number = getTotalMatches();
+
+    expect(totalMatches).toBe(2);
+    expect(document.body.innerHTML).toBe(
+      '<div><span class="better-ctrl-f-highlight better-ctrl-f-1">Àgréé</span>ment <span class="better-ctrl-f-highlight better-ctrl-f-2">Àgréé</span>ment</div>',
+    );
+  });
+
+  test('does not highlight diacritics when searchDiacritics is false', () => {
+    document.body.innerHTML = '<div>Àgréément</div>';
+    setSearchDiacritics(false);
+    highlight('agree');
+    const totalMatches: number = getTotalMatches();
+
+    expect(totalMatches).toBe(0);
+    expect(document.body.innerHTML).toBe('<div>Àgréément</div>');
   });
 });

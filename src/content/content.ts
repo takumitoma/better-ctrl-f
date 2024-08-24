@@ -1,13 +1,19 @@
 import './content.css';
-import { isVisible, getSearchRegex, createSpan } from './utils';
+import {
+  isVisible,
+  getSearchRegex,
+  createSpan,
+  removeDiacritics,
+} from './utils';
 
 console.log('hello world from content script');
 
-// dummy at index 0 for offset because the matches navigation on the popup 
+// dummy at index 0 for offset because the matches navigation on the popup
 // shows match indexes starting at index 1
 let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
+let searchDiacritics: boolean = false;
 
 chrome.runtime.onMessage.addListener(
   (
@@ -48,6 +54,11 @@ export function getTotalMatches() {
 }
 
 /** @private */
+export function setSearchDiacritics(bool: boolean) {
+  searchDiacritics = bool;
+}
+
+/** @private */
 export function findTextNodes(body: Element = document.body): Text[] {
   const textNodes: Text[] = [];
 
@@ -59,7 +70,8 @@ export function findTextNodes(body: Element = document.body): Text[] {
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
       if (element.tagName === 'IFRAME') {
         try {
-          const iframeDoc = (element as HTMLIFrameElement).contentDocument ||
+          const iframeDoc =
+            (element as HTMLIFrameElement).contentDocument ||
             (element as HTMLIFrameElement).contentWindow?.document;
           if (iframeDoc) {
             traverse(iframeDoc.body);
@@ -93,7 +105,7 @@ export function highlight(searchQuery: string): void {
 
   highlightedNodes = [document.createElement('span')];
   const textNodes = findTextNodes();
-  const searchRegex = getSearchRegex(searchQuery);
+  const searchRegex = getSearchRegex(searchQuery, searchDiacritics);
   totalMatches = 0;
   focusIndex = 1;
 
@@ -104,13 +116,19 @@ export function highlight(searchQuery: string): void {
   textNodes.forEach((textNode) => {
     let textContent = textNode.textContent || '';
     if (!textContent) return;
-    let match;
 
+    let match;
+    let processedContent = searchDiacritics
+      ? removeDiacritics(textContent)
+      : textContent;
     searchRegex.lastIndex = 0;
 
-    while ((match = searchRegex.exec(textContent)) !== null) {
+    while ((match = searchRegex.exec(processedContent)) !== null) {
       totalMatches++;
-      const matchString = match[0];
+
+      const matchStart = match.index;
+      const matchEnd = matchStart + match[0].length;
+      const matchString = textContent.slice(matchStart, matchEnd);
       const span = createSpan(totalMatches, matchString);
       highlightedNodes.push(span);
 
@@ -132,12 +150,15 @@ export function highlight(searchQuery: string): void {
       const after = textNode.splitText(match.index);
       // after becomes = after the match
       if (after.textContent) {
-        after.textContent = after.textContent.substring(matchString.length);
+        after.textContent = after.textContent.substring(match[0].length);
       }
       // insert span between textNode and after
       textNode.parentNode?.insertBefore(span, after);
 
       textContent = after.textContent || '';
+      processedContent = searchDiacritics
+        ? removeDiacritics(textContent)
+        : textContent;
       textNode = after;
       searchRegex.lastIndex = 0;
     }
