@@ -1,7 +1,7 @@
 span.better-ctrl-f-highlight {
-  background-color: yellow;
+  background-color: yellow !important;
 }
 
 span.better-ctrl-f-focus {
-  background-color: #FF8C00;
+  background-color: #FF8C00 !important;
 }

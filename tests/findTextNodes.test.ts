@@ -135,5 +135,24 @@ describe('Content script, findTextNodes function', () => {
     expect(textNodes[1].textContent).toBe('Iframe');
     expect(textNodes[2].textContent).toBe('text');
   });
+
+  test('includes text from open mode shadow DOM', () => {
+    document.body.innerHTML = `
+      <div>Main document text</div>
+      <div id="shadow-host"></div>
+    `;
+    const shadowHost = document.getElementById('shadow-host');
+    if (shadowHost) {
+      const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML = `
+        <div>Shadow DOM text</div>
+        <p>More shadow DOM content</p>
+      `;
+    }
+    const textNodes = findTextNodes();
+    expect(textNodes.length).toBe(3);
+    expect(textNodes[0].textContent).toBe('Main document text');
+    expect(textNodes[1].textContent).toBe('Shadow DOM text');
+    expect(textNodes[2].textContent).toBe('More shadow DOM content');
+  });
 });
-// also have to add tests for shadow dom

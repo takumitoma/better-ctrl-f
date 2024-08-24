@@ -14,6 +14,7 @@ let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
 let searchDiacritics: boolean = false;
+let shadowRoots: ShadowRoot[] = []
 
 chrome.runtime.onMessage.addListener(
   (
@@ -80,6 +81,14 @@ export function findTextNodes(body: Element = document.body): Text[] {
           // silently catch cross-origin iframe errors
         }
         return;
+      }
+
+      if (element.shadowRoot) {
+        let style = document.createElement('style');
+        style.textContent = `span.better-ctrl-f-highlight { background-color: yellow !important; } span.better-ctrl-f-focus { background-color: #FF8C00 !important; }`;
+        element.shadowRoot.appendChild(style);
+        shadowRoots.push(element.shadowRoot);
+        traverse(element.shadowRoot);
       }
     }
 
@@ -165,12 +174,9 @@ export function highlight(searchQuery: string): void {
   });
 }
 
-/** @private */
-export function unhighlight(): void {
-  const highlightSpans = document.querySelectorAll(
-    'span.better-ctrl-f-highlight',
-  );
 
+function unhighlightHelper(element: Document | ShadowRoot): void {
+  const highlightSpans = element.querySelectorAll('span.better-ctrl-f-highlight');
   highlightSpans.forEach((span) => {
     const parent = span.parentNode;
     if (parent && span.firstChild) {
@@ -179,6 +185,12 @@ export function unhighlight(): void {
       parent.normalize();
     }
   });
+}
+
+/** @private */
+export function unhighlight(): void {
+  unhighlightHelper(document);
+  shadowRoots.forEach(unhighlightHelper);
 }
 
 function focusHighlight(index: number): void {
