@@ -3,8 +3,8 @@ import { isVisible, getSearchRegex, createSpan } from './utils';
 
 console.log('hello world from content script');
 
-// dummy at index 0 for offset because the matches navigation on the popup shows match indexes
-// starting at index 1
+// dummy at index 0 for offset because the matches navigation on the popup 
+// shows match indexes starting at index 1
 let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
@@ -53,11 +53,22 @@ export function findTextNodes(body: Element = document.body): Text[] {
 
   // pre order dfs
   function traverse(node: Node): void {
-    // Skip script and style tags
     if (node.nodeType === Node.ELEMENT_NODE) {
       const element = node as HTMLElement;
       if (!isVisible(element)) return;
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
+      if (element.tagName === 'IFRAME') {
+        try {
+          const iframeDoc = (element as HTMLIFrameElement).contentDocument ||
+            (element as HTMLIFrameElement).contentWindow?.document;
+          if (iframeDoc) {
+            traverse(iframeDoc.body);
+          }
+        } catch (e) {
+          // silently catch cross-origin iframe errors
+        }
+        return;
+      }
     }
 
     // filter out nodes with just newlines/whitespace
