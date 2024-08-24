@@ -5,8 +5,24 @@ export default function SearchBar() {
   const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
   const isMounted = useRef(false);
 
+  useEffect(() => {
+    const port = chrome.runtime.connect({ name: 'popup' });
+    port.onMessage.addListener((message) => {
+      if (message.action === 'setStoredQuery') {
+        setSearchQuery(message.query);
+      }
+    });
+    return () => port.disconnect();
+  }, [setSearchQuery]);
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchQuery(event.target.value);
+    const newQuery = event.target.value;
+    setSearchQuery(newQuery);
+    chrome.runtime.sendMessage({
+      target: 'background',
+      action: 'storeQuery',
+      searchQuery: newQuery,
+    });
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

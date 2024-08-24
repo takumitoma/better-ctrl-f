@@ -14,7 +14,8 @@ let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
 let searchDiacritics: boolean = false;
-let shadowRoots: ShadowRoot[] = [];
+const searchShadowDoms: boolean = false;
+const shadowRoots: ShadowRoot[] = [];
 
 chrome.runtime.onMessage.addListener(
   (
@@ -70,8 +71,8 @@ export function findTextNodes(body: Element = document.body): Text[] {
       if (!isVisible(element)) return;
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
 
-      if (element.shadowRoot) {
-        let style = document.createElement('style');
+      if (searchShadowDoms && element.shadowRoot) {
+        const style = document.createElement('style');
         style.textContent = `span.better-ctrl-f-highlight { background-color: yellow !important; } span.better-ctrl-f-focus { background-color: #FF8C00 !important; }`;
         element.shadowRoot.appendChild(style);
         shadowRoots.push(element.shadowRoot);
@@ -161,9 +162,10 @@ export function highlight(searchQuery: string): void {
   });
 }
 
-
 function unhighlightHelper(element: Document | ShadowRoot): void {
-  const highlightSpans = element.querySelectorAll('span.better-ctrl-f-highlight');
+  const highlightSpans = element.querySelectorAll(
+    'span.better-ctrl-f-highlight',
+  );
   highlightSpans.forEach((span) => {
     const parent = span.parentNode;
     if (parent && span.firstChild) {

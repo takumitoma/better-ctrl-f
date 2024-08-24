@@ -1,5 +1,16 @@
 console.log('Hello world from bakground script');
 
+let debounceTimer: NodeJS.Timeout | null = null;
+
+function storeSearchQuery(query: string) {
+  if (debounceTimer) {
+    clearTimeout(debounceTimer);
+  }
+  debounceTimer = setTimeout(() => {
+    chrome.storage.local.set({ lastSearchQuery: query });
+  }, 300);
+}
+
 chrome.runtime.onMessage.addListener(
   (message: {
     target: string;
@@ -7,10 +18,13 @@ chrome.runtime.onMessage.addListener(
     searchQuery: string;
     index: number;
   }) => {
-    if (
-      message.target !== 'background' ||
-      (message.action !== 'highlight' && message.action !== 'focus')
-    ) {
+    if (message.target !== 'background') {
+      return;
+    }
+
+    if (message.action === 'storeQuery' && message.searchQuery !== undefined) {
+      storeSearchQuery(message.searchQuery);
+    } else if (message.action !== 'highlight' && message.action !== 'focus') {
       return;
     }
 
@@ -44,3 +58,16 @@ chrome.runtime.onMessage.addListener(
     });
   },
 );
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === 'popup') {
+    chrome.storage.local.get(['lastSearchQuery'], (result) => {
+      if (result.lastSearchQuery) {
+        port.postMessage({
+          action: 'setStoredQuery',
+          query: result.lastSearchQuery,
+        });
+      }
+    });
+  }
+});
