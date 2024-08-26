@@ -14,7 +14,7 @@ let highlightedNodes: HTMLSpanElement[] = [document.createElement('span')];
 let focusIndex: number = 0;
 let totalMatches: number = 0;
 let searchDiacritics: boolean = false;
-const searchShadowDoms: boolean = false;
+let searchShadowDoms: boolean = false;
 const shadowRoots: ShadowRoot[] = [];
 
 chrome.runtime.onMessage.addListener(
@@ -61,6 +61,11 @@ export function getTotalMatches() {
 /** @private */
 export function setSearchDiacritics(bool: boolean) {
   searchDiacritics = bool;
+}
+
+/** @private */
+export function setSearchShadowDoms(bool: boolean) {
+  searchShadowDoms = bool;
 }
 
 /** @private */

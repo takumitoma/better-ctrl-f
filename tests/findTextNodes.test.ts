@@ -1,8 +1,9 @@
-import { findTextNodes } from '../src/content/content';
+import { setSearchShadowDoms, findTextNodes } from '../src/content/content';
 
 describe('Content script, findTextNodes function', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
+    setSearchShadowDoms(false);
   });
 
   test('recognizes nested elements and returns text nodes in correct order', () => {
@@ -119,6 +120,7 @@ describe('Content script, findTextNodes function', () => {
       <div>Main document text</div>
       <div id="shadow-host"></div>
     `;
+    setSearchShadowDoms(true);
     const shadowHost = document.getElementById('shadow-host');
     if (shadowHost) {
       const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
