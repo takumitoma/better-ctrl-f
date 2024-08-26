@@ -1,4 +1,4 @@
-import { usePopupContext } from "../../PopupContext";
+import { usePopupContext } from '../../PopupContext';
 
 export default function GoToSetHighlightButton() {
   const { highlightColor, setPage } = usePopupContext();
@@ -6,7 +6,7 @@ export default function GoToSetHighlightButton() {
     <button
       className="goto-color-button"
       style={{ backgroundColor: highlightColor }}
-      onClick={() => setPage("PickColor")}
+      onClick={() => setPage('PickColor')}
     />
   );
 }
