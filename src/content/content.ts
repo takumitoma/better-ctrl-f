@@ -24,6 +24,7 @@ chrome.runtime.onMessage.addListener(
       action: string;
       searchQuery: string;
       index: number;
+      highlightColor: string;
     },
     _,
     sendResponse: (response: {
@@ -46,6 +47,8 @@ chrome.runtime.onMessage.addListener(
       sendResponse({ focusIndex: focusIndex, totalMatches: totalMatches });
     } else if (message.action === 'focus') {
       focusHighlight(message.index);
+    } else if (message.action === 'updateHighlightColor') {
+      updateHighlightColor(message.highlightColor);
     }
   },
 );
@@ -190,4 +193,12 @@ function focusHighlight(index: number): void {
     inline: 'nearest',
   });
   focusIndex = index;
+}
+
+function updateHighlightColor(color: string): void {
+  console.log(color);
+  document.documentElement.style.setProperty(
+    '--better-ctrl-f-highlight-color',
+    color,
+  );
 }
