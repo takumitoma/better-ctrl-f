@@ -1,22 +1,21 @@
-import { useEffect } from 'react';
-import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
-import { usePopupContext } from './PopupContext';
+import { useEffect } from "react";
+import { HiChevronUp, HiChevronDown } from "react-icons/hi";
+import { usePopupContext } from "../../PopupContext";
 
 export default function MatchNavigation() {
-  const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
-    usePopupContext();
+  const { searchQuery, totalMatches, incrementMatch, decrementMatch } = usePopupContext();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent): void {
-      if (event.key === 'Enter' && event.shiftKey) {
+      if (event.key === "Enter" && event.shiftKey) {
         decrementMatch();
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -26,7 +25,7 @@ export default function MatchNavigation() {
         className="icon-button"
         onClick={decrementMatch}
         style={{
-          pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
+          pointerEvents: searchQuery && totalMatches > 0 ? "auto" : "none",
         }}
       >
         <HiChevronUp className="icon" />
@@ -35,7 +34,7 @@ export default function MatchNavigation() {
         className="icon-button"
         onClick={incrementMatch}
         style={{
-          pointerEvents: searchQuery && totalMatches > 0 ? 'auto' : 'none',
+          pointerEvents: searchQuery && totalMatches > 0 ? "auto" : "none",
         }}
       >
         <HiChevronDown className="icon" />

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import { usePopupContext } from './PopupContext';
+import React, { useEffect, useRef } from "react";
+import { usePopupContext } from "../../PopupContext";
 
 export default function SearchBar() {
   const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
   const isMounted = useRef(false);
 
   useEffect(() => {
-    const port = chrome.runtime.connect({ name: 'popup' });
+    const port = chrome.runtime.connect({ name: "popup" });
     port.onMessage.addListener((message) => {
-      if (message.action === 'setStoredQuery') {
+      if (message.action === "setStoredQuery") {
         setSearchQuery(message.query);
       }
     });
@@ -19,8 +19,8 @@ export default function SearchBar() {
     const newQuery = event.target.value;
     setSearchQuery(newQuery);
     chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'storeQuery',
+      target: "background",
+      action: "storeQuery",
       searchQuery: newQuery,
     });
   }
@@ -33,8 +33,8 @@ export default function SearchBar() {
   useEffect(() => {
     if (isMounted.current) {
       chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'highlight',
+        target: "background",
+        action: "highlight",
         searchQuery: searchQuery,
       });
     } else {
@@ -44,12 +44,7 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit} id="search-bar">
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={handleChange}
-        autoFocus
-      />
+      <input type="text" value={searchQuery} onChange={handleChange} autoFocus />
     </form>
   );
 }

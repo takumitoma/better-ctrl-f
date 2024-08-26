@@ -1,6 +1,6 @@
-import { usePopupContext } from './PopupContext';
-import GoToHomeButton from './GoToHomeButton';
-import ColorPicker from './ColorPicker';
+import { usePopupContext } from "../PopupContext";
+import GoToHomeButton from "./SetColor/GoToHomeButton";
+import ColorPicker from "./SetColor/ColorPicker";
 
 export default function SetHighlightPage() {
   const { highlightColor, setHighlightColor } = usePopupContext();
@@ -11,8 +11,7 @@ export default function SetHighlightPage() {
       <hr />
       <h1 className="title">
         Edit&nbsp;
-        <span style={{ backgroundColor: highlightColor }}>highlight</span>&nbsp;
-        color
+        <span style={{ backgroundColor: highlightColor }}>highlight</span>&nbsp; color
       </h1>
       <ColorPicker color={highlightColor} onChange={setHighlightColor} />
     </div>

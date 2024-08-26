@@ -1,14 +1,14 @@
-import { usePopupContext } from './PopupContext';
-import SetHighlightPage from './SetHighlightPage';
-import MainPage from './MainPage';
+import { usePopupContext } from "./PopupContext";
+import SetHighlightPage from "./Pages/SetHighlightPage";
+import MainPage from "./Pages/MainPage";
 
 export default function Popup() {
-  const { view } = usePopupContext();
+  const { page } = usePopupContext();
 
   return (
     <div id="popup">
-      {view === 'Main' && <MainPage />}
-      {view === 'PickColor' && <SetHighlightPage />}
+      {page === "Main" && <MainPage />}
+      {page === "PickColor" && <SetHighlightPage />}
     </div>
   );
 }
