@@ -1,20 +1,14 @@
-import SearchBar from './SearchBar';
-import MatchCounter from './MatchCounter';
-import Divider from './Divider';
-import MatchNavigation from './MatchNavigation';
-import PopupClose from './PopupClose';
-import { PopupProvider } from './PopupContext';
+import { usePopupContext } from './PopupContext';
+import SetHighlightPage from './SetHighlightPage';
+import MainPage from './MainPage';
 
 export default function Popup() {
+  const { view } = usePopupContext();
+
   return (
-    <PopupProvider>
-      <div id="popup">
-        <SearchBar />
-        <MatchCounter />
-        <Divider />
-        <MatchNavigation />
-        <PopupClose />
-      </div>
-    </PopupProvider>
+    <div id="popup">
+      {view === 'Main' && <MainPage />}
+      {view === 'PickColor' && <SetHighlightPage />}
+    </div>
   );
 }

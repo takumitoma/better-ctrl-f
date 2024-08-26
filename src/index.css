@@ -17,12 +17,15 @@ html
 }
 
 #popup {
-  display: flex;
-  align-items: center;
-  column-gap: 7px;
   margin: 7px 10px;
   width: 100%;
   height: 36px;
+}
+
+#main {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
 }
 
 #search-bar {
@@ -32,7 +35,6 @@ html
   flex-grow: 1;
   margin-right: 7px;
   pointer-events: none;
-  user-select: none;
 }
 
 #search-bar > input {
@@ -48,7 +50,6 @@ html
 #match-counter {
   margin-left: auto;
   pointer-events: none;
-  user-select: none;
 }
 
 #divider {
@@ -57,7 +58,6 @@ html
   margin-left: 7px;
   height: 100%;
   pointer-events: none;
-  user-select: none;
 }
 
 .icon {
@@ -76,11 +76,117 @@ html
   transition: background-color 0.2s ease;
 }
 
+.goto-color-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  border: 1px black solid;
+  transition: opacity 0.2s ease;
+}
+
 #search-bar:hover:not(:focus-within), 
-.icon-button:hover {
+.icon-button:hover,
+button#goto-home:hover {
   background-color: var(--light-gray); 
 }
 
-.icon-button:active {
+.icon-button:active,
+button#goto-home:active {
   background-color: white;
+}
+
+.goto-color-button:hover {
+  opacity: 0.5;
+}
+
+.goto-color-button:active {
+  opacity: 1;
+}
+
+/* PICK COLOR */
+#set-highlight {
+  height: 400px;
+  font-size: 14px;
+}
+
+button#goto-home {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 10px 5px 0;
+}
+
+button#goto-home > .icon {
+  height: 28px;
+  width: 28px;
+}
+
+.color-picker {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  flex-direction: column;
+}
+
+.color-picker .react-colorful__saturation {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.color-picker .react-colorful__saturation-pointer {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.color-picker .react-colorful__hue {
+  margin-top: 10px;
+  border-radius: 15px;
+  height: 24px;
+}
+
+.color-picker .react-colorful__hue-pointer {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+#set-highlight > h1 {
+  font-size: 20px;
+}
+
+.color-picker .swatches {
+  display: flex;
+  padding: 12px;
+  flex-wrap: wrap;
+}
+
+.color-picker .swatch {
+  width: 24px;
+  height: 24px;
+  margin: 4px;
+  border: none;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+.color-picker input {
+  display: block;
+  box-sizing: border-box;
+  width: 150px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #eee;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.color-picker input:focus {
+  border-color: #4298ef;
 }

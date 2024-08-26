@@ -7,8 +7,12 @@ interface PopupContextProps {
   setCurrentMatch: (match: number) => void;
   totalMatches: number;
   setTotalMatches: (matches: number) => void;
+  highlightColor: string;
+  setHighlightColor: (color: string) => void;
   incrementMatch: () => void;
   decrementMatch: () => void;
+  view: string;
+  setView: (view: string) => void;
 }
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
@@ -19,6 +23,8 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentMatch, setCurrentMatch] = useState<number>(0);
   const [totalMatches, setTotalMatches] = useState<number>(0);
+  const [highlightColor, setHighlightColor] = useState<string>('#FFFF00');
+  const [view, setView] = useState<string>('Main');
 
   function incrementMatch() {
     if (!searchQuery) return;
@@ -55,8 +61,12 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
         setCurrentMatch,
         totalMatches,
         setTotalMatches,
+        highlightColor,
+        setHighlightColor,
         incrementMatch,
         decrementMatch,
+        view,
+        setView,
       }}
     >
       {children}
