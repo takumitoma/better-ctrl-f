@@ -9,7 +9,7 @@ export function useHighlightColorSync() {
       if (res.lastHighlightColor) setHighlightColor(res.lastHighlightColor);
     });
   }, []);
-  
+
   useEffect(() => {
     chrome.runtime.sendMessage({
       target: 'background',

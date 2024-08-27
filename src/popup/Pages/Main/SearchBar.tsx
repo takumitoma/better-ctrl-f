@@ -8,7 +8,7 @@ export default function SearchBar() {
   useEffect(() => {
     chrome.storage.local.get(['lastSearchQuery'], (res) => {
       setSearchQuery(res.lastSearchQuery);
-    })
+    });
   }, []);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
