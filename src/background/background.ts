@@ -2,6 +2,7 @@ console.log('Hello world from background script');
 
 let debounceSearch: NodeJS.Timeout | null = null;
 let debounceHighlight: NodeJS.Timeout | null = null;
+let debounceFocus: NodeJS.Timeout | null = null;
 
 function storeSearchQuery(query: string) {
   if (debounceSearch) {
@@ -18,6 +19,15 @@ function storeHighlightColor(color: string) {
   }
   debounceHighlight = setTimeout(() => {
     chrome.storage.local.set({ lastHighlightColor: color });
+  }, 300);
+}
+
+function storeFocusColor(color: string) {
+  if (debounceFocus) {
+    clearTimeout(debounceFocus);
+  }
+  debounceFocus = setTimeout(() => {
+    chrome.storage.local.set({ lastFocusColor: color });
   }, 300);
 }
 
@@ -74,6 +84,7 @@ chrome.runtime.onMessage.addListener(
           action: 'updateFocusColor',
           focusColor: message.focusColor,
         });
+        storeFocusColor(message.focusColor);
       }
     });
   },

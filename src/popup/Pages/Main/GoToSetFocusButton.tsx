@@ -1,14 +1,10 @@
-import { useEffect } from 'react';
 import { usePopupContext } from '../../PopupContext';
+import { useFocusColorSync } from '../../hooks/useFocusColorSync';
 
 export default function GoToSetFocusButton() {
-  const { focusColor, setFocusColor, setPage } = usePopupContext();
+  const { focusColor, setPage } = usePopupContext();
 
-  useEffect(() => {
-    chrome.storage.local.get(['lastFocusColor'], (res) => {
-      if (res.lastFocusColor) setFocusColor(res.lastFocusColor);
-    });
-  }, []);
+  useFocusColorSync();
 
   return (
     <button

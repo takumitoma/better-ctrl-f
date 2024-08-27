@@ -1,18 +1,12 @@
-import { useEffect } from 'react';
 import { usePopupContext } from '../PopupContext';
+import { useFocusColorSync } from '../hooks/useFocusColorSync';
 import GoToHomeButton from './SetColor/GoToHomeButton';
 import ColorPicker from './SetColor/ColorPicker';
 
 export default function SetFocusPage() {
   const { focusColor, setFocusColor } = usePopupContext();
 
-  useEffect(() => {
-    chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'updateFocusColor',
-      focusColor,
-    });
-  }, [focusColor]);
+  useFocusColorSync();
 
   return (
     <div>
