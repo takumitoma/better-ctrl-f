@@ -1,6 +1,7 @@
 import { usePopupContext } from './PopupContext';
-import SetHighlightPage from './Pages/SetHighlightPage';
 import MainPage from './Pages/MainPage';
+import SetHighlightPage from './Pages/SetHighlightPage';
+import SetFocusPage from './Pages/SetFocusPage';
 
 export default function Popup() {
   const { page } = usePopupContext();
@@ -8,7 +9,8 @@ export default function Popup() {
   return (
     <div id="popup">
       {page === 'Main' && <MainPage />}
-      {page === 'PickColor' && <SetHighlightPage />}
+      {page === 'SetHighlight' && <SetHighlightPage />}
+      {page === 'SetFocus' && <SetFocusPage />}
     </div>
   );
 }
