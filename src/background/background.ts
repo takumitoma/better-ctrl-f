@@ -1,13 +1,23 @@
-console.log('Hello world from bakground script');
+console.log('Hello world from background script');
 
-let debounceTimer: NodeJS.Timeout | null = null;
+let debounceSearch: NodeJS.Timeout | null = null;
+let debounceHighlight: NodeJS.Timeout | null = null;
 
 function storeSearchQuery(query: string) {
-  if (debounceTimer) {
-    clearTimeout(debounceTimer);
+  if (debounceSearch) {
+    clearTimeout(debounceSearch);
   }
-  debounceTimer = setTimeout(() => {
+  debounceSearch = setTimeout(() => {
     chrome.storage.local.set({ lastSearchQuery: query });
+  }, 300);
+}
+
+function storeHighlightColor(color: string) {
+  if (debounceHighlight) {
+    clearTimeout(debounceHighlight);
+  }
+  debounceHighlight = setTimeout(() => {
+    chrome.storage.local.set({ lastHighlightColor: color });
   }, 300);
 }
 
@@ -20,11 +30,6 @@ chrome.runtime.onMessage.addListener(
     highlightColor: string;
   }) => {
     if (message.target !== 'background') {
-      return;
-    }
-
-    if (message.action === 'storeQuery' && message.searchQuery !== undefined) {
-      storeSearchQuery(message.searchQuery);
       return;
     }
 
@@ -54,6 +59,7 @@ chrome.runtime.onMessage.addListener(
             });
           },
         );
+        storeSearchQuery(message.searchQuery);
       } else if (message.action === 'focus') {
         chrome.tabs.sendMessage(tabs[0].id, {
           target: 'content',
@@ -61,26 +67,15 @@ chrome.runtime.onMessage.addListener(
           index: message.index,
         });
       } else if (message.action === 'updateHighlightColor') {
-        console.log('called: ' + message.highlightColor);
+        console.log("called for" + message.highlightColor);
         chrome.tabs.sendMessage(tabs[0].id, {
           target: 'content',
           action: 'updateHighlightColor',
           highlightColor: message.highlightColor,
         });
+        storeHighlightColor(message.highlightColor);
       }
     });
   },
 );
 
-chrome.runtime.onConnect.addListener((port) => {
-  if (port.name === 'popup') {
-    chrome.storage.local.get(['lastSearchQuery'], (result) => {
-      if (result.lastSearchQuery) {
-        port.postMessage({
-          action: 'setStoredQuery',
-          query: result.lastSearchQuery,
-        });
-      }
-    });
-  }
-});

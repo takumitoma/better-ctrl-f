@@ -6,23 +6,14 @@ export default function SearchBar() {
   const isMounted = useRef(false);
 
   useEffect(() => {
-    const port = chrome.runtime.connect({ name: 'popup' });
-    port.onMessage.addListener((message) => {
-      if (message.action === 'setStoredQuery') {
-        setSearchQuery(message.query);
-      }
-    });
-    return () => port.disconnect();
-  }, [setSearchQuery]);
+    chrome.storage.local.get(['lastSearchQuery'], (res) => {
+      setSearchQuery(res.lastSearchQuery);
+    })
+  }, []);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newQuery = event.target.value;
     setSearchQuery(newQuery);
-    chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'storeQuery',
-      searchQuery: newQuery,
-    });
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
