@@ -1,14 +1,10 @@
-import { useEffect } from 'react';
 import { usePopupContext } from '../../PopupContext';
+import { useHighlightColorSync } from '../../hooks/useHighlightColorSync';
 
 export default function GoToSetHighlightButton() {
-  const { highlightColor, setHighlightColor, setPage } = usePopupContext();
+  const { highlightColor, setPage } = usePopupContext();
 
-  useEffect(() => {
-    chrome.storage.local.get(['lastHighlightColor'], (res) => {
-      if (res.lastHighlightColor) setHighlightColor(res.lastHighlightColor);
-    });
-  }, []);
+  useHighlightColorSync();
 
   return (
     <button
