@@ -28,14 +28,9 @@ chrome.runtime.onMessage.addListener(
     searchQuery: string;
     index: number;
     highlightColor: string;
+    focusColor: string;
   }) => {
     if (message.target !== 'background') {
-      return;
-    }
-
-    if (
-      !['highlight', 'focus', 'updateHighlightColor'].includes(message.action)
-    ) {
       return;
     }
 
@@ -67,15 +62,19 @@ chrome.runtime.onMessage.addListener(
           index: message.index,
         });
       } else if (message.action === 'updateHighlightColor') {
-        console.log("called for" + message.highlightColor);
         chrome.tabs.sendMessage(tabs[0].id, {
           target: 'content',
           action: 'updateHighlightColor',
           highlightColor: message.highlightColor,
         });
         storeHighlightColor(message.highlightColor);
+      } else if (message.action === 'updateFocusColor') {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          target: 'content',
+          action: 'updateFocusColor',
+          focusColor: message.focusColor,
+        });
       }
     });
   },
 );
-

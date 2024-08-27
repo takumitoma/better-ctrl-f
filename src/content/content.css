@@ -1,5 +1,6 @@
 :root {
-  --better-ctrl-f-highlight-color: yellow
+  --better-ctrl-f-highlight-color: #FFFF00;
+  --better-ctrl-f-focus-color: #FFA500;
 }
 
 span.better-ctrl-f-highlight {
@@ -7,5 +8,5 @@ span.better-ctrl-f-highlight {
 }
 
 span.better-ctrl-f-focus {
-  background-color: #FFA500 !important;
+  background-color: var(--better-ctrl-f-focus-color) !important;
 }

@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener(
       searchQuery: string;
       index: number;
       highlightColor: string;
+      focusColor: string;
     },
     _,
     sendResponse: (response: {
@@ -49,6 +50,8 @@ chrome.runtime.onMessage.addListener(
       focusHighlight(message.index);
     } else if (message.action === 'updateHighlightColor') {
       updateHighlightColor(message.highlightColor);
+    } else if (message.action === 'updateFocusColor') {
+      updateFocusColor(message.focusColor);
     }
   },
 );
@@ -201,9 +204,15 @@ function focusHighlight(index: number): void {
 }
 
 function updateHighlightColor(color: string): void {
-  console.log(color);
   document.documentElement.style.setProperty(
     '--better-ctrl-f-highlight-color',
+    color,
+  );
+}
+
+function updateFocusColor(color: string): void {
+  document.documentElement.style.setProperty(
+    '--better-ctrl-f-focus-color',
     color,
   );
 }
