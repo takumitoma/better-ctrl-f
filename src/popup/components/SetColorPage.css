@@ -1,0 +1,38 @@
+#set-highlight, #set-focus {
+  height: 400px;
+  font-size: 14px;
+}
+
+#goto-home {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 10px 5px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+#goto-home > .icon {
+  height: 28px;
+  width: 28px;
+  margin-right: 5px;
+}
+
+#goto-home > p {
+  margin: 0;
+}
+
+#goto-home:hover {
+  background-color: var(--light-gray);
+}
+
+#goto-home:active {
+  background-color: white;
+}
+
+.title {
+  font-size: 20px;
+}

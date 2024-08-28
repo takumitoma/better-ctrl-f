@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { usePopupContext } from '../PopupContext';
+import { usePopupContext } from '../context/PopupContext';
 
 export function useHighlightColorSync() {
   const { highlightColor, setHighlightColor } = usePopupContext();

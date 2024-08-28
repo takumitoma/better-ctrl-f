@@ -1,0 +1,42 @@
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.icon-button:hover {
+  background-color: var(--light-gray);
+}
+
+.icon-button:active {
+  background-color: white;
+}
+
+.icon-button .icon {
+  height: 16px;
+  width: 16px;
+  color: var(--gray);
+}
+
+.goto-color-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  border: 1px black solid;
+  transition: opacity 0.2s ease;
+}
+
+.goto-color-button:hover {
+  opacity: 0.5;
+}
+
+.goto-color-button:active {
+  opacity: 1;
+}
