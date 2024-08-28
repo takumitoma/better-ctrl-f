@@ -1,4 +1,8 @@
-import { storeSearchQuery, storeHighlightColor, storeFocusColor } from './storage';
+import {
+  storeSearchQuery,
+  storeHighlightColor,
+  storeFocusColor,
+} from './storage';
 import { sendMessageToActiveTab } from './tabs';
 
 interface Message {
@@ -32,18 +36,21 @@ export function handleMessage(message: Message): void {
 }
 
 function handleHighlight(searchQuery: string = ''): void {
-  sendMessageToActiveTab({
-    target: 'content',
-    action: 'highlight',
-    searchQuery,
-  }, (response: { focusIndex: number; totalMatches: number }) => {
-    chrome.runtime.sendMessage({
-      target: 'popup',
-      action: 'updateMatches',
-      currentMatch: response.focusIndex,
-      totalMatches: response.totalMatches,
-    });
-  });
+  sendMessageToActiveTab(
+    {
+      target: 'content',
+      action: 'highlight',
+      searchQuery,
+    },
+    (response: { focusIndex: number; totalMatches: number }) => {
+      chrome.runtime.sendMessage({
+        target: 'popup',
+        action: 'updateMatches',
+        currentMatch: response.focusIndex,
+        totalMatches: response.totalMatches,
+      });
+    },
+  );
   storeSearchQuery(searchQuery);
 }
 

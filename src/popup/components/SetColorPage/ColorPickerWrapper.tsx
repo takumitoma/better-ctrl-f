@@ -7,11 +7,20 @@ interface ColorPickerWrapperProps {
   colorType: 'highlight' | 'focus';
 }
 
-export const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({ colorType }) => {
-  const { highlightColor, focusColor, setHighlightColor, setFocusColor, setPage } = usePopupContext();
+export const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
+  colorType,
+}) => {
+  const {
+    highlightColor,
+    focusColor,
+    setHighlightColor,
+    setFocusColor,
+    setPage,
+  } = usePopupContext();
 
   const color = colorType === 'highlight' ? highlightColor : focusColor;
-  const setColor = colorType === 'highlight' ? setHighlightColor : setFocusColor;
+  const setColor =
+    colorType === 'highlight' ? setHighlightColor : setFocusColor;
 
   return (
     <div>

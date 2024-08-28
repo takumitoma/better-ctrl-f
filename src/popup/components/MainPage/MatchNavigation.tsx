@@ -5,7 +5,8 @@ import { useMatchNavigation } from '../../hooks/useMatchNavigation';
 import { Button } from '../common/Button';
 
 export const MatchNavigation: React.FC = () => {
-  const { searchQuery, totalMatches, incrementMatch, decrementMatch } = usePopupContext();
+  const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
+    usePopupContext();
 
   useMatchNavigation();
 

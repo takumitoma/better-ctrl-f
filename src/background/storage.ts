@@ -3,7 +3,7 @@ let debounceHighlight: NodeJS.Timeout | null = null;
 let debounceFocus: NodeJS.Timeout | null = null;
 const DEBOUNCE_TIME = 300; //ms
 
-export function storeSearchQuery(query: string):void {
+export function storeSearchQuery(query: string): void {
   if (debounceSearch) {
     clearTimeout(debounceSearch);
   }
@@ -12,7 +12,7 @@ export function storeSearchQuery(query: string):void {
   }, DEBOUNCE_TIME);
 }
 
-export function storeHighlightColor(color: string):void {
+export function storeHighlightColor(color: string): void {
   if (debounceHighlight) {
     clearTimeout(debounceHighlight);
   }

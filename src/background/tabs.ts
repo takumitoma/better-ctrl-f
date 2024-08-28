@@ -1,6 +1,6 @@
 export function sendMessageToActiveTab(
   message: any,
-  callback?: (response: any) => void
+  callback?: (response: any) => void,
 ): void {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (!tabs[0]?.id) return;
