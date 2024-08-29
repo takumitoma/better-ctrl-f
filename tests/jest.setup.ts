@@ -16,3 +16,5 @@ global.chrome = {
 
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
+
+window.HTMLElement.prototype.scrollIntoView = jest.fn();

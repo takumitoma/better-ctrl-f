@@ -1,9 +1,13 @@
-import { setSearchShadowDoms, findTextNodes } from '../src/content/content';
+import { findTextNodes } from '../src/content/utils';
+import { initializeHighlightState } from '../src/content/highlightManager';
 
 describe('Content script, findTextNodes function', () => {
+  let state: ReturnType<typeof initializeHighlightState>;
+
   beforeEach(() => {
     document.body.innerHTML = '';
-    setSearchShadowDoms(false);
+    state = initializeHighlightState();
+    state.options.searchShadowDoms = false;
   });
 
   test('recognizes nested elements and returns text nodes in correct order', () => {
@@ -19,7 +23,7 @@ describe('Content script, findTextNodes function', () => {
       `</div>` +
       `Fifth` +
       `</div>`;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes[0].textContent).toBe('First');
     expect(textNodes[1].textContent).toBe('Second');
     expect(textNodes[2].textContent).toBe('Third');
@@ -34,7 +38,7 @@ describe('Content script, findTextNodes function', () => {
       <h1>This is a heading</h1>
       <button>This is a button</button>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes[0].textContent).toBe('This is a div');
     expect(textNodes[1].textContent).toBe('This is a paragraph');
     expect(textNodes[2].textContent).toBe('This is a heading');
@@ -48,7 +52,7 @@ describe('Content script, findTextNodes function', () => {
       <p><b>This is a bold text</b></p>
       <div><strong>This is an important text</strong></div>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes[0].textContent).toBe('This is a span');
     expect(textNodes[1].textContent).toBe('This is an anchor');
     expect(textNodes[2].textContent).toBe('This is a bold text');
@@ -59,12 +63,12 @@ describe('Content script, findTextNodes function', () => {
     document.body.innerHTML = `
       <div>Text with entities like &amp; and &gt;</div>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes[0].textContent).toBe('Text with entities like & and >');
   });
 
   test('returns empty array for empty document', () => {
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes).toStrictEqual([]);
   });
 
@@ -73,7 +77,7 @@ describe('Content script, findTextNodes function', () => {
       <p><span></span></p>
       <div>Was the previous line skipped?</div>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes[0].textContent).toBe('Was the previous line skipped?');
   });
 
@@ -83,7 +87,7 @@ describe('Content script, findTextNodes function', () => {
       <script>console.log('spooky');</script>
       <div>Were the style and script skipped?</div>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes.length).toBe(1);
     expect(textNodes[0].textContent).toBe('Were the style and script skipped?');
   });
@@ -96,7 +100,7 @@ describe('Content script, findTextNodes function', () => {
 
     if (testDiv) {
       testDiv.innerHTML = 'dynamic';
-      const textNodes = findTextNodes();
+      const textNodes = findTextNodes(state.options.searchShadowDoms);
       expect(textNodes[0].textContent).toBe('dynamic');
     }
   });
@@ -109,7 +113,7 @@ describe('Content script, findTextNodes function', () => {
       <div style="opacity: 0;">Invisible due to opacity:0</div>
       <div>Another visible text</div>
     `;
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes.length).toBe(2);
     expect(textNodes[0].textContent).toBe('Visible text');
     expect(textNodes[1].textContent).toBe('Another visible text');
@@ -120,7 +124,7 @@ describe('Content script, findTextNodes function', () => {
       <div>Main document text</div>
       <div id="shadow-host"></div>
     `;
-    setSearchShadowDoms(true);
+    state.options.searchShadowDoms = true;
     const shadowHost = document.getElementById('shadow-host');
     if (shadowHost) {
       const shadowRoot = shadowHost.attachShadow({ mode: 'open' });
@@ -129,7 +133,7 @@ describe('Content script, findTextNodes function', () => {
         <p>More shadow DOM content</p>
       `;
     }
-    const textNodes = findTextNodes();
+    const textNodes = findTextNodes(state.options.searchShadowDoms);
     expect(textNodes.length).toBe(3);
     expect(textNodes[0].textContent).toBe('Main document text');
     expect(textNodes[1].textContent).toBe('Shadow DOM text');

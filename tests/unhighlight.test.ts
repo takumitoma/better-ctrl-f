@@ -1,8 +1,14 @@
-import { unhighlight } from '../src/content/content';
+import {
+  initializeHighlightState,
+  unhighlight,
+} from '../src/content/highlightManager';
 
 describe('Content script, unhighlight function', () => {
+  let state: ReturnType<typeof initializeHighlightState>;
+
   beforeEach(() => {
     document.body.innerHTML = '';
+    state = initializeHighlightState();
   });
 
   test('correctly removes a single highlight', () => {
@@ -12,7 +18,7 @@ describe('Content script, unhighlight function', () => {
       `<span class="better-ctrl-f-highlight">a basic test</span> ` +
       `case for the unhighlight function` +
       `</div>`;
-    unhighlight();
+    unhighlight(state);
 
     const expected = 'This is a basic test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -27,7 +33,7 @@ describe('Content script, unhighlight function', () => {
       `<span class="better-ctrl-f-highlight">unhighlight</span> ` +
       `function` +
       `</div>`;
-    unhighlight();
+    unhighlight(state);
 
     const expected = 'This is a test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -41,7 +47,7 @@ describe('Content script, unhighlight function', () => {
       `o` +
       `<span class="better-ctrl-f-highlight">rd</span>` +
       `</div>`;
-    unhighlight();
+    unhighlight(state);
 
     const expected = 'Multiple highlights in one word';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -49,7 +55,7 @@ describe('Content script, unhighlight function', () => {
 
   test('does nothing when there are no highlights', () => {
     document.body.innerHTML = `<div id="test-div">Nothing should be done</div>`;
-    unhighlight();
+    unhighlight(state);
 
     const expected = 'Nothing should be done';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
