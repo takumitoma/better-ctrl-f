@@ -3,6 +3,7 @@ import {
   highlight,
   getTotalMatches,
   setSearchDiacritics,
+  setCaseSensitive,
 } from '../src/content/highlightManager';
 
 describe('Content script, highlight function', () => {
@@ -137,5 +138,17 @@ describe('Content script, highlight function', () => {
 
     expect(totalMatches).toBe(0);
     expect(document.body.innerHTML).toBe('<div>Àgréément</div>');
+  });
+
+  test('highlights correctly with case sensitivity', () => {
+    document.body.innerHTML = '<div>Case case CASE cASe</div>';
+    setCaseSensitive(state, true);
+    highlight(state, 'case');
+    const totalMatches: number = getTotalMatches(state);
+
+    expect(totalMatches).toBe(1);
+    expect(document.body.innerHTML).toBe(
+      '<div>Case <span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">case</span> CASE cASe</div>',
+    );
   });
 });

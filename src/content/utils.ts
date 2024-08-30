@@ -18,13 +18,15 @@ function escapeSpecialChars(string: string): string {
 export function getSearchRegex(
   searchQuery: string,
   searchDiacritics: boolean,
+  caseSensitive: boolean,
 ): RegExp {
   const escapedQuery = escapeSpecialChars(searchQuery);
+  const flags = caseSensitive ? 'g' : 'gi';
   if (searchDiacritics) {
     const diacriticInsensitiveQuery = removeDiacritics(escapedQuery);
-    return new RegExp(diacriticInsensitiveQuery, 'gi');
+    return new RegExp(diacriticInsensitiveQuery, flags);
   }
-  return new RegExp(`(${escapedQuery})`, 'gi');
+  return new RegExp(`(${escapedQuery})`, flags);
 }
 
 export function createSpan(
