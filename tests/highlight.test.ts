@@ -21,7 +21,11 @@ describe('Content script, highlight function', () => {
 
     expect(totalMatches).toBe(1);
 
-    const expected = `<div><span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">High</span>light</div>`;
+    const expected =
+      `<div>` +
+      `<span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">High</span>` +
+      `light` +
+      `</div>`;
     expect(document.body.innerHTML).toBe(expected);
   });
 
@@ -113,42 +117,54 @@ describe('Content script, highlight function', () => {
     expect(totalMatches).toBe(1);
 
     const expected =
-      `<div>  Leading and trailing <span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">` +
-      `spaces</span>  </div>`;
+      `<div>  Leading and trailing ` +
+      `<span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">` +
+      `spaces` +
+      `</span>  ` +
+      `</div>`;
     expect(document.body.innerHTML).toBe(expected);
   });
 
   test('highlights diacritics when searchDiacritics is true', () => {
-    document.body.innerHTML = '<div>Àgréément Àgréément</div>';
+    document.body.innerHTML = `<div>Àgréément Àgréément</div>`;
     setSearchDiacritics(state, true);
     highlight(state, 'agree');
     const totalMatches: number = getTotalMatches(state);
 
     expect(totalMatches).toBe(2);
-    expect(document.body.innerHTML).toBe(
-      '<div><span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">Àgréé</span>ment <span class="better-ctrl-f-highlight better-ctrl-f-2">Àgréé</span>ment</div>',
-    );
+
+    const expected =
+      `<div>` +
+      `<span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">Àgréé</span>` +
+      `ment ` +
+      `<span class="better-ctrl-f-highlight better-ctrl-f-2">Àgréé</span>` +
+      `ment</div>`;
+    expect(document.body.innerHTML).toBe(expected);
   });
 
   test('does not highlight diacritics when searchDiacritics is false', () => {
-    document.body.innerHTML = '<div>Àgréément</div>';
+    document.body.innerHTML = `<div>Àgréément</div>`;
     setSearchDiacritics(state, false);
     highlight(state, 'agree');
     const totalMatches: number = getTotalMatches(state);
 
     expect(totalMatches).toBe(0);
-    expect(document.body.innerHTML).toBe('<div>Àgréément</div>');
+    const expected = `<div>Àgréément</div>`;
+    expect(document.body.innerHTML).toBe(expected);
   });
 
   test('highlights correctly with case sensitivity', () => {
-    document.body.innerHTML = '<div>Case case CASE cASe</div>';
+    document.body.innerHTML = `<div>Case case CASE cASe</div>`;
     setCaseSensitive(state, true);
     highlight(state, 'case');
     const totalMatches: number = getTotalMatches(state);
 
     expect(totalMatches).toBe(1);
-    expect(document.body.innerHTML).toBe(
-      '<div>Case <span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">case</span> CASE cASe</div>',
-    );
+
+    const expected =
+      `<div>Case ` +
+      `<span class="better-ctrl-f-highlight better-ctrl-f-1 better-ctrl-f-focus">case</span>` +
+      ` CASE cASe</div>`;
+    expect(document.body.innerHTML).toBe(expected);
   });
 });
