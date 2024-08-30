@@ -1,31 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { usePopupContext } from './context/PopupContext';
 import MainPage from './components/MainPage';
 import SetHighlightPage from './components/SetHighlightPage';
 import SetFocusPage from './components/SetFocusPage';
+import LoadingScreen from './components/LoadingScreen';
+
+const CHECK_INTERVAL = 3000;
 
 const Popup: React.FC = () => {
-  const { page, setCurrentMatch, setTotalMatches } = usePopupContext();
+  const { page, contentLoaded, setContentLoaded } = usePopupContext();
+
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  function checkContentScript(): void {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'ping' }, () => {
+          if (chrome.runtime.lastError) {
+            setContentLoaded(false);
+          } else {
+            setContentLoaded(true);
+            if (intervalRef.current !== null) {
+              clearInterval(intervalRef.current);
+            }
+          }
+        });
+      }
+    });
+  }
 
   useEffect(() => {
-    const handleMessage = (message: {
-      target: string;
-      action: string;
-      currentMatch: number;
-      totalMatches: number;
-    }) => {
-      if (message.target === 'popup' && message.action === 'updateMatches') {
-        setCurrentMatch(message.totalMatches > 0 ? message.currentMatch : 0);
-        setTotalMatches(message.totalMatches);
-      }
-    };
+    checkContentScript();
 
-    chrome.runtime.onMessage.addListener(handleMessage);
+    if (!contentLoaded) {
+      intervalRef.current = setInterval(checkContentScript, CHECK_INTERVAL);
+    }
 
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, [setCurrentMatch, setTotalMatches]);
+  }, [contentLoaded]);
+
+  if (!contentLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div id="popup">

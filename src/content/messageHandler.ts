@@ -30,6 +30,11 @@ export function handleMessage(
     return;
   }
 
+  if (message.action === 'ping') {
+    sendResponse({ status: 'alive' });
+    return;
+  }
+
   if (!document.body) {
     console.error('document.body does not exist');
     sendResponse();
