@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Divider: React.FC = () => <span id="divider" />;
+const Divider: React.FC = () => <div id="divider" />;
 
 export default Divider;
