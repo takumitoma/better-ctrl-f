@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { usePopupContext } from '../../context/PopupContext';
 
-export const SearchBar: React.FC = () => {
+const SearchBar: React.FC = () => {
   const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
 
   useEffect(() => {
@@ -38,3 +38,5 @@ export const SearchBar: React.FC = () => {
     </form>
   );
 };
+
+export default SearchBar;

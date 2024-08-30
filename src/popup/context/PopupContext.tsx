@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface PopupContextProps {
+export type Page = 'Main' | 'SetHighlight' | 'SetFocus';
+
+export interface PopupContextProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   currentMatch: number;
@@ -13,8 +15,8 @@ interface PopupContextProps {
   setFocusColor: (color: string) => void;
   incrementMatch: () => void;
   decrementMatch: () => void;
-  page: string;
-  setPage: (page: string) => void;
+  page: Page;
+  setPage: (page: Page) => void;
 }
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
@@ -27,7 +29,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   const [totalMatches, setTotalMatches] = useState<number>(0);
   const [highlightColor, setHighlightColor] = useState<string>('#FFFF00');
   const [focusColor, setFocusColor] = useState<string>('#FFA500');
-  const [page, setPage] = useState<string>('Main');
+  const [page, setPage] = useState<Page>('Main');
 
   function incrementMatch() {
     if (!searchQuery) return;
@@ -79,10 +81,10 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const usePopupContext = (): PopupContextProps => {
+export function usePopupContext(): PopupContextProps {
   const context = useContext(PopupContext);
   if (!context) {
     throw new Error('usePopupContext was used outside a PopupProvider');
   }
   return context;
-};
+}

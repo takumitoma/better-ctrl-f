@@ -2,9 +2,9 @@ import React from 'react';
 import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
 import { usePopupContext } from '../../context/PopupContext';
 import { useMatchNavigation } from '../../hooks/useMatchNavigation';
-import { Button } from '../common/Button';
+import Button from '../common/Button';
 
-export const MatchNavigation: React.FC = () => {
+const MatchNavigation: React.FC = () => {
   const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
     usePopupContext();
 
@@ -27,3 +27,5 @@ export const MatchNavigation: React.FC = () => {
     </>
   );
 };
+
+export default MatchNavigation;

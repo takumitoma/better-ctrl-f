@@ -1,14 +1,14 @@
 import React from 'react';
-import { SearchBar } from './MainPage/SearchBar';
-import { MatchCounter } from './MainPage/MatchCounter';
-import { Divider } from './common/Divider';
-import { MatchNavigation } from './MainPage/MatchNavigation';
-import { Button } from './common/Button';
+import SearchBar from './MainPage/SearchBar';
+import MatchCounter from './MainPage/MatchCounter';
+import Divider from './common/Divider';
+import MatchNavigation from './MainPage/MatchNavigation';
+import Button from './common/Button';
 import { usePopupContext } from '../context/PopupContext';
 import { useHighlightColorSync } from '../hooks/useHighlightColorSync';
 import { useFocusColorSync } from '../hooks/useFocusColorSync';
 
-export const MainPage: React.FC = () => {
+const MainPage: React.FC = () => {
   const { highlightColor, focusColor, setPage } = usePopupContext();
   useHighlightColorSync();
   useFocusColorSync();
@@ -32,3 +32,5 @@ export const MainPage: React.FC = () => {
     </div>
   );
 };
+
+export default MainPage;

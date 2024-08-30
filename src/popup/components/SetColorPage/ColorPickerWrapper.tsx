@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorPicker } from '../common/ColorPicker';
+import ColorPicker from '../common/ColorPicker';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { usePopupContext } from '../../context/PopupContext';
 
@@ -7,7 +7,7 @@ interface ColorPickerWrapperProps {
   colorType: 'highlight' | 'focus';
 }
 
-export const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
+const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
   colorType,
 }) => {
   const {
@@ -36,3 +36,5 @@ export const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
     </div>
   );
 };
+
+export default ColorPickerWrapper;

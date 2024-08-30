@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { usePopupContext } from './context/PopupContext';
-import { MainPage } from './components/MainPage';
-import { SetHighlightPage } from './components/SetHighlightPage';
-import { SetFocusPage } from './components/SetFocusPage';
+import MainPage from './components/MainPage';
+import SetHighlightPage from './components/SetHighlightPage';
+import SetFocusPage from './components/SetFocusPage';
 
 const Popup: React.FC = () => {
   const { page, setCurrentMatch, setTotalMatches } = usePopupContext();

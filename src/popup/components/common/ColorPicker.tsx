@@ -7,10 +7,7 @@ interface ColorPickerProps {
   onChange: (color: string) => void;
 }
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({
-  color,
-  onChange,
-}) => (
+const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange }) => (
   <div className="color-picker">
     <HexColorPicker color={color} onChange={onChange} />
     <div className="swatches">
@@ -26,3 +23,5 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     <HexColorInput color={color} onChange={onChange} />
   </div>
 );
+
+export default ColorPicker;
