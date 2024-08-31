@@ -5,15 +5,16 @@ import {
   removeDiacritics,
 } from './utils';
 
+const highlightOptions = {
+  searchDiacritics: false,
+  searchShadowDoms: false,
+  isCaseSensitive: false,
+};
+
 export interface HighlightState {
   nodes: HTMLSpanElement[];
   focusIndex: number;
   totalMatches: number;
-  options: {
-    searchDiacritics: boolean;
-    searchShadowDoms: boolean;
-    isCaseSensitive: boolean;
-  };
   shadowRoots: ShadowRoot[];
 }
 
@@ -22,11 +23,6 @@ export function initializeHighlightState(): HighlightState {
     nodes: [document.createElement('span')],
     focusIndex: 0,
     totalMatches: 0,
-    options: {
-      searchDiacritics: false,
-      searchShadowDoms: false,
-      isCaseSensitive: false,
-    },
     shadowRoots: [],
   };
 }
@@ -40,11 +36,11 @@ export function highlight(state: HighlightState, searchQuery: string): void {
     return;
   }
 
-  const textNodes = findTextNodes(state.options.searchShadowDoms);
+  const textNodes = findTextNodes(highlightOptions.searchShadowDoms);
   const searchRegex = getSearchRegex(
     searchQuery,
-    state.options.searchDiacritics,
-    state.options.isCaseSensitive,
+    highlightOptions.searchDiacritics,
+    highlightOptions.isCaseSensitive,
   );
   state.totalMatches = 0;
   state.focusIndex = 1;
@@ -77,7 +73,7 @@ function processTextNode(
   let textContent = textNode.textContent || '';
   if (!textContent) return;
 
-  let processedContent = state.options.searchDiacritics
+  let processedContent = highlightOptions.searchDiacritics
     ? removeDiacritics(textContent)
     : textContent;
   searchRegex.lastIndex = 0;
@@ -116,13 +112,15 @@ function processTextNode(
     textNode.parentNode?.insertBefore(span, after);
 
     textContent = after.textContent || '';
-    processedContent = state.options.searchDiacritics
+    processedContent = highlightOptions.searchDiacritics
       ? removeDiacritics(textContent)
       : textContent;
     textNode = after;
     searchRegex.lastIndex = 0;
   }
 }
+
+// ... (rest of the functions remain the same)
 
 export function unhighlight(state: HighlightState): void {
   unhighlightHelper(document);
@@ -168,25 +166,16 @@ export function updateFocusColor(color: string): void {
   );
 }
 
-export function setSearchDiacritics(
-  state: HighlightState,
-  value: boolean,
-): void {
-  state.options.searchDiacritics = value;
+export function setSearchDiacritics(value: boolean): void {
+  highlightOptions.searchDiacritics = value;
 }
 
-export function setSearchShadowDoms(
-  state: HighlightState,
-  value: boolean,
-): void {
-  state.options.searchShadowDoms = value;
+export function setSearchShadowDoms(value: boolean): void {
+  highlightOptions.searchShadowDoms = value;
 }
 
-export function setIsCaseSensitive(
-  state: HighlightState,
-  value: boolean,
-): void {
-  state.options.isCaseSensitive = value;
+export function setIsCaseSensitive(value: boolean): void {
+  highlightOptions.isCaseSensitive = value;
 }
 
 export function getTotalMatches(state: HighlightState): number {

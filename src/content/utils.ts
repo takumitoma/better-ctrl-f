@@ -41,7 +41,7 @@ export function createSpan(
 }
 
 export function findTextNodes(
-  searchShadowDoms: boolean,
+  searchShadowDoms: boolean = false,
   body: Element = document.body,
 ): Text[] {
   const textNodes: Text[] = [];

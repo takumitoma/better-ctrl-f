@@ -12,6 +12,8 @@ describe('Content script, highlight function', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     state = initializeHighlightState();
+    setSearchDiacritics(false);
+    setIsCaseSensitive(false);
   });
 
   test('correctly highlights single match', () => {
@@ -127,7 +129,7 @@ describe('Content script, highlight function', () => {
 
   test('highlights diacritics when searchDiacritics is true', () => {
     document.body.innerHTML = `<div>Àgréément Àgréément</div>`;
-    setSearchDiacritics(state, true);
+    setSearchDiacritics(true);
     highlight(state, 'agree');
     const totalMatches: number = getTotalMatches(state);
 
@@ -144,7 +146,7 @@ describe('Content script, highlight function', () => {
 
   test('does not highlight diacritics when searchDiacritics is false', () => {
     document.body.innerHTML = `<div>Àgréément</div>`;
-    setSearchDiacritics(state, false);
+    setSearchDiacritics(false);
     highlight(state, 'agree');
     const totalMatches: number = getTotalMatches(state);
 
@@ -155,7 +157,7 @@ describe('Content script, highlight function', () => {
 
   test('highlights correctly with case sensitivity', () => {
     document.body.innerHTML = `<div>Case case CASE cASe</div>`;
-    setIsCaseSensitive(state, true);
+    setIsCaseSensitive(true);
     highlight(state, 'case');
     const totalMatches: number = getTotalMatches(state);
 

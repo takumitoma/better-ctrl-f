@@ -49,8 +49,8 @@ export function handleMessage(
 
   switch (message.action) {
     case 'highlight':
-      setIsCaseSensitive(highlightState, message.isCaseSensitive);
-      setSearchDiacritics(highlightState, message.searchDiacritics);
+      setIsCaseSensitive(message.isCaseSensitive);
+      setSearchDiacritics(message.searchDiacritics);
       highlight(highlightState, message.searchQuery);
       response = {
         focusIndex: getFocusIndex(highlightState),
