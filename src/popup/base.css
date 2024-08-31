@@ -6,7 +6,12 @@
 
 html {
   width: 350px;  
-  height: 50px; 
+  height: auto; 
+}
+
+body {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
 }
 
 #root {
@@ -18,5 +23,5 @@ html {
 #popup {
   margin: 7px 10px;
   width: 100%;
-  height: 36px;
+  height: auto;
 }

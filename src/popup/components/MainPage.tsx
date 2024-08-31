@@ -4,6 +4,7 @@ import MatchCounter from './MainPage/MatchCounter';
 import Divider from './common/Divider';
 import MatchNavigation from './MainPage/MatchNavigation';
 import Button from './common/Button';
+import SearchOptions from './MainPage/SearchOptions';
 import { usePopupContext } from '../context/PopupContext';
 import { useHighlightColorSync } from '../hooks/useHighlightColorSync';
 import { useFocusColorSync } from '../hooks/useFocusColorSync';
@@ -15,20 +16,23 @@ const MainPage: React.FC = () => {
 
   return (
     <div id="main">
-      <SearchBar />
-      <MatchCounter />
-      <Divider />
-      <MatchNavigation />
-      <Button
-        className="goto-color-button"
-        style={{ backgroundColor: highlightColor }}
-        onClick={() => setPage('SetHighlight')}
-      />
-      <Button
-        className="goto-color-button"
-        style={{ backgroundColor: focusColor }}
-        onClick={() => setPage('SetFocus')}
-      />
+      <div className="search-query-row">
+        <SearchBar />
+        <MatchCounter />
+        <Divider />
+        <MatchNavigation />
+        <Button
+          className="goto-color-button"
+          style={{ backgroundColor: highlightColor }}
+          onClick={() => setPage('SetHighlight')}
+        />
+        <Button
+          className="goto-color-button"
+          style={{ backgroundColor: focusColor }}
+          onClick={() => setPage('SetFocus')}
+        />
+      </div>
+      <SearchOptions />
     </div>
   );
 };

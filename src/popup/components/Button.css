@@ -28,8 +28,8 @@
   justify-content: center;
   height: 28px;
   width: 28px;
-  border-radius: 50%;
-  border: 1px black solid;
+  border: 3px var(--light-gray) solid;
+  border-radius: 4px;
   transition: opacity 0.2s ease;
 }
 

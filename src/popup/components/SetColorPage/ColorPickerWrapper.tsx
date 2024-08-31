@@ -23,7 +23,7 @@ const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
     colorType === 'highlight' ? setHighlightColor : setFocusColor;
 
   return (
-    <div>
+    <div className="set-color">
       <button id="goto-home" onClick={() => setPage('Main')}>
         <IoIosArrowRoundBack className="icon" />
         <p>Go Back</p>
