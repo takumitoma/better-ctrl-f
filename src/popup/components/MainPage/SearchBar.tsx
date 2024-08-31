@@ -6,8 +6,6 @@ const SearchBar: React.FC = () => {
     searchQuery,
     setSearchQuery,
     incrementMatch,
-    isCaseSensitive,
-    searchDiacritics,
   } = usePopupContext();
 
   useEffect(() => {
@@ -21,8 +19,6 @@ const SearchBar: React.FC = () => {
       target: 'background',
       action: 'highlight',
       searchQuery,
-      isCaseSensitive,
-      searchDiacritics,
     });
   }, [searchQuery]);
 

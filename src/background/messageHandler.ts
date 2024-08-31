@@ -2,6 +2,8 @@ import {
   storeSearchQuery,
   storeHighlightColor,
   storeFocusColor,
+  storeIsCaseSensitive,
+  storeSearchDiacritics,
 } from './storage';
 import { sendMessageToActiveTab } from './tabs';
 
@@ -23,11 +25,7 @@ export function handleMessage(message: Message): void {
 
   switch (message.action) {
     case 'highlight':
-      handleHighlight(
-        message.searchQuery,
-        message.isCaseSensitive,
-        message.searchDiacritics,
-      );
+      handleHighlight(message.searchQuery);
       break;
     case 'focus':
       handleFocus(message.index);
@@ -38,21 +36,21 @@ export function handleMessage(message: Message): void {
     case 'updateFocusColor':
       handleUpdateFocusColor(message.focusColor);
       break;
+    case 'updateIsCaseSensitive':
+      handleUpdateIsCaseSensitive(message.isCaseSensitive);
+      break;
+    case 'updateSearchDiacritics':
+      handleUpdateSearchDiacritics(message.searchDiacritics);
+      break;
   }
 }
 
-function handleHighlight(
-  searchQuery: string = '',
-  isCaseSensitive: boolean = false,
-  searchDiacritics: boolean = false,
-): void {
+function handleHighlight(searchQuery: string = ''): void {
   sendMessageToActiveTab(
     {
       target: 'content',
       action: 'highlight',
       searchQuery,
-      isCaseSensitive,
-      searchDiacritics,
     },
     (response: { focusIndex: number; totalMatches: number }) => {
       chrome.runtime.sendMessage({
@@ -90,4 +88,22 @@ function handleUpdateFocusColor(focusColor: string = ''): void {
     focusColor,
   });
   storeFocusColor(focusColor);
+}
+
+function handleUpdateIsCaseSensitive(isCaseSensitive: boolean = false): void {
+  sendMessageToActiveTab({
+    target: 'content',
+    action: 'updateIsCaseSensitive',
+    isCaseSensitive,
+  });
+  storeIsCaseSensitive(isCaseSensitive);
+}
+
+function handleUpdateSearchDiacritics(searchDiacritics: boolean = false): void {
+  sendMessageToActiveTab({
+    target: 'content',
+    action: 'updateSearchDiacritics',
+    searchDiacritics,
+  });
+  storeSearchDiacritics(searchDiacritics);
 }

@@ -11,10 +11,6 @@ interface PopupContextProps {
   setHighlightColor: (color: string) => void;
   focusColor: string;
   setFocusColor: (color: string) => void;
-  isCaseSensitive: boolean;
-  setIsCaseSensitive: (bool: boolean) => void;
-  searchDiacritics: boolean;
-  setSearchDiacritics: (bool: boolean) => void;
   incrementMatch: () => void;
   decrementMatch: () => void;
   page: string;
@@ -31,8 +27,6 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   const [totalMatches, setTotalMatches] = useState<number>(0);
   const [highlightColor, setHighlightColor] = useState<string>('#FFFF00');
   const [focusColor, setFocusColor] = useState<string>('#FFA500');
-  const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [searchDiacritics, setSearchDiacritics] = useState<boolean>(false);
   const [page, setPage] = useState<string>('Main');
 
   function incrementMatch() {
@@ -74,10 +68,6 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
         setHighlightColor,
         focusColor,
         setFocusColor,
-        isCaseSensitive,
-        setIsCaseSensitive,
-        searchDiacritics,
-        setSearchDiacritics,
         incrementMatch,
         decrementMatch,
         page,

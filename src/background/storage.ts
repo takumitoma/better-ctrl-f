@@ -1,7 +1,9 @@
 let debounceSearch: NodeJS.Timeout | null = null;
 let debounceHighlight: NodeJS.Timeout | null = null;
 let debounceFocus: NodeJS.Timeout | null = null;
-const DEBOUNCE_TIME = 300; //ms
+let debounceCaseSensitive: NodeJS.Timeout | null = null;
+let debounceDiacritics: NodeJS.Timeout | null = null;
+const DEBOUNCE_TIME = 300;
 
 export function storeSearchQuery(query: string): void {
   if (debounceSearch) {
@@ -27,5 +29,23 @@ export function storeFocusColor(color: string): void {
   }
   debounceFocus = setTimeout(() => {
     chrome.storage.local.set({ lastFocusColor: color });
+  }, DEBOUNCE_TIME);
+}
+
+export function storeIsCaseSensitive(bool: boolean): void {
+  if (debounceCaseSensitive) {
+    clearTimeout(debounceCaseSensitive);
+  }
+  debounceCaseSensitive = setTimeout(() => {
+    chrome.storage.local.set({ lastIsCaseSensitive: bool });
+  }, DEBOUNCE_TIME);
+}
+
+export function storeSearchDiacritics(bool: boolean): void {
+  if (debounceDiacritics) {
+    clearTimeout(debounceDiacritics);
+  }
+  debounceDiacritics = setTimeout(() => {
+    chrome.storage.local.set({ lastSearchDiacritics: bool });
   }, DEBOUNCE_TIME);
 }
