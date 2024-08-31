@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
 import { usePopupContext } from '../../context/PopupContext';
-import { useMatchNavigation } from '../../hooks/useMatchNavigation';
 import Button from '../common/Button';
 
 const MatchNavigation: React.FC = () => {
   const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
     usePopupContext();
 
-  useMatchNavigation();
+    useEffect(() => {
+      function handleKeyDown(event: KeyboardEvent) {
+        if (event.key === 'Enter' && event.shiftKey) {
+          event.preventDefault();
+          decrementMatch();
+        }
+      };
+  
+      document.addEventListener('keydown', handleKeyDown);
+  
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [decrementMatch]);
 
   const isEnabled = searchQuery && totalMatches > 0;
 
