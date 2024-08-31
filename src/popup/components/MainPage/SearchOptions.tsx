@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { usePopupContext } from '../../context/PopupContext';
 
 const SearchOptions: React.FC = () => {
-  const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [searchDiacritics, setSearchDiacritics] = useState<boolean>(false);
-  //const [searchShadowDoms, setSearchShadowDoms] = useState<boolean>(false);
+  const {
+    isCaseSensitive,
+    setIsCaseSensitive,
+    searchDiacritics,
+    setSearchDiacritics,
+  } = usePopupContext();
 
-  //   <label>
-  //   <input
-  //     type="checkbox"
-  //     checked={searchShadowDoms}
-  //     onChange={(e) => setSearchShadowDoms(e.target.checked)}
-  //   />
-  //   Shadow DOM
-  // </label>
   return (
     <div id="search-options">
       <label>

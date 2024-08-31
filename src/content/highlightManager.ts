@@ -12,7 +12,7 @@ export interface HighlightState {
   options: {
     searchDiacritics: boolean;
     searchShadowDoms: boolean;
-    caseSensitive: boolean;
+    isCaseSensitive: boolean;
   };
   shadowRoots: ShadowRoot[];
 }
@@ -25,7 +25,7 @@ export function initializeHighlightState(): HighlightState {
     options: {
       searchDiacritics: false,
       searchShadowDoms: false,
-      caseSensitive: false,
+      isCaseSensitive: false,
     },
     shadowRoots: [],
   };
@@ -44,7 +44,7 @@ export function highlight(state: HighlightState, searchQuery: string): void {
   const searchRegex = getSearchRegex(
     searchQuery,
     state.options.searchDiacritics,
-    state.options.caseSensitive,
+    state.options.isCaseSensitive,
   );
   state.totalMatches = 0;
   state.focusIndex = 1;
@@ -182,8 +182,11 @@ export function setSearchShadowDoms(
   state.options.searchShadowDoms = value;
 }
 
-export function setCaseSensitive(state: HighlightState, value: boolean): void {
-  state.options.caseSensitive = value;
+export function setIsCaseSensitive(
+  state: HighlightState,
+  value: boolean,
+): void {
+  state.options.isCaseSensitive = value;
 }
 
 export function getTotalMatches(state: HighlightState): number {

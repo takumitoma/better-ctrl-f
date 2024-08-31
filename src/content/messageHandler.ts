@@ -7,6 +7,8 @@ import {
   getFocusIndex,
   getTotalMatches,
   initializeHighlightState,
+  setIsCaseSensitive,
+  setSearchDiacritics,
 } from './highlightManager';
 
 interface Message {
@@ -16,6 +18,8 @@ interface Message {
   index: number;
   highlightColor: string;
   focusColor: string;
+  isCaseSensitive: boolean;
+  searchDiacritics: boolean;
 }
 
 const highlightState: HighlightState = initializeHighlightState();
@@ -45,6 +49,8 @@ export function handleMessage(
 
   switch (message.action) {
     case 'highlight':
+      setIsCaseSensitive(highlightState, message.isCaseSensitive);
+      setSearchDiacritics(highlightState, message.searchDiacritics);
       highlight(highlightState, message.searchQuery);
       response = {
         focusIndex: getFocusIndex(highlightState),

@@ -3,7 +3,7 @@ import {
   highlight,
   getTotalMatches,
   setSearchDiacritics,
-  setCaseSensitive,
+  setIsCaseSensitive,
 } from '../src/content/highlightManager';
 
 describe('Content script, highlight function', () => {
@@ -155,7 +155,7 @@ describe('Content script, highlight function', () => {
 
   test('highlights correctly with case sensitivity', () => {
     document.body.innerHTML = `<div>Case case CASE cASe</div>`;
-    setCaseSensitive(state, true);
+    setIsCaseSensitive(state, true);
     highlight(state, 'case');
     const totalMatches: number = getTotalMatches(state);
 

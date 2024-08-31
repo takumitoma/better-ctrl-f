@@ -12,6 +12,8 @@ interface Message {
   index?: number;
   highlightColor?: string;
   focusColor?: string;
+  isCaseSensitive?: boolean;
+  searchDiacritics?: boolean;
 }
 
 export function handleMessage(message: Message): void {
@@ -21,7 +23,11 @@ export function handleMessage(message: Message): void {
 
   switch (message.action) {
     case 'highlight':
-      handleHighlight(message.searchQuery);
+      handleHighlight(
+        message.searchQuery,
+        message.isCaseSensitive,
+        message.searchDiacritics,
+      );
       break;
     case 'focus':
       handleFocus(message.index);
@@ -35,12 +41,18 @@ export function handleMessage(message: Message): void {
   }
 }
 
-function handleHighlight(searchQuery: string = ''): void {
+function handleHighlight(
+  searchQuery: string = '',
+  isCaseSensitive: boolean = false,
+  searchDiacritics: boolean = false,
+): void {
   sendMessageToActiveTab(
     {
       target: 'content',
       action: 'highlight',
       searchQuery,
+      isCaseSensitive,
+      searchDiacritics,
     },
     (response: { focusIndex: number; totalMatches: number }) => {
       chrome.runtime.sendMessage({
