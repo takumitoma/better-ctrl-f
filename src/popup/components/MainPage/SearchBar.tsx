@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { usePopupContext } from '../../context/PopupContext';
 
 const SearchBar: React.FC = () => {
-  const {
-    searchQuery,
-    setSearchQuery,
-    incrementMatch,
-  } = usePopupContext();
+  const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
 
   useEffect(() => {
     chrome.storage.local.get(['lastSearchQuery'], (res) => {

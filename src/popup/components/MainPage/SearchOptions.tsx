@@ -18,7 +18,7 @@ const SearchOptions: React.FC = () => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'updateIsCaseSensitive',
-      isCaseSensitive
+      isCaseSensitive,
     });
   }, [isCaseSensitive]);
 
@@ -26,7 +26,7 @@ const SearchOptions: React.FC = () => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'updateSearchDiacritics',
-      searchDiacritics
+      searchDiacritics,
     });
   }, [searchDiacritics]);
 
