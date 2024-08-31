@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type Page = 'Main' | 'SetHighlight' | 'SetFocus';
-
 interface PopupContextProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -15,10 +13,8 @@ interface PopupContextProps {
   setFocusColor: (color: string) => void;
   incrementMatch: () => void;
   decrementMatch: () => void;
-  page: Page;
-  setPage: (page: Page) => void;
-  contentLoaded: boolean;
-  setContentLoaded: (Loaded: boolean) => void;
+  page: string;
+  setPage: (page: string) => void;
 }
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
@@ -31,8 +27,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   const [totalMatches, setTotalMatches] = useState<number>(0);
   const [highlightColor, setHighlightColor] = useState<string>('#FFFF00');
   const [focusColor, setFocusColor] = useState<string>('#FFA500');
-  const [page, setPage] = useState<Page>('Main');
-  const [contentLoaded, setContentLoaded] = useState<boolean>(false);
+  const [page, setPage] = useState<string>('Main');
 
   function incrementMatch() {
     if (!searchQuery) return;
@@ -77,8 +72,6 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
         decrementMatch,
         page,
         setPage,
-        contentLoaded,
-        setContentLoaded,
       }}
     >
       {children}
