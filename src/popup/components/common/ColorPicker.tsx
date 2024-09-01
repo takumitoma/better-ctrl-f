@@ -20,7 +20,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange }) => (
         />
       ))}
     </div>
-    <HexColorInput color={color} onChange={onChange} />
+    <HexColorInput color={color} onChange={onChange} tabIndex={0}/>
   </div>
 );
 

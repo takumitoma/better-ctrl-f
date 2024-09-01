@@ -35,6 +35,7 @@ const SearchOptions: React.FC = () => {
       <label>
         <input
           type="checkbox"
+          tabIndex={0}
           checked={isCaseSensitive}
           onChange={(e) => setIsCaseSensitive(e.target.checked)}
         />
@@ -43,6 +44,7 @@ const SearchOptions: React.FC = () => {
       <label>
         <input
           type="checkbox"
+          tabIndex={0}
           checked={searchDiacritics}
           onChange={(e) => setSearchDiacritics(e.target.checked)}
         />

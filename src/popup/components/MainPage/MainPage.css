@@ -60,3 +60,7 @@
   background: initial;
   margin-right: 5px;
 }
+
+#search-options input[type="checkbox"]:focus {
+  outline: 2px solid var(--sky-blue);
+}

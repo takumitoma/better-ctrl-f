@@ -8,7 +8,8 @@
   transition: background-color 0.2s ease;
 }
 
-.icon-button:hover {
+.icon-button:hover,
+.icon-button:focus {
   background-color: var(--light-gray);
 }
 
@@ -33,10 +34,13 @@
   transition: opacity 0.2s ease;
 }
 
-.goto-color-button:hover {
+.goto-color-button:hover,
+.goto-color-button:focus {
+  border: 3px var(--sky-blue) solid;
   opacity: 0.5;
 }
 
 .goto-color-button:active {
+  border: 3px var(--light-gray) solid;
   opacity: 1;
 }

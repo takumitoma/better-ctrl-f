@@ -20,7 +20,8 @@
   margin: 0;
 }
 
-#goto-home:hover {
+#goto-home:hover,
+#goto-home:focus {
   background-color: var(--light-gray);
 }
 

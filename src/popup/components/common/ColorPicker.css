@@ -60,3 +60,7 @@
 .color-picker input:focus {
   border-color: #4298ef;
 }
+
+.color-picker .swatch:focus {
+  border: 2px solid var(--sky-blue);
+}

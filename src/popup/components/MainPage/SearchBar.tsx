@@ -34,6 +34,7 @@ const SearchBar: React.FC = () => {
         value={searchQuery}
         onChange={handleChange}
         autoFocus
+        tabIndex={0}
       />
     </form>
   );

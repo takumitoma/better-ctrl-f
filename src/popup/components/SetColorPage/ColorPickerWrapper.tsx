@@ -24,7 +24,7 @@ const ColorPickerWrapper: React.FC<ColorPickerWrapperProps> = ({
 
   return (
     <div className="set-color">
-      <button id="goto-home" onClick={() => setPage('Main')}>
+      <button id="goto-home" onClick={() => setPage('Main')} tabIndex={0}>
         <IoIosArrowRoundBack className="icon" />
         <p>Go Back</p>
       </button>
