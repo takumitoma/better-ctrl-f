@@ -1,12 +1,52 @@
 :root {
-  --better-ctrl-f-highlight-color: #FFFF00;
-  --better-ctrl-f-focus-color: #FFA500;
+  --better-ctrl-f-highlight-color-0: #FFFF00;
+  --better-ctrl-f-focus-color-0: #FFA500;
+  --better-ctrl-f-highlight-color-1: #FFFF00;
+  --better-ctrl-f-focus-color-1: #FFA500;
+  --better-ctrl-f-highlight-color-2: #FFFF00;
+  --better-ctrl-f-focus-color-2: #FFA500;
+  --better-ctrl-f-highlight-color-3: #FFFF00;
+  --better-ctrl-f-focus-color-3: #FFA500;
+  --better-ctrl-f-highlight-color-4: #FFFF00;
+  --better-ctrl-f-focus-color-4: #FFA500;
 }
 
-span.better-ctrl-f-highlight {
-  background-color: var(--better-ctrl-f-highlight-color) !important;
+span.better-ctrl-f-highlight-0 {
+  background-color: var(--better-ctrl-f-highlight-color-0) !important;
 }
 
-span.better-ctrl-f-focus {
-  background-color: var(--better-ctrl-f-focus-color) !important;
+span.better-ctrl-f-focus-0 {
+  background-color: var(--better-ctrl-f-focus-color-0) !important;
+}
+
+span.better-ctrl-f-highlight-1 {
+  background-color: var(--better-ctrl-f-highlight-color-1) !important;
+}
+
+span.better-ctrl-f-focus-1 {
+  background-color: var(--better-ctrl-f-focus-color-1) !important;
+}
+
+span.better-ctrl-f-highlight-2 {
+  background-color: var(--better-ctrl-f-highlight-color-2) !important;
+}
+
+span.better-ctrl-f-focus-2 {
+  background-color: var(--better-ctrl-f-focus-color-2) !important;
+}
+
+span.better-ctrl-f-highlight-3 {
+  background-color: var(--better-ctrl-f-highlight-color-3) !important;
+}
+
+span.better-ctrl-f-focus-3 {
+  background-color: var(--better-ctrl-f-focus-color-3) !important;
+}
+
+span.better-ctrl-f-highlight-4 {
+  background-color: var(--better-ctrl-f-highlight-color-4) !important;
+}
+
+span.better-ctrl-f-focus-4 {
+  background-color: var(--better-ctrl-f-focus-color-4) !important;
 }

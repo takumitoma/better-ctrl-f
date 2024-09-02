@@ -1,7 +1,7 @@
 import {
-  storeSearchQuery,
-  storeHighlightColor,
-  storeFocusColor,
+  storeSearchQueries,
+  storeHighlightColors,
+  storeFocusColors,
   storeIsCaseSensitive,
   storeSearchDiacritics,
 } from './storage';
@@ -16,25 +16,26 @@ interface Message {
   focusColor?: string;
   isCaseSensitive?: boolean;
   searchDiacritics?: boolean;
+  queryIndex: number;
 }
 
-export function handleMessage(message: Message): void {
+export function handleMessage(message: Message, sendResponse: (response?: any) => void): void {
   if (message.target !== 'background') {
-    return;
+    sendResponse();
   }
 
   switch (message.action) {
     case 'highlight':
-      handleHighlight(message.searchQuery);
+      handleHighlight(message.searchQuery, message.queryIndex, sendResponse);
       break;
     case 'focus':
-      handleFocus(message.index);
+      handleFocus(message.index, message.queryIndex);
       break;
     case 'updateHighlightColor':
-      handleUpdateHighlightColor(message.highlightColor);
+      handleUpdateHighlightColor(message.highlightColor, message.queryIndex);
       break;
     case 'updateFocusColor':
-      handleUpdateFocusColor(message.focusColor);
+      handleUpdateFocusColor(message.focusColor, message.queryIndex);
       break;
     case 'updateIsCaseSensitive':
       handleUpdateIsCaseSensitive(message.isCaseSensitive);
@@ -43,14 +44,17 @@ export function handleMessage(message: Message): void {
       handleUpdateSearchDiacritics(message.searchDiacritics);
       break;
   }
+
+  sendResponse(); 
 }
 
-function handleHighlight(searchQuery: string = ''): void {
+function handleHighlight(searchQuery: string = '', queryIndex: number, _sendResponse: (response?: any) => void): void {
   sendMessageToActiveTab(
     {
       target: 'content',
       action: 'highlight',
       searchQuery,
+      queryIndex,
     },
     (response: { focusIndex: number; totalMatches: number }) => {
       chrome.runtime.sendMessage({
@@ -58,36 +62,40 @@ function handleHighlight(searchQuery: string = ''): void {
         action: 'updateMatches',
         currentMatch: response.focusIndex,
         totalMatches: response.totalMatches,
+        queryIndex,
       });
+      storeSearchQueries(searchQuery, queryIndex);
     },
   );
-  storeSearchQuery(searchQuery);
 }
 
-function handleFocus(index: number = 0): void {
+function handleFocus(index: number = 0, queryIndex: number): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'focus',
     index,
+    queryIndex,
   });
 }
 
-function handleUpdateHighlightColor(highlightColor: string = ''): void {
+function handleUpdateHighlightColor(highlightColor: string = '', queryIndex: number): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'updateHighlightColor',
     highlightColor,
+    queryIndex,
   });
-  storeHighlightColor(highlightColor);
+  storeHighlightColors(highlightColor, queryIndex);
 }
 
-function handleUpdateFocusColor(focusColor: string = ''): void {
+function handleUpdateFocusColor(focusColor: string = '', queryIndex: number): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'updateFocusColor',
     focusColor,
+    queryIndex,
   });
-  storeFocusColor(focusColor);
+  storeFocusColors(focusColor, queryIndex);
 }
 
 function handleUpdateIsCaseSensitive(isCaseSensitive: boolean = false): void {

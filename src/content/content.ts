@@ -5,5 +5,4 @@ console.log('hello world from content script');
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   handleMessage(message, sender, sendResponse);
-  return true;
 });

@@ -27,8 +27,8 @@ export function initializeHighlightState(): HighlightState {
   };
 }
 
-export function highlight(state: HighlightState, searchQuery: string): void {
-  unhighlight(state);
+export function highlight(state: HighlightState, searchQuery: string, queryIndex: number): void {
+  unhighlight(state, queryIndex);
 
   if (!searchQuery) {
     state.totalMatches = 0;
@@ -57,10 +57,11 @@ export function highlight(state: HighlightState, searchQuery: string): void {
       searchRegex,
       selectionNode,
       selectionFound,
+      queryIndex,
     );
   });
 
-  focusHighlight(state, state.focusIndex);
+  focusHighlight(state, state.focusIndex, queryIndex);
 }
 
 function processTextNode(
@@ -69,6 +70,7 @@ function processTextNode(
   searchRegex: RegExp,
   selectionNode: Node | null | undefined,
   selectionFound: boolean,
+  queryIndex: number,
 ): void {
   let textContent = textNode.textContent || '';
   if (!textContent) return;
@@ -85,7 +87,7 @@ function processTextNode(
     const matchStart = match.index;
     const matchEnd = matchStart + match[0].length;
     const matchString = textContent.slice(matchStart, matchEnd);
-    const span = createSpan(state.totalMatches, matchString);
+    const span = createSpan(state.totalMatches, matchString, queryIndex);
     state.nodes.push(span);
 
     // Check if we've found the selection node
@@ -120,16 +122,14 @@ function processTextNode(
   }
 }
 
-// ... (rest of the functions remain the same)
-
-export function unhighlight(state: HighlightState): void {
-  unhighlightHelper(document);
-  state.shadowRoots.forEach(unhighlightHelper);
+export function unhighlight(state: HighlightState, queryIndex: number): void {
+  unhighlightHelper(document, queryIndex);
+  state.shadowRoots.forEach((root) => unhighlightHelper(root, queryIndex));
 }
 
-function unhighlightHelper(element: Document | ShadowRoot): void {
+function unhighlightHelper(element: Document | ShadowRoot, queryIndex: number): void {
   const highlightSpans = element.querySelectorAll(
-    'span.better-ctrl-f-highlight',
+    `span.better-ctrl-f-highlight-${queryIndex}`,
   );
   highlightSpans.forEach((span) => {
     const parent = span.parentNode;
@@ -141,10 +141,10 @@ function unhighlightHelper(element: Document | ShadowRoot): void {
   });
 }
 
-export function focusHighlight(state: HighlightState, index: number): void {
+export function focusHighlight(state: HighlightState, index: number, queryIndex: number): void {
   if (state.totalMatches === 0) return;
-  state.nodes[state.focusIndex]?.classList.remove('better-ctrl-f-focus');
-  state.nodes[index]?.classList.add('better-ctrl-f-focus');
+  state.nodes[state.focusIndex]?.classList.remove(`better-ctrl-f-focus-${queryIndex}`);
+  state.nodes[index]?.classList.add(`better-ctrl-f-focus-${queryIndex}`);
   state.nodes[index]?.scrollIntoView({
     block: 'center',
     inline: 'nearest',
@@ -152,16 +152,16 @@ export function focusHighlight(state: HighlightState, index: number): void {
   state.focusIndex = index;
 }
 
-export function updateHighlightColor(color: string): void {
+export function updateHighlightColor(color: string, queryIndex: number): void {
   document.documentElement.style.setProperty(
-    '--better-ctrl-f-highlight-color',
+    `--better-ctrl-f-highlight-color-${queryIndex}`,
     color,
   );
 }
 
-export function updateFocusColor(color: string): void {
+export function updateFocusColor(color: string, queryIndex: number): void {
   document.documentElement.style.setProperty(
-    '--better-ctrl-f-focus-color',
+    `--better-ctrl-f-focus-color-${queryIndex}`,
     color,
   );
 }

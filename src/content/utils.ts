@@ -32,9 +32,10 @@ export function getSearchRegex(
 export function createSpan(
   matchCount: number,
   matchString: string,
+  queryIndex: number
 ): HTMLSpanElement {
   const span = document.createElement('span');
-  span.classList.add('better-ctrl-f-highlight');
+  span.classList.add(`better-ctrl-f-highlight-${queryIndex}`);
   span.classList.add(`better-ctrl-f-${matchCount}`);
   span.appendChild(document.createTextNode(matchString));
   return span;
@@ -57,8 +58,10 @@ export function findTextNodes(
       if (element.shadowRoot && searchShadowDoms) {
         const style = document.createElement('style');
         style.textContent = `
-          span.better-ctrl-f-highlight { background-color: var(--better-ctrl-f-highlight-color) !important; }
-          span.better-ctrl-f-focus { background-color: var(--better-ctrl-f-focus-color) !important; }
+          ${[0, 1, 2, 3, 4].map(i => `
+            span.better-ctrl-f-highlight-${i} { background-color: var(--better-ctrl-f-highlight-color-${i}) !important; }
+            span.better-ctrl-f-focus-${i} { background-color: var(--better-ctrl-f-focus-color-${i}) !important; }
+          `).join('\n')}
         `;
         element.shadowRoot.appendChild(style);
         shadowRoots.push(element.shadowRoot);

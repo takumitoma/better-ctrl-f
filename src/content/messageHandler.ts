@@ -14,15 +14,16 @@ import {
 interface Message {
   target: string;
   action: string;
-  searchQuery: string;
-  index: number;
-  highlightColor: string;
-  focusColor: string;
-  isCaseSensitive: boolean;
-  searchDiacritics: boolean;
+  searchQuery?: string;
+  index?: number;
+  highlightColor?: string;
+  focusColor?: string;
+  isCaseSensitive?: boolean;
+  searchDiacritics?: boolean;
+  queryIndex: number;
 }
 
-const highlightState: HighlightState = initializeHighlightState();
+const highlightStates: HighlightState[] = Array(5).fill(null).map(() => initializeHighlightState());
 
 export function handleMessage(
   message: Message,
@@ -45,32 +46,30 @@ export function handleMessage(
     return;
   }
 
-  let response: { focusIndex?: number; totalMatches?: number } | undefined;
-
   switch (message.action) {
     case 'highlight':
-      highlight(highlightState, message.searchQuery);
-      response = {
-        focusIndex: getFocusIndex(highlightState),
-        totalMatches: getTotalMatches(highlightState),
-      };
+      highlight(highlightStates[message.queryIndex], message.searchQuery!, message.queryIndex);
+      sendResponse({
+        focusIndex: getFocusIndex(highlightStates[message.queryIndex]),
+        totalMatches: getTotalMatches(highlightStates[message.queryIndex]),
+      })
       break;
     case 'focus':
-      focusHighlight(highlightState, message.index);
+      focusHighlight(highlightStates[message.queryIndex], message.index!, message.queryIndex);
       break;
     case 'updateHighlightColor':
-      updateHighlightColor(message.highlightColor);
+      updateHighlightColor(message.highlightColor!, message.queryIndex);
       break;
     case 'updateFocusColor':
-      updateFocusColor(message.focusColor);
+      updateFocusColor(message.focusColor!, message.queryIndex);
       break;
     case 'updateIsCaseSensitive':
-      setIsCaseSensitive(message.isCaseSensitive);
+      setIsCaseSensitive(message.isCaseSensitive!);
       break;
     case 'updateSearchDiacritics':
-      setSearchDiacritics(message.searchDiacritics);
+      setSearchDiacritics(message.searchDiacritics!);
       break;
   }
 
-  sendResponse(response);
+  sendResponse();
 }
