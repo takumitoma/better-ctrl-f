@@ -22,10 +22,15 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
       totalMatches: number;
       queryIndex: number;
     }) {
-      if (message.target === 'popup' && message.action === 'updateMatches' && message.queryIndex === index) {
+      if (
+        message.target === 'popup' &&
+        message.action === 'updateMatches' &&
+        message.queryIndex === index
+      ) {
         setCurrentMatches((prev) => {
           const newMatches = [...prev];
-          newMatches[index] = message.totalMatches > 0 ? message.currentMatch : 0;
+          newMatches[index] =
+            message.totalMatches > 0 ? message.currentMatch : 0;
           return newMatches;
         });
         setTotalMatches((prev) => {
@@ -34,7 +39,7 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
           return newTotals;
         });
       }
-    };
+    }
 
     chrome.runtime.onMessage.addListener(handleMessage);
 

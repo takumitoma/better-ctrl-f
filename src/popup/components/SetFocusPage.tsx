@@ -8,11 +8,7 @@ interface SetFocusPageProps {
 }
 
 const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
-  const {
-    focusColors,
-    setFocusColors,
-    setPage,
-  } = usePopupContext();
+  const { focusColors, setFocusColors, setPage } = usePopupContext();
 
   // useEffect(() => {
   //   chrome.storage.local.get(['focusColors'], (res) => {
@@ -35,7 +31,7 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
       newColors[index] = newColor;
       return newColors;
     });
-  };
+  }
 
   return (
     <div className="set-color">
@@ -45,7 +41,8 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
       </button>
       <hr />
       <h1 className="title">
-        Edit <span style={{ backgroundColor: focusColors[index] }}>focus</span> color
+        Edit <span style={{ backgroundColor: focusColors[index] }}>focus</span>{' '}
+        color
       </h1>
       <ColorPicker color={focusColors[index]} onChange={handleChange} />
     </div>

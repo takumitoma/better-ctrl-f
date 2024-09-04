@@ -21,14 +21,17 @@ interface Message {
   focusColors?: string[];
 }
 
-export function handleMessage(message: Message, sendResponse: (response?: any) => void): void {
+export function handleMessage(
+  message: Message,
+  sendResponse: (response?: any) => void,
+): void {
   if (message.target !== 'background') {
     sendResponse();
   }
 
   switch (message.action) {
     case 'highlight':
-      handleHighlight(message.searchQuery, message.queryIndex, sendResponse);
+      handleHighlight(message.searchQuery, message.queryIndex);
       break;
     case 'focus':
       handleFocus(message.index, message.queryIndex);
@@ -47,13 +50,16 @@ export function handleMessage(message: Message, sendResponse: (response?: any) =
       break;
     case 'batchUpdateColors':
       handleBatchUpdateColors(message.highlightColors, message.focusColors);
-      break;      
+      break;
   }
 
-  sendResponse(); 
+  sendResponse();
 }
 
-function handleHighlight(searchQuery: string = '', queryIndex: number, _sendResponse: (response?: any) => void): void {
+function handleHighlight(
+  searchQuery: string = '',
+  queryIndex: number,
+): void {
   sendMessageToActiveTab(
     {
       target: 'content',
@@ -83,7 +89,10 @@ function handleFocus(index: number = 0, queryIndex: number): void {
   });
 }
 
-function handleUpdateHighlightColor(highlightColor: string = '', queryIndex: number): void {
+function handleUpdateHighlightColor(
+  highlightColor: string = '',
+  queryIndex: number,
+): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'updateHighlightColor',
@@ -93,7 +102,10 @@ function handleUpdateHighlightColor(highlightColor: string = '', queryIndex: num
   storeHighlightColors(highlightColor, queryIndex);
 }
 
-function handleUpdateFocusColor(focusColor: string = '', queryIndex: number): void {
+function handleUpdateFocusColor(
+  focusColor: string = '',
+  queryIndex: number,
+): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'updateFocusColor',
@@ -103,7 +115,10 @@ function handleUpdateFocusColor(focusColor: string = '', queryIndex: number): vo
   storeFocusColors(focusColor, queryIndex);
 }
 
-function handleBatchUpdateColors(highlightColors: string[] = [], focusColors: string[] = []): void {
+function handleBatchUpdateColors(
+  highlightColors: string[] = [],
+  focusColors: string[] = [],
+): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'batchUpdateColors',

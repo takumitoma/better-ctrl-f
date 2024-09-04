@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 interface PopupContextProps {
   searchQueries: string[];
@@ -22,18 +29,27 @@ const PopupContext = createContext<PopupContextProps | undefined>(undefined);
 export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [searchQueries, setSearchQueries] = useState<string[]>(Array(5).fill(''));
-  const [currentMatches, setCurrentMatches] = useState<number[]>(Array(5).fill(0));
+  const [searchQueries, setSearchQueries] = useState<string[]>(
+    Array(5).fill(''),
+  );
+  const [currentMatches, setCurrentMatches] = useState<number[]>(
+    Array(5).fill(0),
+  );
   const [totalMatches, setTotalMatches] = useState<number[]>(Array(5).fill(0));
-  const [highlightColors, setHighlightColors] = useState<string[]>(Array(5).fill('#FFFF00'));
-  const [focusColors, setFocusColors] = useState<string[]>(Array(5).fill('#FFA500'));
+  const [highlightColors, setHighlightColors] = useState<string[]>(
+    Array(5).fill('#FFFF00'),
+  );
+  const [focusColors, setFocusColors] = useState<string[]>(
+    Array(5).fill('#FFA500'),
+  );
   const [page, setPage] = useState<string>('Main');
 
   function incrementMatch(index: number) {
     if (!searchQueries[index]) return;
     setCurrentMatches((prevMatches) => {
       const newMatches = [...prevMatches];
-      newMatches[index] = newMatches[index] !== totalMatches[index] ? newMatches[index] + 1 : 1;
+      newMatches[index] =
+        newMatches[index] !== totalMatches[index] ? newMatches[index] + 1 : 1;
       chrome.runtime.sendMessage({
         target: 'background',
         action: 'focus',
@@ -48,7 +64,8 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
     if (!searchQueries[index]) return;
     setCurrentMatches((prevMatches) => {
       const newMatches = [...prevMatches];
-      newMatches[index] = newMatches[index] === 1 ? totalMatches[index] : newMatches[index] - 1;
+      newMatches[index] =
+        newMatches[index] === 1 ? totalMatches[index] : newMatches[index] - 1;
       chrome.runtime.sendMessage({
         target: 'background',
         action: 'focus',

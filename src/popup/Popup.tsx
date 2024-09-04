@@ -24,14 +24,10 @@ const Popup: React.FC = () => {
       child = <SetHighlightPage index={index} />;
     } else if (pageType === 'SetFocus') {
       child = <SetFocusPage index={index} />;
-    } 
+    }
   }
 
-  return (
-    <div id="popup">
-      {child}
-    </div>
-  );
+  return <div id="popup">{child}</div>;
 };
 
 export default Popup;

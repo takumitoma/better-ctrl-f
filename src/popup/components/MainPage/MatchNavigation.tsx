@@ -8,7 +8,8 @@ interface MatchNavigationProps {
 }
 
 const MatchNavigation: React.FC<MatchNavigationProps> = ({ index }) => {
-  const { searchQueries, totalMatches, incrementMatch, decrementMatch } = usePopupContext();
+  const { searchQueries, totalMatches, incrementMatch, decrementMatch } =
+    usePopupContext();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {

@@ -27,7 +27,11 @@ export function initializeHighlightState(): HighlightState {
   };
 }
 
-export function highlight(state: HighlightState, searchQuery: string, queryIndex: number): void {
+export function highlight(
+  state: HighlightState,
+  searchQuery: string,
+  queryIndex: number,
+): void {
   unhighlight(state, queryIndex);
 
   if (!searchQuery) {
@@ -127,7 +131,10 @@ export function unhighlight(state: HighlightState, queryIndex: number): void {
   state.shadowRoots.forEach((root) => unhighlightHelper(root, queryIndex));
 }
 
-function unhighlightHelper(element: Document | ShadowRoot, queryIndex: number): void {
+function unhighlightHelper(
+  element: Document | ShadowRoot,
+  queryIndex: number,
+): void {
   const highlightSpans = element.querySelectorAll(
     `span.better-ctrl-f-highlight-${queryIndex}`,
   );
@@ -141,9 +148,15 @@ function unhighlightHelper(element: Document | ShadowRoot, queryIndex: number): 
   });
 }
 
-export function focusHighlight(state: HighlightState, index: number, queryIndex: number): void {
+export function focusHighlight(
+  state: HighlightState,
+  index: number,
+  queryIndex: number,
+): void {
   if (state.totalMatches === 0) return;
-  state.nodes[state.focusIndex]?.classList.remove(`better-ctrl-f-focus-${queryIndex}`);
+  state.nodes[state.focusIndex]?.classList.remove(
+    `better-ctrl-f-focus-${queryIndex}`,
+  );
   state.nodes[index]?.classList.add(`better-ctrl-f-focus-${queryIndex}`);
   state.nodes[index]?.scrollIntoView({
     block: 'center',
@@ -166,7 +179,10 @@ export function updateFocusColor(color: string, queryIndex: number): void {
   );
 }
 
-export function batchUpdateColors(highlightColors: string[], focusColors: string[]): void {
+export function batchUpdateColors(
+  highlightColors: string[],
+  focusColors: string[],
+): void {
   highlightColors.forEach((color, index) => {
     updateHighlightColor(color, index);
   });

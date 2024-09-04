@@ -26,7 +26,9 @@ interface Message {
   focusColors?: string[];
 }
 
-const highlightStates: HighlightState[] = Array(5).fill(null).map(() => initializeHighlightState());
+const highlightStates: HighlightState[] = Array(5)
+  .fill(null)
+  .map(() => initializeHighlightState());
 
 export function handleMessage(
   message: Message,
@@ -51,14 +53,22 @@ export function handleMessage(
 
   switch (message.action) {
     case 'highlight':
-      highlight(highlightStates[message.queryIndex], message.searchQuery!, message.queryIndex);
+      highlight(
+        highlightStates[message.queryIndex],
+        message.searchQuery!,
+        message.queryIndex,
+      );
       sendResponse({
         focusIndex: getFocusIndex(highlightStates[message.queryIndex]),
         totalMatches: getTotalMatches(highlightStates[message.queryIndex]),
-      })
+      });
       break;
     case 'focus':
-      focusHighlight(highlightStates[message.queryIndex], message.index!, message.queryIndex);
+      focusHighlight(
+        highlightStates[message.queryIndex],
+        message.index!,
+        message.queryIndex,
+      );
       break;
     case 'updateHighlightColor':
       updateHighlightColor(message.highlightColor!, message.queryIndex);

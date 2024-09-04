@@ -1,6 +1,6 @@
-let debounceSearch: NodeJS.Timeout[] = Array(5).fill(null);
-let debounceHighlight: NodeJS.Timeout[] = Array(5).fill(null);
-let debounceFocus: NodeJS.Timeout[] = Array(5).fill(null);
+const debounceSearch: NodeJS.Timeout[] = Array(5).fill(null);
+const debounceHighlight: NodeJS.Timeout[] = Array(5).fill(null);
+const debounceFocus: NodeJS.Timeout[] = Array(5).fill(null);
 let debounceCaseSensitive: NodeJS.Timeout | null = null;
 let debounceDiacritics: NodeJS.Timeout | null = null;
 const DEBOUNCE_TIME = 300;
@@ -24,7 +24,8 @@ export function storeHighlightColors(color: string, index: number): void {
   }
   debounceHighlight[index] = setTimeout(() => {
     chrome.storage.local.get(['highlightColors'], (result) => {
-      const highlightColors = result.highlightColors || Array(5).fill('#FFFF00');
+      const highlightColors =
+        result.highlightColors || Array(5).fill('#FFFF00');
       highlightColors[index] = color;
       chrome.storage.local.set({ highlightColors });
     });

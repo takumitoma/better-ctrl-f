@@ -8,11 +8,7 @@ interface SetHighlightPageProps {
 }
 
 const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
-  const {
-    highlightColors,
-    setHighlightColors,
-    setPage,
-  } = usePopupContext();
+  const { highlightColors, setHighlightColors, setPage } = usePopupContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -29,7 +25,7 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
       newColors[index] = newColor;
       return newColors;
     });
-  };
+  }
 
   return (
     <div className="set-color">
@@ -39,7 +35,11 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
       </button>
       <hr />
       <h1 className="title">
-        Edit <span style={{ backgroundColor: highlightColors[index] }}>highlight</span> color {index}
+        Edit{' '}
+        <span style={{ backgroundColor: highlightColors[index] }}>
+          highlight
+        </span>{' '}
+        color {index}
       </h1>
       <ColorPicker color={highlightColors[index]} onChange={handleChange} />
     </div>
