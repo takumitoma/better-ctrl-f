@@ -15,10 +15,10 @@ describe('Content script, unhighlight function', () => {
     document.body.innerHTML =
       `<div id="test-div">` +
       `This is ` +
-      `<span class="better-ctrl-f-highlight">a basic test</span> ` +
+      `<span class="better-ctrl-f-highlight-0">a basic test</span> ` +
       `case for the unhighlight function` +
       `</div>`;
-    unhighlight(state);
+    unhighlight(state, 0);
 
     const expected = 'This is a basic test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -28,12 +28,12 @@ describe('Content script, unhighlight function', () => {
     document.body.innerHTML =
       `<div id="test-div">` +
       `This is ` +
-      `<span class="better-ctrl-f-highlight">a test</span> ` +
+      `<span class="better-ctrl-f-highlight-0">a test</span> ` +
       `case for the ` +
-      `<span class="better-ctrl-f-highlight">unhighlight</span> ` +
+      `<span class="better-ctrl-f-highlight-0">unhighlight</span> ` +
       `function` +
       `</div>`;
-    unhighlight(state);
+    unhighlight(state, 0);
 
     const expected = 'This is a test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -43,11 +43,11 @@ describe('Content script, unhighlight function', () => {
     document.body.innerHTML =
       `<div id="test-div">` +
       `Multiple highlights in one ` +
-      `<span class="better-ctrl-f-highlight">w</span>` +
+      `<span class="better-ctrl-f-highlight-0">w</span>` +
       `o` +
-      `<span class="better-ctrl-f-highlight">rd</span>` +
+      `<span class="better-ctrl-f-highlight-0">rd</span>` +
       `</div>`;
-    unhighlight(state);
+    unhighlight(state, 0);
 
     const expected = 'Multiple highlights in one word';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -55,7 +55,7 @@ describe('Content script, unhighlight function', () => {
 
   test('does nothing when there are no highlights', () => {
     document.body.innerHTML = `<div id="test-div">Nothing should be done</div>`;
-    unhighlight(state);
+    unhighlight(state, 0);
 
     const expected = 'Nothing should be done';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
