@@ -8,8 +8,8 @@
   transition: background-color 0.2s ease;
 }
 
-.icon-button:hover,
-.icon-button:focus {
+.icon-button:not([disabled]):hover,
+.icon-button:not([disabled]):focus {
   background-color: var(--light-gray);
 }
 
