@@ -140,9 +140,11 @@ function unhighlightHelper(
   );
   highlightSpans.forEach((span) => {
     const parent = span.parentNode;
-    if (parent && span.firstChild) {
-      parent.replaceChild(span.firstChild, span);
-      // combines back the text nodes that were separated by the span
+    if (parent) {
+      while (span.firstChild) {
+        parent.insertBefore(span.firstChild, span);
+      }
+      parent.removeChild(span);
       parent.normalize();
     }
   });

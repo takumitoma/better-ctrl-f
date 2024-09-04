@@ -60,4 +60,25 @@ describe('Content script, unhighlight function', () => {
     const expected = 'Nothing should be done';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
   });
+
+  test('correctly removes multiple highlights', () => {
+    document.body.innerHTML =
+      `<div id="test-div">` +
+      `<span class="better-ctrl-f-highlight-0">` +
+      `<span class="better-ctrl-f-highlight-1">` +
+      `High` +
+      `</span>` +
+      `light` +
+      `<span class="better-ctrl-f-highlight-2">` +
+      `er` +
+      `</span>` +
+      `</span>` +
+      `</div>`;
+    unhighlight(state, 0);
+    unhighlight(state, 1);
+    unhighlight(state, 2);
+
+    const expected = 'Highlighter';
+    expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
+  });
 });
