@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { usePopupContext } from '../../context/PopupContext';
 
 const SearchOptions: React.FC = () => {
-  const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [searchDiacritics, setSearchDiacritics] = useState<boolean>(false);
+  const {
+    isCaseSensitive,
+    setIsCaseSensitive,
+    searchDiacritics,
+    setSearchDiacritics,
+  } = usePopupContext();
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    chrome.storage.local.get(['isCaseSensitive', 'searchDiacritics'], (res) => {
-      setIsCaseSensitive(res.isCaseSensitive || false);
-      setSearchDiacritics(res.searchDiacritics || false);
-    });
-  }, []);
-
-  useEffect(() => {
-    chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'updateIsCaseSensitive',
-      isCaseSensitive,
-    });
+    if (isMounted.current) {
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'updateIsCaseSensitive',
+        isCaseSensitive,
+      });
+    }
   }, [isCaseSensitive]);
 
   useEffect(() => {
-    chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'updateSearchDiacritics',
-      searchDiacritics,
-    });
+    if (isMounted.current) {
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'updateSearchDiacritics',
+        searchDiacritics,
+      });
+    }
   }, [searchDiacritics]);
+
+  useEffect(() => {
+    isMounted.current = true;
+  }, []);
 
   return (
     <div id="search-options">
