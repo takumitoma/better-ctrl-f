@@ -1,20 +1,20 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
 interface PopupContextProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  currentMatch: number;
-  setCurrentMatch: (match: number) => void;
-  totalMatches: number;
-  setTotalMatches: (matches: number) => void;
-  highlightColor: string;
-  setHighlightColor: (color: string) => void;
-  focusColor: string;
-  setFocusColor: (color: string) => void;
-  incrementMatch: () => void;
-  decrementMatch: () => void;
+  searchQueries: string[];
+  setSearchQueries: Dispatch<SetStateAction<string[]>>;
+  currentMatches: number[];
+  setCurrentMatches: Dispatch<SetStateAction<number[]>>;
+  totalMatches: number[];
+  setTotalMatches: Dispatch<SetStateAction<number[]>>;
+  highlightColors: string[];
+  setHighlightColors: Dispatch<SetStateAction<string[]>>;
+  focusColors: string[];
+  setFocusColors: Dispatch<SetStateAction<string[]>>;
+  incrementMatch: (index: number) => void;
+  decrementMatch: (index: number) => void;
   page: string;
-  setPage: (page: string) => void;
+  setPage: Dispatch<SetStateAction<string>>;
 }
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
@@ -22,52 +22,56 @@ const PopupContext = createContext<PopupContextProps | undefined>(undefined);
 export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [currentMatch, setCurrentMatch] = useState<number>(0);
-  const [totalMatches, setTotalMatches] = useState<number>(0);
-  const [highlightColor, setHighlightColor] = useState<string>('#FFFF00');
-  const [focusColor, setFocusColor] = useState<string>('#FFA500');
+  const [searchQueries, setSearchQueries] = useState<string[]>(Array(5).fill(''));
+  const [currentMatches, setCurrentMatches] = useState<number[]>(Array(5).fill(0));
+  const [totalMatches, setTotalMatches] = useState<number[]>(Array(5).fill(0));
+  const [highlightColors, setHighlightColors] = useState<string[]>(Array(5).fill('#FFFF00'));
+  const [focusColors, setFocusColors] = useState<string[]>(Array(5).fill('#FFA500'));
   const [page, setPage] = useState<string>('Main');
 
-  function incrementMatch() {
-    if (!searchQuery) return;
-    setCurrentMatch((prevIndex) => {
-      const newIndex = prevIndex !== totalMatches ? prevIndex + 1 : 1;
+  function incrementMatch(index: number) {
+    if (!searchQueries[index]) return;
+    setCurrentMatches((prevMatches) => {
+      const newMatches = [...prevMatches];
+      newMatches[index] = newMatches[index] !== totalMatches[index] ? newMatches[index] + 1 : 1;
       chrome.runtime.sendMessage({
         target: 'background',
         action: 'focus',
-        index: newIndex,
+        index: newMatches[index],
+        queryIndex: index,
       });
-      return newIndex;
+      return newMatches;
     });
   }
 
-  function decrementMatch() {
-    if (!searchQuery) return;
-    setCurrentMatch((prevIndex) => {
-      const newIndex = prevIndex === 1 ? totalMatches : prevIndex - 1;
+  function decrementMatch(index: number) {
+    if (!searchQueries[index]) return;
+    setCurrentMatches((prevMatches) => {
+      const newMatches = [...prevMatches];
+      newMatches[index] = newMatches[index] === 1 ? totalMatches[index] : newMatches[index] - 1;
       chrome.runtime.sendMessage({
         target: 'background',
         action: 'focus',
-        index: newIndex,
+        index: newMatches[index],
+        queryIndex: index,
       });
-      return newIndex;
+      return newMatches;
     });
   }
 
   return (
     <PopupContext.Provider
       value={{
-        searchQuery,
-        setSearchQuery,
-        currentMatch,
-        setCurrentMatch,
+        searchQueries,
+        setSearchQueries,
+        currentMatches,
+        setCurrentMatches,
         totalMatches,
         setTotalMatches,
-        highlightColor,
-        setHighlightColor,
-        focusColor,
-        setFocusColor,
+        highlightColors,
+        setHighlightColors,
+        focusColors,
+        setFocusColors,
         incrementMatch,
         decrementMatch,
         page,

@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { usePopupContext } from '../../context/PopupContext';
 
-const MatchCounter: React.FC = () => {
+interface MatchCounterProps {
+  index: number;
+}
+
+const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
   const {
-    searchQuery,
-    currentMatch,
+    searchQueries,
+    currentMatches,
     totalMatches,
-    setCurrentMatch,
+    setCurrentMatches,
     setTotalMatches,
   } = usePopupContext();
 
@@ -16,10 +20,19 @@ const MatchCounter: React.FC = () => {
       action: string;
       currentMatch: number;
       totalMatches: number;
+      queryIndex: number;
     }) => {
-      if (message.target === 'popup' && message.action === 'updateMatches') {
-        setCurrentMatch(message.totalMatches > 0 ? message.currentMatch : 0);
-        setTotalMatches(message.totalMatches);
+      if (message.target === 'popup' && message.action === 'updateMatches' && message.queryIndex === index) {
+        setCurrentMatches((prev) => {
+          const newMatches = [...prev];
+          newMatches[index] = message.totalMatches > 0 ? message.currentMatch : 0;
+          return newMatches;
+        });
+        setTotalMatches((prev) => {
+          const newTotals = [...prev];
+          newTotals[index] = message.totalMatches;
+          return newTotals;
+        });
       }
     };
 
@@ -28,13 +41,13 @@ const MatchCounter: React.FC = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
-  }, []);
+  }, [index]);
 
-  const visibility = searchQuery ? 'visible' : 'hidden';
+  const visibility = searchQueries[index] ? 'visible' : 'hidden';
 
   return (
     <span id="match-counter" style={{ visibility }}>
-      {currentMatch}/{totalMatches}
+      {currentMatches[index]}/{totalMatches[index]}
     </span>
   );
 };

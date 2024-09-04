@@ -9,6 +9,7 @@ import {
   initializeHighlightState,
   setIsCaseSensitive,
   setSearchDiacritics,
+  batchUpdateColors,
 } from './highlightManager';
 
 interface Message {
@@ -21,6 +22,8 @@ interface Message {
   isCaseSensitive?: boolean;
   searchDiacritics?: boolean;
   queryIndex: number;
+  highlightColors?: string[];
+  focusColors?: string[];
 }
 
 const highlightStates: HighlightState[] = Array(5).fill(null).map(() => initializeHighlightState());
@@ -68,6 +71,9 @@ export function handleMessage(
       break;
     case 'updateSearchDiacritics':
       setSearchDiacritics(message.searchDiacritics!);
+      break;
+    case 'batchUpdateColors':
+      batchUpdateColors(message.highlightColors!, message.focusColors!);
       break;
   }
 

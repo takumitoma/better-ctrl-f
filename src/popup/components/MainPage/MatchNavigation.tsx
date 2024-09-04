@@ -3,15 +3,18 @@ import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
 import { usePopupContext } from '../../context/PopupContext';
 import Button from '../common/Button';
 
-const MatchNavigation: React.FC = () => {
-  const { searchQuery, totalMatches, incrementMatch, decrementMatch } =
-    usePopupContext();
+interface MatchNavigationProps {
+  index: number;
+}
+
+const MatchNavigation: React.FC<MatchNavigationProps> = ({ index }) => {
+  const { searchQueries, totalMatches, incrementMatch, decrementMatch } = usePopupContext();
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Enter' && event.shiftKey) {
         event.preventDefault();
-        decrementMatch();
+        decrementMatch(index);
       }
     }
 
@@ -22,17 +25,17 @@ const MatchNavigation: React.FC = () => {
     };
   }, [decrementMatch]);
 
-  const isEnabled = searchQuery && totalMatches > 0;
+  const isEnabled = searchQueries[index] && totalMatches[index] > 0;
 
   return (
     <>
       <Button
-        onClick={decrementMatch}
+        onClick={() => decrementMatch(index)}
         disabled={!isEnabled}
         icon={<HiChevronUp />}
       />
       <Button
-        onClick={incrementMatch}
+        onClick={() => incrementMatch(index)}
         disabled={!isEnabled}
         icon={<HiChevronDown />}
       />

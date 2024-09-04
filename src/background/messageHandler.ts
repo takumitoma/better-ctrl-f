@@ -17,6 +17,8 @@ interface Message {
   isCaseSensitive?: boolean;
   searchDiacritics?: boolean;
   queryIndex: number;
+  highlightColors?: string[];
+  focusColors?: string[];
 }
 
 export function handleMessage(message: Message, sendResponse: (response?: any) => void): void {
@@ -43,6 +45,9 @@ export function handleMessage(message: Message, sendResponse: (response?: any) =
     case 'updateSearchDiacritics':
       handleUpdateSearchDiacritics(message.searchDiacritics);
       break;
+    case 'batchUpdateColors':
+      handleBatchUpdateColors(message.highlightColors, message.focusColors);
+      break;      
   }
 
   sendResponse(); 
@@ -96,6 +101,15 @@ function handleUpdateFocusColor(focusColor: string = '', queryIndex: number): vo
     queryIndex,
   });
   storeFocusColors(focusColor, queryIndex);
+}
+
+function handleBatchUpdateColors(highlightColors: string[] = [], focusColors: string[] = []): void {
+  sendMessageToActiveTab({
+    target: 'content',
+    action: 'batchUpdateColors',
+    highlightColors,
+    focusColors,
+  });
 }
 
 function handleUpdateIsCaseSensitive(isCaseSensitive: boolean = false): void {

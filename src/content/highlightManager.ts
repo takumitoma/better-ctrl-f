@@ -166,6 +166,16 @@ export function updateFocusColor(color: string, queryIndex: number): void {
   );
 }
 
+export function batchUpdateColors(highlightColors: string[], focusColors: string[]): void {
+  highlightColors.forEach((color, index) => {
+    updateHighlightColor(color, index);
+  });
+
+  focusColors.forEach((color, index) => {
+    updateFocusColor(color, index);
+  });
+}
+
 export function setSearchDiacritics(value: boolean): void {
   highlightOptions.searchDiacritics = value;
 }

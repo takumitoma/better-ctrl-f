@@ -1,62 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { usePopupContext } from './context/PopupContext';
 import MainPage from './components/MainPage';
 import SetHighlightPage from './components/SetHighlightPage';
 import SetFocusPage from './components/SetFocusPage';
 import LoadingScreen from './components/LoadingScreen';
-
-const CHECK_INTERVAL = 3000;
+import useContentScriptChecker from './hooks/useContentScriptChecker';
 
 const Popup: React.FC = () => {
   const { page } = usePopupContext();
-  const [contentLoaded, setContentLoaded] = useState<boolean>(false);
+  const contentScriptLoaded = useContentScriptChecker();
 
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  let child = null;
 
-  function checkContentScript(): void {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(
-          tabs[0].id,
-          { target: 'content', action: 'ping' },
-          () => {
-            if (chrome.runtime.lastError) {
-              setContentLoaded(false);
-            } else {
-              setContentLoaded(true);
-              if (intervalRef.current !== null) {
-                clearInterval(intervalRef.current);
-              }
-            }
-          },
-        );
-      }
-    });
-  }
+  if (!contentScriptLoaded) {
+    child = <LoadingScreen />;
+  } else if (page === 'Main') {
+    child = <MainPage />;
+  } else {
+    const [pageType, indexStr] = page.split('-');
+    const index = parseInt(indexStr);
 
-  useEffect(() => {
-    checkContentScript();
-
-    if (!contentLoaded) {
-      intervalRef.current = setInterval(checkContentScript, CHECK_INTERVAL);
-    }
-
-    return () => {
-      if (intervalRef.current !== null) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
-
-  if (!contentLoaded) {
-    return <LoadingScreen />;
+    if (pageType === 'SetHighlight') {
+      child = <SetHighlightPage index={index} />;
+    } else if (pageType === 'SetFocus') {
+      child = <SetFocusPage index={index} />;
+    } 
   }
 
   return (
     <div id="popup">
-      {page === 'Main' && <MainPage />}
-      {page === 'SetHighlight' && <SetHighlightPage />}
-      {page === 'SetFocus' && <SetFocusPage />}
+      {child}
     </div>
   );
 };

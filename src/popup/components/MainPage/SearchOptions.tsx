@@ -6,10 +6,10 @@ const SearchOptions: React.FC = () => {
 
   useEffect(() => {
     chrome.storage.local.get(
-      ['lastIsCaseSensitive', 'lastSearchDiacritics'],
+      ['isCaseSensitive', 'searchDiacritics'],
       (res) => {
-        setIsCaseSensitive(res.lastIsCaseSensitive || false);
-        setSearchDiacritics(res.lastSearchDiacritics || false);
+        setIsCaseSensitive(res.isCaseSensitive || false);
+        setSearchDiacritics(res.searchDiacritics || false);
       },
     );
   }, []);

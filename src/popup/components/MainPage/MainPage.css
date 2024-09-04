@@ -3,7 +3,8 @@
   align-items: center;
   column-gap: 7px;
   height: 36px; 
-  margin-bottom: 7px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 #search-bar {
@@ -63,4 +64,9 @@
 
 #search-options input[type="checkbox"]:focus {
   outline: 2px solid var(--sky-blue);
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
 }

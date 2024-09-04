@@ -1,37 +1,37 @@
-import React from 'react';
-import SearchBar from './MainPage/SearchBar';
-import MatchCounter from './MainPage/MatchCounter';
-import Divider from './common/Divider';
-import MatchNavigation from './MainPage/MatchNavigation';
-import Button from './common/Button';
+import React, { useEffect } from 'react';
+import QueryRow from './MainPage/QueryRow';
 import SearchOptions from './MainPage/SearchOptions';
 import { usePopupContext } from '../context/PopupContext';
-import { useHighlightColorSync } from '../hooks/useHighlightColorSync';
-import { useFocusColorSync } from '../hooks/useFocusColorSync';
 
 const MainPage: React.FC = () => {
-  const { highlightColor, focusColor, setPage } = usePopupContext();
-  useHighlightColorSync();
-  useFocusColorSync();
+  const { setSearchQueries, setHighlightColors, setFocusColors } = usePopupContext();
+
+  useEffect(() => {
+    chrome.storage.local.get(['searchQueries', 'highlightColors', 'focusColors'], (res) => {
+      if (res.searchQueries) setSearchQueries(res.searchQueries);
+      if (res.highlightColors) setHighlightColors(res.highlightColors);
+      if (res.focusColors) setFocusColors(res.focusColors);
+      chrome.runtime.sendMessage({
+        target: 'background',
+        action: 'batchUpdateColors',
+        highlightColors: res.highlightColors,
+        focusColors: res.focusColors
+      })
+    });
+  }, []);
+
+  // // the search options have to be loaded before the search queries so the 
+  // // search options are applied to the queries
+  // const [isSearchOptionsLoaded, setIsSearchOptionsLoaded] = useState(false);
+  // useEffect(() => {
+  //   setIsSearchOptionsLoaded(true);
+  // }, []);
 
   return (
     <div id="main">
-      <div className="search-query-row">
-        <SearchBar />
-        <MatchCounter />
-        <Divider />
-        <MatchNavigation />
-        <Button
-          className="goto-color-button"
-          style={{ backgroundColor: highlightColor }}
-          onClick={() => setPage('SetHighlight')}
-        />
-        <Button
-          className="goto-color-button"
-          style={{ backgroundColor: focusColor }}
-          onClick={() => setPage('SetFocus')}
-        />
-      </div>
+      {[0, 1, 2, 3, 4].map((index) => (
+        <QueryRow key={index} index={index} />
+      ))}
       <SearchOptions />
     </div>
   );

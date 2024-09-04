@@ -1,39 +1,42 @@
 import React, { useEffect } from 'react';
 import { usePopupContext } from '../../context/PopupContext';
 
-const SearchBar: React.FC = () => {
-  const { searchQuery, setSearchQuery, incrementMatch } = usePopupContext();
+interface SearchBarProps {
+  index: number;
+}
 
-  useEffect(() => {
-    chrome.storage.local.get(['lastSearchQuery'], (res) => {
-      setSearchQuery(res.lastSearchQuery);
-    });
-  }, []);
+const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
+  const { searchQueries, setSearchQueries, incrementMatch } = usePopupContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'highlight',
-      searchQuery,
+      searchQuery: searchQueries[index],
+      queryIndex: index,
     });
-  }, [searchQuery]);
+  }, [searchQueries[index], index]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    setSearchQueries((prev) => {
+      const newQueries = [...prev];
+      newQueries[index] = event.target.value;
+      return newQueries;
+    });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    incrementMatch();
+    incrementMatch(index);
   };
 
   return (
     <form onSubmit={handleSubmit} id="search-bar">
       <input
         type="text"
-        value={searchQuery}
+        value={searchQueries[index]}
         onChange={handleChange}
-        autoFocus
+        autoFocus={index === 0}
         tabIndex={0}
       />
     </form>
