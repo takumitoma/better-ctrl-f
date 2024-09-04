@@ -65,8 +65,3 @@
 #search-options input[type="checkbox"]:focus {
   outline: 2px solid var(--sky-blue);
 }
-
-#main {
-  display: flex;
-  flex-direction: column;
-}

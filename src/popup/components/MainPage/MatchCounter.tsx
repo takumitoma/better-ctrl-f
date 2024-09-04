@@ -15,13 +15,13 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
   } = usePopupContext();
 
   useEffect(() => {
-    const handleMessage = (message: {
+    function handleMessage(message: {
       target: string;
       action: string;
       currentMatch: number;
       totalMatches: number;
       queryIndex: number;
-    }) => {
+    }) {
       if (message.target === 'popup' && message.action === 'updateMatches' && message.queryIndex === index) {
         setCurrentMatches((prev) => {
           const newMatches = [...prev];
@@ -41,7 +41,7 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
-  }, [index]);
+  }, []);
 
   const visibility = searchQueries[index] ? 'visible' : 'hidden';
 

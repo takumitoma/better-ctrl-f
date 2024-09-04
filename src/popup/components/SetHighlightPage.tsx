@@ -23,7 +23,7 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
     });
   }, [highlightColors]);
 
-  const setColor = (newColor: string) => {
+  function handleChange(newColor: string) {
     setHighlightColors((prev) => {
       const newColors = [...prev];
       newColors[index] = newColor;
@@ -41,7 +41,7 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
       <h1 className="title">
         Edit <span style={{ backgroundColor: highlightColors[index] }}>highlight</span> color {index}
       </h1>
-      <ColorPicker color={highlightColors[index]} onChange={setColor} />
+      <ColorPicker color={highlightColors[index]} onChange={handleChange} />
     </div>
   );
 };

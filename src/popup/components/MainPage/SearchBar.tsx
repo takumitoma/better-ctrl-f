@@ -15,7 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
       searchQuery: searchQueries[index],
       queryIndex: index,
     });
-  }, [searchQueries[index], index]);
+  }, [searchQueries[index]]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQueries((prev) => {

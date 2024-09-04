@@ -29,7 +29,7 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
     });
   }, [focusColors]);
 
-  const setColor = (newColor: string) => {
+  function handleChange(newColor: string) {
     setFocusColors((prev) => {
       const newColors = [...prev];
       newColors[index] = newColor;
@@ -47,7 +47,7 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
       <h1 className="title">
         Edit <span style={{ backgroundColor: focusColors[index] }}>focus</span> color
       </h1>
-      <ColorPicker color={focusColors[index]} onChange={setColor} />
+      <ColorPicker color={focusColors[index]} onChange={handleChange} />
     </div>
   );
 };
