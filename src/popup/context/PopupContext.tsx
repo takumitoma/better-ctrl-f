@@ -51,7 +51,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   const [page, setPage] = useState<string>('Main');
 
   function incrementMatch(index: number) {
-    if (!searchQueries[index]) return;
+    if (!searchQueries[index] || !totalMatches[index]) return;
     setCurrentMatches((prevMatches) => {
       const newMatches = [...prevMatches];
       newMatches[index] =
@@ -67,7 +67,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   }
 
   function decrementMatch(index: number) {
-    if (!searchQueries[index]) return;
+    if (!searchQueries[index] || !totalMatches[index]) return;
     setCurrentMatches((prevMatches) => {
       const newMatches = [...prevMatches];
       newMatches[index] =
