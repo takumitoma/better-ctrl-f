@@ -1,7 +1,7 @@
 import {
-  storeSearchQueries,
-  storeHighlightColors,
-  storeFocusColors,
+  storeSearchQuery,
+  storeHighlightColor,
+  storeFocusColor,
   storeIsCaseSensitive,
   storeSearchDiacritics,
 } from './storage';
@@ -56,10 +56,7 @@ export function handleMessage(
   sendResponse();
 }
 
-function handleHighlight(
-  searchQuery: string = '',
-  queryIndex: number,
-): void {
+function handleHighlight(searchQuery: string = '', queryIndex: number): void {
   sendMessageToActiveTab(
     {
       target: 'content',
@@ -75,7 +72,7 @@ function handleHighlight(
         totalMatches: response.totalMatches,
         queryIndex,
       });
-      storeSearchQueries(searchQuery, queryIndex);
+      storeSearchQuery(searchQuery, queryIndex);
     },
   );
 }
@@ -99,7 +96,7 @@ function handleUpdateHighlightColor(
     highlightColor,
     queryIndex,
   });
-  storeHighlightColors(highlightColor, queryIndex);
+  storeHighlightColor(highlightColor, queryIndex);
 }
 
 function handleUpdateFocusColor(
@@ -112,7 +109,7 @@ function handleUpdateFocusColor(
     focusColor,
     queryIndex,
   });
-  storeFocusColors(focusColor, queryIndex);
+  storeFocusColor(focusColor, queryIndex);
 }
 
 function handleBatchUpdateColors(
