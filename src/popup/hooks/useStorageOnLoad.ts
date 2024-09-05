@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { usePopupContext } from '../context/PopupContext';
+import {
+  useSearchContext,
+  useColorContext,
+  useSettingsContext,
+} from '../context';
 
 const useStorageOnLoad = () => {
-  const {
-    setSearchQueries,
-    setHighlightColors,
-    setFocusColors,
-    setIsCaseSensitive,
-    setSearchDiacritics,
-  } = usePopupContext();
+  const { setSearchQueries } = useSearchContext();
+  const { setHighlightColors, setFocusColors } = useColorContext();
+  const { setIsCaseSensitive, setSearchDiacritics } = useSettingsContext();
 
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 

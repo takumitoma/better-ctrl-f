@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import { usePopupContext } from '../context/PopupContext';
+import { useColorContext, useNavigationContext } from '../context';
 import ColorPicker from './common/ColorPicker';
 
 interface SetHighlightPageProps {
@@ -8,7 +8,8 @@ interface SetHighlightPageProps {
 }
 
 const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
-  const { highlightColors, setHighlightColors, setPage } = usePopupContext();
+  const { highlightColors, setHighlightColors } = useColorContext();
+  const { setPage } = useNavigationContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -29,7 +30,11 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
 
   return (
     <div className="set-color">
-      <button className="goto-home" onClick={() => setPage('Main')} tabIndex={0}>
+      <button
+        className="goto-home"
+        onClick={() => setPage('Main')}
+        tabIndex={0}
+      >
         <IoIosArrowRoundBack className="icon" />
         <p>Go Back</p>
       </button>
@@ -39,7 +44,7 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
         <span style={{ backgroundColor: highlightColors[index] }}>
           highlight
         </span>{' '}
-        color {index}
+        color
       </h1>
       <ColorPicker color={highlightColors[index]} onChange={handleChange} />
     </div>

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { usePopupContext } from '../../context/PopupContext';
+import { useSearchContext } from '../../context';
 
 interface SearchBarProps {
   index: number;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
-  const { searchQueries, setSearchQueries, incrementMatch, decrementMatch } = usePopupContext();
+  const { searchQueries, setSearchQueries, incrementMatch, decrementMatch } =
+    useSearchContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -22,7 +23,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
       const targetElement = document.getElementById(`search-bar-${index}`);
 
       if (document.activeElement === targetElement) {
-        console.log("calling 2");
         if (event.key === 'Enter' && event.shiftKey) {
           event.preventDefault();
           decrementMatch(index);

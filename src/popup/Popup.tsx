@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePopupContext } from './context/PopupContext';
+import { useNavigationContext } from './context';
 import MainPage from './components/MainPage';
 import SetHighlightPage from './components/SetHighlightPage';
 import SetFocusPage from './components/SetFocusPage';
@@ -7,7 +7,7 @@ import LoadingScreen from './components/LoadingScreen';
 import useContentScriptChecker from './hooks/useContentScriptChecker';
 
 const Popup: React.FC = () => {
-  const { page } = usePopupContext();
+  const { page } = useNavigationContext();
   const contentScriptLoaded = useContentScriptChecker();
 
   let child = null;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import { usePopupContext } from '../context/PopupContext';
+import { useColorContext, useNavigationContext } from '../context';
 import ColorPicker from './common/ColorPicker';
 
 interface SetFocusPageProps {
@@ -8,13 +8,8 @@ interface SetFocusPageProps {
 }
 
 const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
-  const { focusColors, setFocusColors, setPage } = usePopupContext();
-
-  // useEffect(() => {
-  //   chrome.storage.local.get(['focusColors'], (res) => {
-  //     if (res.focusColors) setFocusColors(res.focusColors);
-  //   });
-  // }, []);
+  const { focusColors, setFocusColors } = useColorContext();
+  const { setPage } = useNavigationContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -35,7 +30,11 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
 
   return (
     <div className="set-color">
-      <button className="goto-home" onClick={() => setPage('Main')} tabIndex={0}>
+      <button
+        className="goto-home"
+        onClick={() => setPage('Main')}
+        tabIndex={0}
+      >
         <IoIosArrowRoundBack className="icon" />
         <p>Go Back</p>
       </button>

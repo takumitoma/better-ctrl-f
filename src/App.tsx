@@ -1,10 +1,21 @@
 import Popup from './popup/Popup';
-import { PopupProvider } from './popup/context/PopupContext';
+import {
+  SearchProvider,
+  ColorProvider,
+  SettingsProvider,
+  NavigationProvider,
+} from './popup/context';
 
 export default function App() {
   return (
-    <PopupProvider>
-      <Popup />
-    </PopupProvider>
+    <NavigationProvider>
+      <SettingsProvider>
+        <SearchProvider>
+          <ColorProvider>
+            <Popup />
+          </ColorProvider>
+        </SearchProvider>
+      </SettingsProvider>
+    </NavigationProvider>
   );
 }

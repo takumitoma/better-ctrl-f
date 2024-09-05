@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { usePopupContext } from '../../context/PopupContext';
+import { useSettingsContext } from '../../context';
 
 const SearchOptions: React.FC = () => {
   const {
@@ -7,7 +7,7 @@ const SearchOptions: React.FC = () => {
     setIsCaseSensitive,
     searchDiacritics,
     setSearchDiacritics,
-  } = usePopupContext();
+  } = useSettingsContext();
   const isMounted = useRef(false);
 
   useEffect(() => {

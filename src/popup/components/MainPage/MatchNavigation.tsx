@@ -1,6 +1,6 @@
 import React from 'react';
 import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
-import { usePopupContext } from '../../context/PopupContext';
+import { useSearchContext } from '../../context';
 import Button from '../common/Button';
 
 interface MatchNavigationProps {
@@ -9,7 +9,7 @@ interface MatchNavigationProps {
 
 const MatchNavigation: React.FC<MatchNavigationProps> = ({ index }) => {
   const { searchQueries, totalMatches, incrementMatch, decrementMatch } =
-    usePopupContext();
+    useSearchContext();
 
   const isEnabled = searchQueries[index] && totalMatches[index] > 0;
 

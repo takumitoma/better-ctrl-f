@@ -4,14 +4,15 @@ import MatchCounter from './MatchCounter';
 import Divider from '../common/Divider';
 import MatchNavigation from './MatchNavigation';
 import Button from '../common/Button';
-import { usePopupContext } from '../../context/PopupContext';
+import { useColorContext, useNavigationContext } from '../../context';
 
 interface QueryRowProps {
   index: number;
 }
 
 const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
-  const { highlightColors, focusColors, setPage } = usePopupContext();
+  const { highlightColors, focusColors } = useColorContext();
+  const { setPage } = useNavigationContext();
 
   return (
     <div className="search-query-row">

@@ -7,30 +7,20 @@ import React, {
   SetStateAction,
 } from 'react';
 
-interface PopupContextProps {
+interface SearchContextProps {
   searchQueries: string[];
   setSearchQueries: Dispatch<SetStateAction<string[]>>;
   currentMatches: number[];
   setCurrentMatches: Dispatch<SetStateAction<number[]>>;
   totalMatches: number[];
   setTotalMatches: Dispatch<SetStateAction<number[]>>;
-  highlightColors: string[];
-  setHighlightColors: Dispatch<SetStateAction<string[]>>;
-  focusColors: string[];
-  setFocusColors: Dispatch<SetStateAction<string[]>>;
   incrementMatch: (index: number) => void;
   decrementMatch: (index: number) => void;
-  isCaseSensitive: boolean;
-  setIsCaseSensitive: Dispatch<SetStateAction<boolean>>;
-  searchDiacritics: boolean;
-  setSearchDiacritics: Dispatch<SetStateAction<boolean>>;
-  page: string;
-  setPage: Dispatch<SetStateAction<string>>;
 }
 
-const PopupContext = createContext<PopupContextProps | undefined>(undefined);
+const SearchContext = createContext<SearchContextProps | undefined>(undefined);
 
-export const PopupProvider: React.FC<{ children: ReactNode }> = ({
+export const SearchProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [searchQueries, setSearchQueries] = useState<string[]>(
@@ -40,15 +30,6 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
     Array(5).fill(0),
   );
   const [totalMatches, setTotalMatches] = useState<number[]>(Array(5).fill(0));
-  const [highlightColors, setHighlightColors] = useState<string[]>(
-    Array(5).fill('#FFFF00'),
-  );
-  const [focusColors, setFocusColors] = useState<string[]>(
-    Array(5).fill('#FFA500'),
-  );
-  const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [searchDiacritics, setSearchDiacritics] = useState<boolean>(false);
-  const [page, setPage] = useState<string>('Main');
 
   function incrementMatch(index: number) {
     if (!searchQueries[index] || !totalMatches[index]) return;
@@ -83,7 +64,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
   }
 
   return (
-    <PopupContext.Provider
+    <SearchContext.Provider
       value={{
         searchQueries,
         setSearchQueries,
@@ -91,29 +72,19 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({
         setCurrentMatches,
         totalMatches,
         setTotalMatches,
-        highlightColors,
-        setHighlightColors,
-        focusColors,
-        setFocusColors,
         incrementMatch,
         decrementMatch,
-        isCaseSensitive,
-        setIsCaseSensitive,
-        searchDiacritics,
-        setSearchDiacritics,
-        page,
-        setPage,
       }}
     >
       {children}
-    </PopupContext.Provider>
+    </SearchContext.Provider>
   );
 };
 
-export function usePopupContext(): PopupContextProps {
-  const context = useContext(PopupContext);
+export function useSearchContext(): SearchContextProps {
+  const context = useContext(SearchContext);
   if (!context) {
-    throw new Error('usePopupContext was used outside a PopupProvider');
+    throw new Error('useSearchContext was used outside a SearchProvider');
   }
   return context;
 }

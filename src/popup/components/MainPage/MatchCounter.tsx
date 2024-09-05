@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { usePopupContext } from '../../context/PopupContext';
+import { useSearchContext } from '../../context';
 
 interface MatchCounterProps {
   index: number;
@@ -12,7 +12,7 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
     totalMatches,
     setCurrentMatches,
     setTotalMatches,
-  } = usePopupContext();
+  } = useSearchContext();
 
   useEffect(() => {
     function handleMessage(message: {
