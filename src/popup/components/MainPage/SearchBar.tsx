@@ -6,7 +6,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
-  const { searchQueries, setSearchQueries, incrementMatch } = usePopupContext();
+  const { searchQueries, setSearchQueries, incrementMatch, decrementMatch } = usePopupContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -16,6 +16,26 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
       queryIndex: index,
     });
   }, [searchQueries[index]]);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      const targetElement = document.getElementById(`search-bar-${index}`);
+
+      if (document.activeElement === targetElement) {
+        console.log("calling 2");
+        if (event.key === 'Enter' && event.shiftKey) {
+          event.preventDefault();
+          decrementMatch(index);
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [decrementMatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQueries((prev) => {
@@ -38,6 +58,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
         onChange={handleChange}
         autoFocus={index === 0}
         tabIndex={0}
+        id={`search-bar-${index}`}
       />
     </form>
   );
