@@ -8,23 +8,22 @@ interface SetFocusPageProps {
 }
 
 const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
-  const { focusColors, setFocusColors } = useColorContext();
+  const { state, dispatch } = useColorContext();
   const { setPage } = useNavigationContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'updateFocusColor',
-      focusColor: focusColors[index],
+      focusColor: state.focusColors[index],
       queryIndex: index,
     });
-  }, [focusColors]);
+  }, [state.focusColors]);
 
   function handleChange(newColor: string) {
-    setFocusColors((prev) => {
-      const newColors = [...prev];
-      newColors[index] = newColor;
-      return newColors;
+    dispatch({
+      type: 'SET_FOCUS_COLOR',
+      payload: { index, color: newColor },
     });
   }
 
@@ -40,10 +39,11 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
       </button>
       <hr />
       <h1 className="title">
-        Edit <span style={{ backgroundColor: focusColors[index] }}>focus</span>{' '}
+        Edit{' '}
+        <span style={{ backgroundColor: state.focusColors[index] }}>focus</span>{' '}
         color
       </h1>
-      <ColorPicker color={focusColors[index]} onChange={handleChange} />
+      <ColorPicker color={state.focusColors[index]} onChange={handleChange} />
     </div>
   );
 };

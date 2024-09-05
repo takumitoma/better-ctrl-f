@@ -6,13 +6,7 @@ interface MatchCounterProps {
 }
 
 const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
-  const {
-    searchQueries,
-    currentMatches,
-    totalMatches,
-    setCurrentMatches,
-    setTotalMatches,
-  } = useSearchContext();
+  const { state, dispatch } = useSearchContext();
 
   useEffect(() => {
     function handleMessage(message: {
@@ -27,16 +21,16 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
         message.action === 'updateMatches' &&
         message.queryIndex === index
       ) {
-        setCurrentMatches((prev) => {
-          const newMatches = [...prev];
-          newMatches[index] =
-            message.totalMatches > 0 ? message.currentMatch : 0;
-          return newMatches;
+        dispatch({
+          type: 'SET_CURRENT_MATCHES',
+          payload: {
+            index,
+            value: message.totalMatches > 0 ? message.currentMatch : 0,
+          },
         });
-        setTotalMatches((prev) => {
-          const newTotals = [...prev];
-          newTotals[index] = message.totalMatches;
-          return newTotals;
+        dispatch({
+          type: 'SET_TOTAL_MATCHES',
+          payload: { index, value: message.totalMatches },
         });
       }
     }
@@ -46,13 +40,13 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
-  }, []);
+  }, [dispatch, index]);
 
-  const visibility = searchQueries[index] ? 'visible' : 'hidden';
+  const visibility = state.searchQueries[index] ? 'visible' : 'hidden';
 
   return (
     <span className="match-counter" style={{ visibility }}>
-      {currentMatches[index]}/{totalMatches[index]}
+      {state.currentMatches[index]}/{state.totalMatches[index]}
     </span>
   );
 };

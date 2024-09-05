@@ -8,23 +8,22 @@ interface SetHighlightPageProps {
 }
 
 const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
-  const { highlightColors, setHighlightColors } = useColorContext();
+  const { state, dispatch } = useColorContext();
   const { setPage } = useNavigationContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'updateHighlightColor',
-      highlightColor: highlightColors[index],
+      highlightColor: state.highlightColors[index],
       queryIndex: index,
     });
-  }, [highlightColors]);
+  }, [state.highlightColors]);
 
   function handleChange(newColor: string) {
-    setHighlightColors((prev) => {
-      const newColors = [...prev];
-      newColors[index] = newColor;
-      return newColors;
+    dispatch({
+      type: 'SET_HIGHLIGHT_COLOR',
+      payload: { index, color: newColor },
     });
   }
 
@@ -41,12 +40,15 @@ const SetHighlightPage: React.FC<SetHighlightPageProps> = ({ index }) => {
       <hr />
       <h1 className="title">
         Edit{' '}
-        <span style={{ backgroundColor: highlightColors[index] }}>
+        <span style={{ backgroundColor: state.highlightColors[index] }}>
           highlight
         </span>{' '}
         color
       </h1>
-      <ColorPicker color={highlightColors[index]} onChange={handleChange} />
+      <ColorPicker
+        color={state.highlightColors[index]}
+        onChange={handleChange}
+      />
     </div>
   );
 };

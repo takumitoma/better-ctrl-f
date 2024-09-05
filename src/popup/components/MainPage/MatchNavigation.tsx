@@ -8,20 +8,19 @@ interface MatchNavigationProps {
 }
 
 const MatchNavigation: React.FC<MatchNavigationProps> = ({ index }) => {
-  const { searchQueries, totalMatches, incrementMatch, decrementMatch } =
-    useSearchContext();
+  const { state, dispatch } = useSearchContext();
 
-  const isEnabled = searchQueries[index] && totalMatches[index] > 0;
+  const isEnabled = state.searchQueries[index] && state.totalMatches[index] > 0;
 
   return (
     <>
       <Button
-        onClick={() => decrementMatch(index)}
+        onClick={() => dispatch({ type: 'DECREMENT_MATCH', payload: index })}
         disabled={!isEnabled}
         icon={<HiChevronUp />}
       />
       <Button
-        onClick={() => incrementMatch(index)}
+        onClick={() => dispatch({ type: 'INCREMENT_MATCH', payload: index })}
         disabled={!isEnabled}
         icon={<HiChevronDown />}
       />

@@ -6,8 +6,8 @@ import {
 } from '../context';
 
 const useStorageOnLoad = () => {
-  const { setSearchQueries } = useSearchContext();
-  const { setHighlightColors, setFocusColors } = useColorContext();
+  const { dispatch: searchDispatch } = useSearchContext();
+  const { dispatch: colorDispatch } = useColorContext();
   const { setIsCaseSensitive, setSearchDiacritics } = useSettingsContext();
 
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
@@ -37,9 +37,21 @@ const useStorageOnLoad = () => {
     chrome.storage.local.get(
       ['searchQueries', 'highlightColors', 'focusColors'],
       (res) => {
-        if (res.searchQueries) setSearchQueries(res.searchQueries);
-        if (res.highlightColors) setHighlightColors(res.highlightColors);
-        if (res.focusColors) setFocusColors(res.focusColors);
+        if (res.searchQueries) {
+          searchDispatch({
+            type: 'SET_SEARCH_QUERIES',
+            payload: res.searchQueries,
+          });
+        }
+        if (res.highlightColors) {
+          colorDispatch({
+            type: 'SET_HIGHLIGHT_COLORS',
+            payload: res.highlightColors,
+          });
+        }
+        if (res.focusColors) {
+          colorDispatch({ type: 'SET_FOCUS_COLORS', payload: res.focusColors });
+        }
         chrome.runtime.sendMessage({
           target: 'background',
           action: 'batchUpdateColors',

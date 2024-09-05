@@ -6,17 +6,16 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
-  const { searchQueries, setSearchQueries, incrementMatch, decrementMatch } =
-    useSearchContext();
+  const { state, dispatch } = useSearchContext();
 
   useEffect(() => {
     chrome.runtime.sendMessage({
       target: 'background',
       action: 'highlight',
-      searchQuery: searchQueries[index],
+      searchQuery: state.searchQueries[index],
       queryIndex: index,
     });
-  }, [searchQueries[index]]);
+  }, [state.searchQueries[index]]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -25,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
       if (document.activeElement === targetElement) {
         if (event.key === 'Enter' && event.shiftKey) {
           event.preventDefault();
-          decrementMatch(index);
+          dispatch({ type: 'DECREMENT_MATCH', payload: index });
         }
       }
     }
@@ -35,26 +34,24 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [decrementMatch]);
+  }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQueries((prev) => {
-      const newQueries = [...prev];
-      newQueries[index] = event.target.value;
-      return newQueries;
-    });
+    const newQueries = [...state.searchQueries];
+    newQueries[index] = event.target.value;
+    dispatch({ type: 'SET_SEARCH_QUERIES', payload: newQueries });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    incrementMatch(index);
+    dispatch({ type: 'INCREMENT_MATCH', payload: index });
   };
 
   return (
     <form onSubmit={handleSubmit} className="search-bar">
       <input
         type="text"
-        value={searchQueries[index]}
+        value={state.searchQueries[index]}
         onChange={handleChange}
         autoFocus={index === 0}
         tabIndex={0}

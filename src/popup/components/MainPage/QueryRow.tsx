@@ -11,7 +11,7 @@ interface QueryRowProps {
 }
 
 const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
-  const { highlightColors, focusColors } = useColorContext();
+  const { state } = useColorContext();
   const { setPage } = useNavigationContext();
 
   return (
@@ -22,12 +22,12 @@ const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
       <MatchNavigation index={index} />
       <Button
         className="goto-color-button"
-        style={{ backgroundColor: highlightColors[index] }}
+        style={{ backgroundColor: state.highlightColors[index] }}
         onClick={() => setPage(`SetHighlight-${index}`)}
       />
       <Button
         className="goto-color-button"
-        style={{ backgroundColor: focusColors[index] }}
+        style={{ backgroundColor: state.focusColors[index] }}
         onClick={() => setPage(`SetFocus-${index}`)}
       />
     </div>
