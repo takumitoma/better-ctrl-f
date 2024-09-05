@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-#search-bar {
+.search-bar {
   height: 36px;
   border-radius: 8px;
   transition: background-color 0.2s ease;
@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-#search-bar > input {
+.search-bar > input {
   height: 36px;
   display: flex;
   align-items: center;
@@ -26,16 +26,16 @@
   user-select: auto;
 }
 
-#search-bar:hover:not(:focus-within) {
+.search-bar:hover:not(:focus-within) {
   background-color: var(--light-gray);
 }
 
-#match-counter {
+.match-counter {
   margin-left: auto;
   pointer-events: none;
 }
 
-#divider {
+.divider {
   width: 2px;
   background-color: var(--light-gray);
   margin-left: 7px;

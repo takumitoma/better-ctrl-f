@@ -35,7 +35,7 @@ const SetFocusPage: React.FC<SetFocusPageProps> = ({ index }) => {
 
   return (
     <div className="set-color">
-      <button id="goto-home" onClick={() => setPage('Main')} tabIndex={0}>
+      <button className="goto-home" onClick={() => setPage('Main')} tabIndex={0}>
         <IoIosArrowRoundBack className="icon" />
         <p>Go Back</p>
       </button>

@@ -31,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ index }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="search-bar">
+    <form onSubmit={handleSubmit} className="search-bar">
       <input
         type="text"
         value={searchQueries[index]}

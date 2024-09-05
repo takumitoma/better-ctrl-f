@@ -51,7 +51,7 @@ const MatchCounter: React.FC<MatchCounterProps> = ({ index }) => {
   const visibility = searchQueries[index] ? 'visible' : 'hidden';
 
   return (
-    <span id="match-counter" style={{ visibility }}>
+    <span className="match-counter" style={{ visibility }}>
       {currentMatches[index]}/{totalMatches[index]}
     </span>
   );

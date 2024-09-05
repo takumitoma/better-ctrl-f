@@ -1,4 +1,4 @@
-#goto-home {
+.goto-home {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -10,22 +10,22 @@
   transition: background-color 0.2s ease;
 }
 
-#goto-home > .icon {
+.goto-home > .icon {
   height: 28px;
   width: 28px;
   margin-right: 5px;
 }
 
-#goto-home > p {
+.goto-home > p {
   margin: 0;
 }
 
-#goto-home:hover,
-#goto-home:focus {
+.goto-home:hover,
+.goto-home:focus {
   background-color: var(--light-gray);
 }
 
-#goto-home:active {
+.goto-home:active {
   background-color: white;
 }
 

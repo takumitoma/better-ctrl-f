@@ -3,7 +3,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 const LoadingScreen: React.FC = () => {
   return (
-    <div className="loading-screen">
+    <div id="loading-screen">
       <h2>Wait for content script to load</h2>
       <ClipLoader color="#123abc" loading={true} size={50} />
       <p>Some reasons you might be seeing this</p>
