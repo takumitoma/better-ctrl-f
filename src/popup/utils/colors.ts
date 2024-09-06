@@ -1,20 +1,20 @@
 export const presetColors: string[] = [
-  '#FF0000', // Red
-  '#008000', // Green
-  '#FFFF00', // Yellow
+  '#FFFF00', // Bright Yellow
   '#00FFFF', // Cyan
-  '#FF00FF', // Magenta
+  '#90EE90', // Light Green
+  '#F08080', // Light Coral
+  '#87CEEB', // Sky Blue
+  '#DA70D6', // Orchid
+  '#FFDAB9', // Peach Puff
+  '#FFB6C1', // Light Pink
+  '#FAFAD2', // Light Goldenrod Yellow
   '#FFA500', // Orange
-  '#800080', // Purple
-  '#FFC0CB', // Pink
-  '#A52A2A', // Brown
-  '#D3D3D3', // Light Gray
-  '#00FF00', // Lime
-  '#808000', // Olive
-  '#008080', // Teal
-  '#800000', // Maroon
-  '#40E0D0', // Turquoise
-  '#FFD700', // Gold
-  '#E6E6FA', // Lavender
+  '#7DF9FF', // Electric Blue
+  '#32CD32', // Lime Green
   '#FF7F50', // Coral
+  '#1E90FF', // Dodger Blue
+  '#BA55D3', // Medium Orchid
+  '#FFE4E1', // Misty Rose
+  '#FA8072', // Salmon
+  '#FFA07A', // Light Salmon
 ];
