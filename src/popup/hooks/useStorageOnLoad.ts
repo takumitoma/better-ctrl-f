@@ -5,7 +5,7 @@ import {
   useSettingsContext,
 } from '../context';
 
-const useStorageOnLoad = () => {
+export function useStorageOnLoad(): void {
   const { dispatch: searchDispatch } = useSearchContext();
   const { dispatch: colorDispatch } = useColorContext();
   const { setIsCaseSensitive, setSearchDiacritics } = useSettingsContext();
@@ -61,6 +61,4 @@ const useStorageOnLoad = () => {
       },
     );
   }, [searchOptionsLoaded]);
-};
-
-export default useStorageOnLoad;
+}

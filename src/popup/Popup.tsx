@@ -4,7 +4,7 @@ import MainPage from './components/MainPage';
 import SetHighlightPage from './components/SetHighlightPage';
 import SetFocusPage from './components/SetFocusPage';
 import LoadingScreen from './components/LoadingScreen';
-import useContentScriptChecker from './hooks/useContentScriptChecker';
+import { useContentScriptChecker } from './hooks/useContentScriptChecker';
 
 const Popup: React.FC = () => {
   const { page } = useNavigationContext();

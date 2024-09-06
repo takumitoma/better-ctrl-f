@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const CHECK_INTERVAL = 3000;
 
-function useContentScriptChecker(): boolean {
+export function useContentScriptChecker(): boolean {
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -43,5 +43,3 @@ function useContentScriptChecker(): boolean {
 
   return contentLoaded;
 }
-
-export default useContentScriptChecker;
