@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigationContext } from './context';
 import MainPage from './components/MainPage';
 import SetColorPage from './components/SetColorPage';
-import LoadingScreen from './components/LoadingScreen';
+import LoadingPage from './components/LoadingPage';
 import { useContentScriptChecker } from './hooks/useContentScriptChecker';
 
 const Popup: React.FC = () => {
@@ -12,7 +12,7 @@ const Popup: React.FC = () => {
   let child = null;
 
   if (!contentScriptLoaded) {
-    child = <LoadingScreen />;
+    child = <LoadingPage />;
   } else if (page === 'Main') {
     child = <MainPage />;
   } else {

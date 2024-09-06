@@ -1,9 +1,9 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-const LoadingScreen: React.FC = () => {
+const LoadingPage: React.FC = () => {
   return (
-    <div id="loading-screen">
+    <div id="loading">
       <h2>Wait for content script to load</h2>
       <ClipLoader color="#123abc" loading={true} size={50} />
       <p>Some reasons you might be seeing this</p>
@@ -19,4 +19,4 @@ const LoadingScreen: React.FC = () => {
   );
 };
 
-export default LoadingScreen;
+export default LoadingPage;

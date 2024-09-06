@@ -1,4 +1,4 @@
-#loading-screen{
+#loading {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,16 +7,16 @@
   text-align: center;
 }
 
-#loading-screen h2 {
+#loading h2 {
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-#loading-screen p {
+#loading p {
   margin-top: 20px;
 }
 
-#loading-screen ul {
+#loading ul {
   text-align: left;
   margin: 10px 40px;
 }
