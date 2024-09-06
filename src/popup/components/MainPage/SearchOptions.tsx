@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSettingsContext } from '../../context';
 import { useSearchOptionsLogic } from '../../hooks/useSearchOptionsLogic';
+import { useNavigationContext } from '../../context';
 
 const SearchOptions: React.FC = () => {
   const {
@@ -9,6 +10,7 @@ const SearchOptions: React.FC = () => {
     searchDiacritics,
     setSearchDiacritics,
   } = useSettingsContext();
+  const { setPage } = useNavigationContext();
 
   useSearchOptionsLogic({ isCaseSensitive, searchDiacritics });
 
@@ -32,6 +34,13 @@ const SearchOptions: React.FC = () => {
         />
         Diacritics
       </label>
+      <button
+        className="goto-help"
+        onClick={() => setPage('Help')}
+        tabIndex={0}
+      >
+        <p>Help</p>
+      </button>
     </div>
   );
 };

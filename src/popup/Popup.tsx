@@ -4,6 +4,7 @@ import MainPage from './components/MainPage';
 import SetColorPage from './components/SetColorPage';
 import LoadingPage from './components/LoadingPage';
 import { useContentScriptChecker } from './hooks/useContentScriptChecker';
+import HelpPage from './components/HelpPage';
 
 const Popup: React.FC = () => {
   const { page } = useNavigationContext();
@@ -15,6 +16,8 @@ const Popup: React.FC = () => {
     child = <LoadingPage />;
   } else if (page === 'Main') {
     child = <MainPage />;
+  } else if (page === 'Help') {
+    child = <HelpPage />;
   } else {
     const [pageType, indexStr] = page.split('-');
     const index = parseInt(indexStr);
@@ -22,7 +25,7 @@ const Popup: React.FC = () => {
     if (pageType === 'SetHighlight' || pageType === 'SetFocus') {
       const type = pageType === 'SetHighlight' ? 'highlight' : 'focus';
       child = <SetColorPage index={index} type={type} />;
-    }
+    }    
   }
 
   return <div id="popup">{child}</div>;

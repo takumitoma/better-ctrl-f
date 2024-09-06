@@ -3,6 +3,7 @@
   --gray: #808080;
   --dark-gray: #A9A9A9;
   --sky-blue: #87CEEB;
+  --link-blue: #0000EE;
 }
 
 html {
@@ -13,6 +14,7 @@ html {
 body {
   font-size: 14px;
   font-family: Arial, sans-serif;
+  line-height: 1.5
 }
 
 #root {

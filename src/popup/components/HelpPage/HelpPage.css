@@ -1,0 +1,14 @@
+#help h1 {
+  font-size: 16px;
+  padding: 5px 0;
+}
+
+#help ul,
+#help ol {
+  list-style: initial;
+  padding-left: 20px;
+}
+
+#help ol {
+  list-style-type: decimal;
+}
