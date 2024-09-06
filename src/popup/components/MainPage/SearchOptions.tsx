@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useSettingsContext } from '../../context';
+import { useSearchOptionsLogic } from '../../hooks/useSearchOptionsLogic';
 
 const SearchOptions: React.FC = () => {
   const {
@@ -8,31 +9,8 @@ const SearchOptions: React.FC = () => {
     searchDiacritics,
     setSearchDiacritics,
   } = useSettingsContext();
-  const isMounted = useRef(false);
 
-  useEffect(() => {
-    if (isMounted.current) {
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateIsCaseSensitive',
-        isCaseSensitive,
-      });
-    }
-  }, [isCaseSensitive]);
-
-  useEffect(() => {
-    if (isMounted.current) {
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateSearchDiacritics',
-        searchDiacritics,
-      });
-    }
-  }, [searchDiacritics]);
-
-  useEffect(() => {
-    isMounted.current = true;
-  }, []);
+  useSearchOptionsLogic({ isCaseSensitive, searchDiacritics });
 
   return (
     <div id="search-options">
