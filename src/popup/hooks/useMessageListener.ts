@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
-type MessageHandler = (message: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) => void;
+type MessageHandler = (
+  message: any,
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response?: any) => void,
+) => void;
 
 export function useMessageListener(handler: MessageHandler): void {
   useEffect(() => {
