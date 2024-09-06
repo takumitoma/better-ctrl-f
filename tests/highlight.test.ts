@@ -19,16 +19,16 @@ describe('Content script, highlight function', () => {
   });
 
   test('correctly highlights single match', () => {
-    document.body.innerHTML = `<div>Highlight</div>`;
-    highlight(state, 'high', 0);
+    document.body.innerHTML = `<div>Highlight this fucking shit</div>`;
+    highlight(state, 'highlight this fucking', 0);
     const totalMatches: number = getTotalMatches(state);
 
     expect(totalMatches).toBe(1);
 
     const expected =
       `<div>` +
-      `<span class="better-ctrl-f-highlight-0 better-ctrl-f-1 better-ctrl-f-focus-0">High</span>` +
-      `light` +
+      `<span class="better-ctrl-f-highlight-0 better-ctrl-f-1 better-ctrl-f-focus-0">Highlight this fucking</span>` +
+      ` shit` +
       `</div>`;
     expect(document.body.innerHTML).toBe(expected);
   });

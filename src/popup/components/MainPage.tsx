@@ -3,12 +3,14 @@ import QueryRow from './MainPage/QueryRow';
 import SearchOptions from './MainPage/SearchOptions';
 import { useStorageOnLoad } from '../hooks/useStorageOnLoad';
 
+const QUERY_ROW_COUNT = 5;
+
 const MainPage: React.FC = () => {
   useStorageOnLoad();
 
   return (
     <div id="main">
-      {[0, 1, 2, 3, 4].map((index) => (
+      {Array.from({ length: QUERY_ROW_COUNT }, (_, index) => (
         <QueryRow key={index} index={index} />
       ))}
       <SearchOptions />

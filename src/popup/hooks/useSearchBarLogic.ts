@@ -11,7 +11,7 @@ export function useSearchBarLogic(index: number) {
       searchQuery: state.searchQueries[index],
       queryIndex: index,
     });
-  }, [state.searchQueries[index], index]);
+  }, [state.searchQueries[index]]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -30,7 +30,7 @@ export function useSearchBarLogic(index: number) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [dispatch, index]);
+  }, [dispatch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQueries = [...state.searchQueries];
