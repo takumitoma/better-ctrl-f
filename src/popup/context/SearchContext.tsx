@@ -52,6 +52,9 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
         ),
       };
     case 'INCREMENT_MATCH':
+      if (state.totalMatches[action.payload] === 0) {
+        return state;
+      }
       newState = {
         ...state,
         currentMatches: state.currentMatches.map((match, index) =>
@@ -70,6 +73,9 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
       });
       return newState;
     case 'DECREMENT_MATCH':
+      if (state.totalMatches[action.payload] === 0) {
+        return state; 
+      }
       newState = {
         ...state,
         currentMatches: state.currentMatches.map((match, index) =>
