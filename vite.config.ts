@@ -16,7 +16,7 @@ export default defineConfig({
     alias: {
       '@hooks': path.resolve(__dirname, './src/popup/hooks'),
       '@context': path.resolve(__dirname, './src/popup/context'),
-      '@utils': path.resolve(__dirname, './src/popup/utils')
-    }
+      '@utils': path.resolve(__dirname, './src/popup/utils'),
+    },
   },
 });

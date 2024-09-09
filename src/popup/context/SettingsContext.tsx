@@ -22,7 +22,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [isDiacriticsSensitive, setIsDiacriticsSensitive] = useState<boolean>(false);
+  const [isDiacriticsSensitive, setIsDiacriticsSensitive] =
+    useState<boolean>(false);
 
   return (
     <SettingsContext.Provider

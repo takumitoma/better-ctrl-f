@@ -13,21 +13,24 @@ export function useStorageOnLoad(): void {
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 
   useEffect(() => {
-    chrome.storage.local.get(['isCaseSensitive', 'isDiacriticsSensitive'], (res) => {
-      setIsCaseSensitive(res.isCaseSensitive || false);
-      setIsDiacriticsSensitive(res.isDiacriticsSensitive || false);
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateIsCaseSensitive',
-        isCaseSensitive: res.isCaseSensitive,
-      });
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateIsDiacriticsSensitive',
-        isDiacriticsSensitive: res.isDiacriticsSensitive,
-      });
-      setSearchOptionsLoaded(true);
-    });
+    chrome.storage.local.get(
+      ['isCaseSensitive', 'isDiacriticsSensitive'],
+      (res) => {
+        setIsCaseSensitive(res.isCaseSensitive || false);
+        setIsDiacriticsSensitive(res.isDiacriticsSensitive || false);
+        chrome.runtime.sendMessage({
+          target: 'background',
+          action: 'updateIsCaseSensitive',
+          isCaseSensitive: res.isCaseSensitive,
+        });
+        chrome.runtime.sendMessage({
+          target: 'background',
+          action: 'updateIsDiacriticsSensitive',
+          isDiacriticsSensitive: res.isDiacriticsSensitive,
+        });
+        setSearchOptionsLoaded(true);
+      },
+    );
   }, []);
 
   useEffect(() => {

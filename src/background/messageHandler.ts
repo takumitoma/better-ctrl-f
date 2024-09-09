@@ -133,7 +133,9 @@ function handleUpdateIsCaseSensitive(isCaseSensitive: boolean = false): void {
   storeIsCaseSensitive(isCaseSensitive);
 }
 
-function handleUpdateIsDiacriticsSensitive(isDiacriticsSensitive: boolean = false): void {
+function handleUpdateIsDiacriticsSensitive(
+  isDiacriticsSensitive: boolean = false,
+): void {
   sendMessageToActiveTab({
     target: 'content',
     action: 'updateIsDiacriticsSensitive',
