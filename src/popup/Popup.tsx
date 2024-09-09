@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigationContext } from './context';
-import MainPage from './components/MainPage';
-import SetColorPage from './components/SetColorPage';
-import LoadingPage from './components/LoadingPage';
+import MainPage from './components/MainPage/MainPage';
+import SetColorPage from './components/SetColorPage/SetColorPage';
+import LoadingPage from './components/LoadingPage/LoadingPage';
 import { useContentScriptChecker } from './hooks/useContentScriptChecker';
-import HelpPage from './components/HelpPage';
+import HelpPage from './components/HelpPage/HelpPage';
 import './reset.css';
 import './base.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
-import { presetColors } from '../../utils';
+import { presetColors } from '../../../utils';
 import './ColorPicker.css';
 
 interface ColorPickerProps {

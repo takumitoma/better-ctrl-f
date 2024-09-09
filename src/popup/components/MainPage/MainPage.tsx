@@ -1,8 +1,8 @@
 import React from 'react';
-import QueryRow from './MainPage/QueryRow';
-import SearchOptions from './MainPage/SearchOptions';
-import { useStorageOnLoad } from '../hooks';
-import './MainPage/MainPage.css';
+import QueryRow from './QueryRow/QueryRow';
+import SearchOptions from './SearchOptions/SearchOptions';
+import { useStorageOnLoad } from '../../hooks';
+import './MainPage.css';
 
 const QUERY_ROW_COUNT = 5;
 

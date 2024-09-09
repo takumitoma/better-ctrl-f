@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSettingsContext } from '../../context';
-import { useSearchOptionsLogic } from '../../hooks';
-import { useNavigationContext } from '../../context';
+import { useSettingsContext, useNavigationContext } from '../../../context';
+import { useSearchOptionsLogic } from '../../../hooks';
 
 const SearchOptions: React.FC = () => {
   const {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { HiChevronUp, HiChevronDown } from 'react-icons/hi';
-import { useSearchContext } from '../../context';
-import IconButton from '../common/IconButton';
+import { useSearchContext } from '../../../../context';
+import IconButton from '../../../common/IconButton/IconButton';
 
 interface MatchNavigationProps {
   index: number;

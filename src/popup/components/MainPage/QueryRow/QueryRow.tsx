@@ -1,10 +1,10 @@
 import React from 'react';
-import SearchBar from './SearchBar';
-import MatchCounter from './MatchCounter';
-import Divider from '../common/Divider';
-import MatchNavigation from './MatchNavigation';
-import GotoColorButton from '../common/GotoColorButton';
-import { useColorContext, useNavigationContext } from '../../context';
+import SearchBar from './SearchBar/SearchBar';
+import MatchCounter from './MatchCounter/MatchCounter';
+import Divider from '../../common/Divider/Divider';
+import MatchNavigation from './MatchNavigation/MatchNavigation';
+import GotoColorButton from '../../common/GotoColorButton/GotoColorButton';
+import { useColorContext, useNavigationContext } from '../../../context';
 
 interface QueryRowProps {
   index: number;
