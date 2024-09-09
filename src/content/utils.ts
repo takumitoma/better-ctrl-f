@@ -41,12 +41,8 @@ export function createSpan(
   return span;
 }
 
-export function findTextNodes(
-  searchShadowDoms: boolean = false,
-  body: Element = document.body,
-): Text[] {
+export function findTextNodes(body: Element = document.body): Text[] {
   const textNodes: Text[] = [];
-  const shadowRoots: ShadowRoot[] = [];
 
   // pre order dfs
   function traverse(node: Node): void {
@@ -54,23 +50,6 @@ export function findTextNodes(
       const element = node as HTMLElement;
       if (!isVisible(element)) return;
       if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
-
-      if (element.shadowRoot && searchShadowDoms) {
-        const style = document.createElement('style');
-        style.textContent = `
-          ${[0, 1, 2, 3, 4]
-            .map(
-              (i) => `
-            span.better-ctrl-f-highlight-${i} { background-color: var(--better-ctrl-f-highlight-color-${i}) !important; }
-            span.better-ctrl-f-focus-${i} { background-color: var(--better-ctrl-f-focus-color-${i}) !important; }
-          `,
-            )
-            .join('\n')}
-        `;
-        element.shadowRoot.appendChild(style);
-        shadowRoots.push(element.shadowRoot);
-        traverse(element.shadowRoot);
-      }
     }
 
     // filter out nodes with just newlines/whitespace

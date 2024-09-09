@@ -1,14 +1,8 @@
-import {
-  initializeHighlightState,
-  unhighlight,
-} from '../src/content/highlightManager';
+import { unhighlight } from '../src/content/highlightManager';
 
 describe('Content script, unhighlight function', () => {
-  let state: ReturnType<typeof initializeHighlightState>;
-
   beforeEach(() => {
     document.body.innerHTML = '';
-    state = initializeHighlightState();
   });
 
   test('correctly removes a single highlight', () => {
@@ -18,7 +12,7 @@ describe('Content script, unhighlight function', () => {
       `<span class="better-ctrl-f-highlight-0">a basic test</span> ` +
       `case for the unhighlight function` +
       `</div>`;
-    unhighlight(state, 0);
+    unhighlight(0);
 
     const expected = 'This is a basic test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -33,7 +27,7 @@ describe('Content script, unhighlight function', () => {
       `<span class="better-ctrl-f-highlight-0">unhighlight</span> ` +
       `function` +
       `</div>`;
-    unhighlight(state, 0);
+    unhighlight(0);
 
     const expected = 'This is a test case for the unhighlight function';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -47,7 +41,7 @@ describe('Content script, unhighlight function', () => {
       `o` +
       `<span class="better-ctrl-f-highlight-0">rd</span>` +
       `</div>`;
-    unhighlight(state, 0);
+    unhighlight(0);
 
     const expected = 'Multiple highlights in one word';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -55,7 +49,7 @@ describe('Content script, unhighlight function', () => {
 
   test('does nothing when there are no highlights', () => {
     document.body.innerHTML = `<div id="test-div">Nothing should be done</div>`;
-    unhighlight(state, 0);
+    unhighlight(0);
 
     const expected = 'Nothing should be done';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);
@@ -74,9 +68,9 @@ describe('Content script, unhighlight function', () => {
       `</span>` +
       `</span>` +
       `</div>`;
-    unhighlight(state, 0);
-    unhighlight(state, 1);
-    unhighlight(state, 2);
+    unhighlight(0);
+    unhighlight(1);
+    unhighlight(2);
 
     const expected = 'Highlighter';
     expect(document.getElementById('test-div')?.innerHTML).toBe(expected);

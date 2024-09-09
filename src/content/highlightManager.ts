@@ -7,7 +7,6 @@ import {
 
 const highlightOptions = {
   isDiacriticsSensitive: false,
-  searchShadowDoms: false,
   isCaseSensitive: false,
 };
 
@@ -15,7 +14,6 @@ export interface HighlightState {
   nodes: HTMLSpanElement[];
   focusIndex: number;
   totalMatches: number;
-  shadowRoots: ShadowRoot[];
 }
 
 export function initializeHighlightState(): HighlightState {
@@ -23,7 +21,6 @@ export function initializeHighlightState(): HighlightState {
     nodes: [document.createElement('span')],
     focusIndex: 0,
     totalMatches: 0,
-    shadowRoots: [],
   };
 }
 
@@ -32,7 +29,7 @@ export function highlight(
   searchQuery: string,
   queryIndex: number,
 ): void {
-  unhighlight(state, queryIndex);
+  unhighlight(queryIndex);
 
   if (!searchQuery) {
     state.totalMatches = 0;
@@ -40,7 +37,7 @@ export function highlight(
     return;
   }
 
-  const textNodes = findTextNodes(highlightOptions.searchShadowDoms);
+  const textNodes = findTextNodes();
   const searchRegex = getSearchRegex(
     searchQuery,
     highlightOptions.isDiacriticsSensitive,
@@ -126,16 +123,8 @@ function processTextNode(
   }
 }
 
-export function unhighlight(state: HighlightState, queryIndex: number): void {
-  unhighlightHelper(document, queryIndex);
-  state.shadowRoots.forEach((root) => unhighlightHelper(root, queryIndex));
-}
-
-function unhighlightHelper(
-  element: Document | ShadowRoot,
-  queryIndex: number,
-): void {
-  const highlightSpans = element.querySelectorAll(
+export function unhighlight(queryIndex: number): void {
+  const highlightSpans = document.querySelectorAll(
     `span.better-ctrl-f-highlight-${queryIndex}`,
   );
   highlightSpans.forEach((span) => {
@@ -196,10 +185,6 @@ export function batchUpdateColors(
 
 export function setIsDiacriticsSensitive(value: boolean): void {
   highlightOptions.isDiacriticsSensitive = value;
-}
-
-export function setSearchShadowDoms(value: boolean): void {
-  highlightOptions.searchShadowDoms = value;
 }
 
 export function setIsCaseSensitive(value: boolean): void {
