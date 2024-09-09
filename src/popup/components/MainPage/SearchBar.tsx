@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchBarLogic } from '../../hooks/useSearchBarLogic';
+import { useSearchBarLogic } from '../../hooks';
 
 interface SearchBarProps {
   index: number;
