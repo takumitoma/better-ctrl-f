@@ -5,6 +5,8 @@ import SetColorPage from './components/SetColorPage';
 import LoadingPage from './components/LoadingPage';
 import { useContentScriptChecker } from './hooks/useContentScriptChecker';
 import HelpPage from './components/HelpPage';
+import "./reset.css";
+import "./base.css";
 
 const Popup: React.FC = () => {
   const { page } = useNavigationContext();

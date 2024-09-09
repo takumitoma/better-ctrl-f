@@ -2,6 +2,7 @@ import React from 'react';
 import QueryRow from './MainPage/QueryRow';
 import SearchOptions from './MainPage/SearchOptions';
 import { useStorageOnLoad } from '../hooks/useStorageOnLoad';
+import "./MainPage/MainPage.css";
 
 const QUERY_ROW_COUNT = 5;
 

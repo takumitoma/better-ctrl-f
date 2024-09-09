@@ -1,6 +1,7 @@
 import React from "react";
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { useNavigationContext } from "../../context";
+import "./GotoHomeButton.css";
 
 const GotoHomeButton: React.FC = () => {
   const { setPage } = useNavigationContext();

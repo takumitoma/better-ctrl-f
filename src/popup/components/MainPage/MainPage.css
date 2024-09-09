@@ -35,14 +35,6 @@
   pointer-events: none;
 }
 
-.divider {
-  width: 2px;
-  background-color: var(--light-gray);
-  margin-left: 7px;
-  height: 100%;
-  pointer-events: none;
-}
-
 #search-options {
   display: flex;
   align-items: center;

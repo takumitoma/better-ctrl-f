@@ -1,9 +1,0 @@
-@import 'popup/reset.css';
-@import 'popup/base.css';
-@import 'popup/components/common/Button.css';
-@import 'popup/components/common/ColorPicker.css';
-@import 'popup/components/common/GotoHomeButton.css';
-@import 'popup/components/MainPage/MainPage.css';
-@import 'popup/components/SetColorPage/SetColorPage.css';
-@import 'popup/components/LoadingPage/LoadingPage.css';
-@import 'popup/components/HelpPage/HelpPage.css';

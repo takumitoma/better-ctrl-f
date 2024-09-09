@@ -1,5 +1,6 @@
 import React from "react";
 import GotoHomeButton from "./common/GotoHomeButton";
+import "./HelpPage/HelpPage.css";
 
 const HelpPage: React.FC = () => {
   return (
