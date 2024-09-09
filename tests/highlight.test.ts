@@ -1,10 +1,8 @@
-// File: src/content/__tests__/highlight.test.ts
-
 import {
   initializeHighlightState,
   highlight,
   getTotalMatches,
-  setSearchDiacritics,
+  setIsDiacriticsSensitive,
   setIsCaseSensitive,
 } from '../src/content/highlightManager';
 
@@ -14,7 +12,7 @@ describe('Content script, highlight function', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     state = initializeHighlightState();
-    setSearchDiacritics(false);
+    setIsDiacriticsSensitive(false);
     setIsCaseSensitive(false);
   });
 
@@ -129,9 +127,9 @@ describe('Content script, highlight function', () => {
     expect(document.body.innerHTML).toBe(expected);
   });
 
-  test('highlights diacritics when searchDiacritics is true', () => {
+  test('highlights diacritics when isDiacriticsSensitive is false', () => {
     document.body.innerHTML = `<div>Àgréément Àgréément</div>`;
-    setSearchDiacritics(true);
+    setIsDiacriticsSensitive(false);
     highlight(state, 'agree', 0);
     const totalMatches: number = getTotalMatches(state);
 
@@ -146,9 +144,9 @@ describe('Content script, highlight function', () => {
     expect(document.body.innerHTML).toBe(expected);
   });
 
-  test('does not highlight diacritics when searchDiacritics is false', () => {
+  test('does not highlight diacritics when isDiacriticsSensitive is true and query has no diacritics', () => {
     document.body.innerHTML = `<div>Àgréément</div>`;
-    setSearchDiacritics(false);
+    setIsDiacriticsSensitive(true);
     highlight(state, 'agree', 0);
     const totalMatches: number = getTotalMatches(state);
 
