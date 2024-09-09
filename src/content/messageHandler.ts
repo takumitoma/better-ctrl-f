@@ -8,7 +8,7 @@ import {
   getTotalMatches,
   initializeHighlightState,
   setIsCaseSensitive,
-  setSearchDiacritics,
+  setIsDiacriticsSensitive,
   batchUpdateColors,
 } from './highlightManager';
 
@@ -20,7 +20,7 @@ interface Message {
   highlightColor?: string;
   focusColor?: string;
   isCaseSensitive?: boolean;
-  searchDiacritics?: boolean;
+  isDiacriticsSensitive?: boolean;
   queryIndex: number;
   highlightColors?: string[];
   focusColors?: string[];
@@ -79,8 +79,8 @@ export function handleMessage(
     case 'updateIsCaseSensitive':
       setIsCaseSensitive(message.isCaseSensitive!);
       break;
-    case 'updateSearchDiacritics':
-      setSearchDiacritics(message.searchDiacritics!);
+    case 'updateIsDiacriticsSensitive':
+      setIsDiacriticsSensitive(message.isDiacriticsSensitive!);
       break;
     case 'batchUpdateColors':
       batchUpdateColors(message.highlightColors!, message.focusColors!);

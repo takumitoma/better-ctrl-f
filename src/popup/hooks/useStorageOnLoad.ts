@@ -8,14 +8,14 @@ import {
 export function useStorageOnLoad(): void {
   const { dispatch: searchDispatch } = useSearchContext();
   const { dispatch: colorDispatch } = useColorContext();
-  const { setIsCaseSensitive, setSearchDiacritics } = useSettingsContext();
+  const { setIsCaseSensitive, setIsDiacriticsSensitive } = useSettingsContext();
 
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 
   useEffect(() => {
-    chrome.storage.local.get(['isCaseSensitive', 'searchDiacritics'], (res) => {
+    chrome.storage.local.get(['isCaseSensitive', 'isDiacriticsSensitive'], (res) => {
       setIsCaseSensitive(res.isCaseSensitive || false);
-      setSearchDiacritics(res.searchDiacritics || false);
+      setIsDiacriticsSensitive(res.isDiacriticsSensitive || false);
       chrome.runtime.sendMessage({
         target: 'background',
         action: 'updateIsCaseSensitive',
@@ -23,8 +23,8 @@ export function useStorageOnLoad(): void {
       });
       chrome.runtime.sendMessage({
         target: 'background',
-        action: 'updateSearchDiacritics',
-        searchDiacritics: res.searchDiacritics,
+        action: 'updateIsDiacriticsSensitive',
+        isDiacriticsSensitive: res.isDiacriticsSensitive,
       });
       setSearchOptionsLoaded(true);
     });

@@ -3,7 +3,7 @@ import {
   storeHighlightColor,
   storeFocusColor,
   storeIsCaseSensitive,
-  storeSearchDiacritics,
+  storeIsDiacriticsSensitive,
 } from './storage';
 import { sendMessageToActiveTab } from './tabs';
 
@@ -15,7 +15,7 @@ interface Message {
   highlightColor?: string;
   focusColor?: string;
   isCaseSensitive?: boolean;
-  searchDiacritics?: boolean;
+  isDiacriticsSensitive?: boolean;
   queryIndex: number;
   highlightColors?: string[];
   focusColors?: string[];
@@ -45,8 +45,8 @@ export function handleMessage(
     case 'updateIsCaseSensitive':
       handleUpdateIsCaseSensitive(message.isCaseSensitive);
       break;
-    case 'updateSearchDiacritics':
-      handleUpdateSearchDiacritics(message.searchDiacritics);
+    case 'updateIsDiacriticsSensitive':
+      handleUpdateIsDiacriticsSensitive(message.isDiacriticsSensitive);
       break;
     case 'batchUpdateColors':
       handleBatchUpdateColors(message.highlightColors, message.focusColors);
@@ -133,11 +133,11 @@ function handleUpdateIsCaseSensitive(isCaseSensitive: boolean = false): void {
   storeIsCaseSensitive(isCaseSensitive);
 }
 
-function handleUpdateSearchDiacritics(searchDiacritics: boolean = false): void {
+function handleUpdateIsDiacriticsSensitive(isDiacriticsSensitive: boolean = false): void {
   sendMessageToActiveTab({
     target: 'content',
-    action: 'updateSearchDiacritics',
-    searchDiacritics,
+    action: 'updateIsDiacriticsSensitive',
+    isDiacriticsSensitive,
   });
-  storeSearchDiacritics(searchDiacritics);
+  storeIsDiacriticsSensitive(isDiacriticsSensitive);
 }

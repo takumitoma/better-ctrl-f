@@ -7,12 +7,12 @@ const SearchOptions: React.FC = () => {
   const {
     isCaseSensitive,
     setIsCaseSensitive,
-    searchDiacritics,
-    setSearchDiacritics,
+    isDiacriticsSensitive,
+    setIsDiacriticsSensitive,
   } = useSettingsContext();
   const { setPage } = useNavigationContext();
 
-  useSearchOptionsLogic({ isCaseSensitive, searchDiacritics });
+  useSearchOptionsLogic({ isCaseSensitive, isDiacriticsSensitive });
 
   return (
     <div id="search-options">
@@ -29,10 +29,10 @@ const SearchOptions: React.FC = () => {
         <input
           type="checkbox"
           tabIndex={0}
-          checked={searchDiacritics}
-          onChange={(e) => setSearchDiacritics(e.target.checked)}
+          checked={isDiacriticsSensitive}
+          onChange={(e) => setIsDiacriticsSensitive(e.target.checked)}
         />
-        Diacritics
+        Diacritics sensitive
       </label>
       <button
         className="goto-help"

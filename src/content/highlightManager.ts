@@ -6,7 +6,7 @@ import {
 } from './utils';
 
 const highlightOptions = {
-  searchDiacritics: false,
+  isDiacriticsSensitive: false,
   searchShadowDoms: false,
   isCaseSensitive: false,
 };
@@ -43,7 +43,7 @@ export function highlight(
   const textNodes = findTextNodes(highlightOptions.searchShadowDoms);
   const searchRegex = getSearchRegex(
     searchQuery,
-    highlightOptions.searchDiacritics,
+    highlightOptions.isDiacriticsSensitive,
     highlightOptions.isCaseSensitive,
   );
   state.totalMatches = 0;
@@ -79,9 +79,9 @@ function processTextNode(
   let textContent = textNode.textContent || '';
   if (!textContent) return;
 
-  let processedContent = highlightOptions.searchDiacritics
-    ? removeDiacritics(textContent)
-    : textContent;
+  let processedContent = highlightOptions.isDiacriticsSensitive
+    ? textContent
+    : removeDiacritics(textContent);
   searchRegex.lastIndex = 0;
 
   let match;
@@ -118,9 +118,9 @@ function processTextNode(
     textNode.parentNode?.insertBefore(span, after);
 
     textContent = after.textContent || '';
-    processedContent = highlightOptions.searchDiacritics
-      ? removeDiacritics(textContent)
-      : textContent;
+    processedContent = highlightOptions.isDiacriticsSensitive
+      ? textContent
+      : removeDiacritics(textContent);
     textNode = after;
     searchRegex.lastIndex = 0;
   }
@@ -194,8 +194,8 @@ export function batchUpdateColors(
   });
 }
 
-export function setSearchDiacritics(value: boolean): void {
-  highlightOptions.searchDiacritics = value;
+export function setIsDiacriticsSensitive(value: boolean): void {
+  highlightOptions.isDiacriticsSensitive = value;
 }
 
 export function setSearchShadowDoms(value: boolean): void {

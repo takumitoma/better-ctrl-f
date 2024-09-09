@@ -13,6 +13,15 @@ const HelpPage: React.FC = () => {
           Case sensitive
           <ul>
             <li>
+              <b>Not Checked:</b> finds both cases of a letter
+              <ul>
+                <li>Searching for &quot;case&quot; finds &quot;case&quot;</li>
+                <li>
+                  Searching for &quot;case&quot; also finds &quot;Case&quot;
+                </li>
+              </ul>
+            </li>            
+            <li>
               <b>Checked:</b> finds the exact case of a letter
               <ul>
                 <li>Searching for &quot;case&quot; finds &quot;case&quot;</li>
@@ -21,22 +30,13 @@ const HelpPage: React.FC = () => {
                 </li>
               </ul>
             </li>
-            <li>
-              <b>Not Checked:</b> finds both cases of a letter
-              <ul>
-                <li>Searching for &quot;case&quot; finds &quot;case&quot;</li>
-                <li>
-                  Searching for &quot;case&quot; also finds &quot;Case&quot;
-                </li>
-              </ul>
-            </li>
           </ul>
         </li>
         <li>
-          Diacritics
+          Diacritics sensitive
           <ul>
             <li>
-              <b>Checked:</b> finds both exact and variant forms of a letter
+              <b>Not Checked:</b> finds both exact and variant forms of a letter 
               <ul>
                 <li>
                   Searching for &quot;café&quot; finds &quot;café&quot;,
@@ -45,13 +45,13 @@ const HelpPage: React.FC = () => {
               </ul>
             </li>
             <li>
-              <b>Not Checked:</b> finds only the exact variant of a letter
+              <b>Checked:</b> finds only the exact variant of a letter 
               <ul>
                 <li>
-                  Searching for &quot;café&quot; finds only &quot;café&quot;
+                  Searching for &quot;café&quot; finds &quot;café&quot;
                 </li>
                 <li>
-                  Searching for &quot;cafe&quot; doesn&apos;t find
+                  Searching for &quot;cafe&quot; does not find
                   &quot;café&quot;
                 </li>
               </ul>

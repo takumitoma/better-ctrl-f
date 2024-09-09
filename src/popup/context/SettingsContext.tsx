@@ -10,8 +10,8 @@ import React, {
 interface SettingsContextProps {
   isCaseSensitive: boolean;
   setIsCaseSensitive: Dispatch<SetStateAction<boolean>>;
-  searchDiacritics: boolean;
-  setSearchDiacritics: Dispatch<SetStateAction<boolean>>;
+  isDiacriticsSensitive: boolean;
+  setIsDiacriticsSensitive: Dispatch<SetStateAction<boolean>>;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -22,15 +22,15 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
-  const [searchDiacritics, setSearchDiacritics] = useState<boolean>(false);
+  const [isDiacriticsSensitive, setIsDiacriticsSensitive] = useState<boolean>(false);
 
   return (
     <SettingsContext.Provider
       value={{
         isCaseSensitive,
         setIsCaseSensitive,
-        searchDiacritics,
-        setSearchDiacritics,
+        isDiacriticsSensitive,
+        setIsDiacriticsSensitive,
       }}
     >
       {children}

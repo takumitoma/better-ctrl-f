@@ -3,7 +3,7 @@ interface StorageState {
   highlightColors: string[];
   focusColors: string[];
   isCaseSensitive: boolean;
-  searchDiacritics: boolean;
+  isDiacriticsSensitive: boolean;
 }
 
 let storageState: StorageState = {
@@ -11,7 +11,7 @@ let storageState: StorageState = {
   highlightColors: Array(5).fill('#FFFF00'),
   focusColors: Array(5).fill('#FFA500'),
   isCaseSensitive: false,
-  searchDiacritics: false,
+  isDiacriticsSensitive: false,
 };
 
 const DEBOUNCE_TIME = 300;
@@ -70,12 +70,12 @@ export function storeIsCaseSensitive(bool: boolean): void {
   }, DEBOUNCE_TIME);
 }
 
-export function storeSearchDiacritics(bool: boolean): void {
+export function storeIsDiacriticsSensitive(bool: boolean): void {
   if (debounceDiacritics) {
     clearTimeout(debounceDiacritics);
   }
   debounceDiacritics = setTimeout(() => {
-    storageState.searchDiacritics = bool;
-    saveToStorage('searchDiacritics', bool);
+    storageState.isDiacriticsSensitive = bool;
+    saveToStorage('isDiacriticsSensitive', bool);
   }, DEBOUNCE_TIME);
 }

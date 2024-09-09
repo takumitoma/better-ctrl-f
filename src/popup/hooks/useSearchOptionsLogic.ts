@@ -2,12 +2,12 @@ import { useEffect, useRef } from 'react';
 
 interface SearchOptionsProps {
   isCaseSensitive: boolean;
-  searchDiacritics: boolean;
+  isDiacriticsSensitive: boolean;
 }
 
 export function useSearchOptionsLogic({
   isCaseSensitive,
-  searchDiacritics,
+  isDiacriticsSensitive,
 }: SearchOptionsProps): void {
   const isMounted = useRef(false);
 
@@ -25,11 +25,11 @@ export function useSearchOptionsLogic({
     if (isMounted.current) {
       chrome.runtime.sendMessage({
         target: 'background',
-        action: 'updateSearchDiacritics',
-        searchDiacritics,
+        action: 'updateIsDiacriticsSensitive',
+        isDiacriticsSensitive,
       });
     }
-  }, [searchDiacritics]);
+  }, [isDiacriticsSensitive]);
 
   useEffect(() => {
     isMounted.current = true;
