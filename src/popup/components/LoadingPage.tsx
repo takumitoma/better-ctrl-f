@@ -1,6 +1,6 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import "./LoadingPage/LoadingPage.css";
+import './LoadingPage/LoadingPage.css';
 
 const LoadingPage: React.FC = () => {
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import ColorPicker from './common/ColorPicker';
 import GotoHomeButton from './common/GotoHomeButton';
 import { useSetColorLogic } from '../hooks/useSetColorLogic';
-import "./SetColorPage/SetColorPage.css";
+import './SetColorPage/SetColorPage.css';
 
 interface SetColorPageProps {
   index: number;
@@ -17,16 +17,9 @@ const SetColorPage: React.FC<SetColorPageProps> = ({ index, type }) => {
       <GotoHomeButton />
       <hr />
       <h1 className="title">
-        Edit{' '}
-        <span style={{ backgroundColor: color }}>
-          {type}
-        </span>{' '}
-        color
+        Edit <span style={{ backgroundColor: color }}>{type}</span> color
       </h1>
-      <ColorPicker
-        color={color}
-        onChange={handleChange}
-      />
+      <ColorPicker color={color} onChange={handleChange} />
     </div>
   );
 };

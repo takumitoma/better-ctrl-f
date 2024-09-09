@@ -6,9 +6,12 @@ type ColorType = 'highlight' | 'focus';
 export const useSetColorLogic = (index: number, type: ColorType) => {
   const { state, dispatch } = useColorContext();
 
-  const colors = type === 'highlight' ? state.highlightColors : state.focusColors;
-  const action = type === 'highlight' ? 'updateHighlightColor' : 'updateFocusColor';
-  const dispatchType = type === 'highlight' ? 'SET_HIGHLIGHT_COLOR' : 'SET_FOCUS_COLOR';
+  const colors =
+    type === 'highlight' ? state.highlightColors : state.focusColors;
+  const action =
+    type === 'highlight' ? 'updateHighlightColor' : 'updateFocusColor';
+  const dispatchType =
+    type === 'highlight' ? 'SET_HIGHLIGHT_COLOR' : 'SET_FOCUS_COLOR';
 
   useEffect(() => {
     chrome.runtime.sendMessage({

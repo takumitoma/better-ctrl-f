@@ -74,7 +74,7 @@ function searchReducer(state: SearchState, action: SearchAction): SearchState {
       return newState;
     case 'DECREMENT_MATCH':
       if (state.totalMatches[action.payload] === 0) {
-        return state; 
+        return state;
       }
       newState = {
         ...state,

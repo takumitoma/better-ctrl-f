@@ -1,6 +1,6 @@
-import React from "react";
-import GotoHomeButton from "./common/GotoHomeButton";
-import "./HelpPage/HelpPage.css";
+import React from 'react';
+import GotoHomeButton from './common/GotoHomeButton';
+import './HelpPage/HelpPage.css';
 
 const HelpPage: React.FC = () => {
   return (
@@ -15,15 +15,19 @@ const HelpPage: React.FC = () => {
             <li>
               <b>Checked:</b> finds the exact case of a letter
               <ul>
-                <li>Searching for "case" finds "case"</li>
-                <li>Searching for "case" doesn't find "Case"</li>
+                <li>Searching for &quot;case&quot; finds &quot;case&quot;</li>
+                <li>
+                  Searching for &quot;case&quot; does not find &quot;Case&quot;
+                </li>
               </ul>
             </li>
             <li>
               <b>Not Checked:</b> finds both cases of a letter
               <ul>
-                <li>Searching for "case" finds "case"</li>
-                <li>Searching for "case" also finds "Case"</li>
+                <li>Searching for &quot;case&quot; finds &quot;case&quot;</li>
+                <li>
+                  Searching for &quot;case&quot; also finds &quot;Case&quot;
+                </li>
               </ul>
             </li>
           </ul>
@@ -34,14 +38,22 @@ const HelpPage: React.FC = () => {
             <li>
               <b>Checked:</b> finds both exact and variant forms of a letter
               <ul>
-                <li>Searching for "café" finds "café", "cafe", "cafè", "cafê", etc.</li>
+                <li>
+                  Searching for &quot;café&quot; finds &quot;café&quot;,
+                  &quot;cafe&quot;, &quot;cafè&quot;, &quot;cafê&quot;, etc.
+                </li>
               </ul>
             </li>
             <li>
               <b>Not Checked:</b> finds only the exact variant of a letter
               <ul>
-                <li>Searching for "café" finds only "café"</li>
-                <li>Searching for "cafe" doesn't find "café"</li>
+                <li>
+                  Searching for &quot;café&quot; finds only &quot;café&quot;
+                </li>
+                <li>
+                  Searching for &quot;cafe&quot; doesn&apos;t find
+                  &quot;café&quot;
+                </li>
               </ul>
             </li>
           </ul>
