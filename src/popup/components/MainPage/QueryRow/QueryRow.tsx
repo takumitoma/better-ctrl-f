@@ -5,6 +5,7 @@ import Divider from '../../common/Divider/Divider';
 import MatchNavigation from './MatchNavigation/MatchNavigation';
 import GotoColorButton from '../../common/GotoColorButton/GotoColorButton';
 import { useColorContext, useNavigationContext } from '../../../context';
+import './QueryRow.css';
 
 interface QueryRowProps {
   index: number;

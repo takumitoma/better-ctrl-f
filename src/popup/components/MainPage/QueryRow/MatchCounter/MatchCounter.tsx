@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSearchContext } from '../../../../context';
 import { useMessageListener } from '../../../../hooks';
+import './MatchCounter.css';
 
 interface MatchCounterProps {
   index: number;

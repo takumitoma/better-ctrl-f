@@ -1,0 +1,8 @@
+.search-query-row {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  height: 36px; 
+  margin-bottom: 10px;
+  width: 100%;
+}

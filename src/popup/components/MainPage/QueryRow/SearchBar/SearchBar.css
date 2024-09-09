@@ -1,0 +1,22 @@
+.search-bar {
+  height: 36px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  flex-grow: 1;
+  margin-right: 7px;
+  pointer-events: none;
+}
+
+.search-bar > input {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  width: 100%;
+  pointer-events: auto;
+  user-select: auto;
+}
+
+.search-bar:hover:not(:focus-within) {
+  background-color: var(--light-gray);
+}

@@ -16,7 +16,7 @@ const SetColorPage: React.FC<SetColorPageProps> = ({ index, type }) => {
     <div className="set-color">
       <GotoHomeButton />
       <hr />
-      <h1 className="title">
+      <h1>
         Edit <span style={{ backgroundColor: color }}>{type}</span> color
       </h1>
       <ColorPicker color={color} onChange={handleChange} />

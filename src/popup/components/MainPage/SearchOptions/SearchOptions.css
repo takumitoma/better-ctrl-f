@@ -1,0 +1,32 @@
+#search-options {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#search-options > label {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+#search-options > label input[type="checkbox"] {
+  user-select: auto;
+  appearance: auto; 
+  background: initial;
+  margin-right: 5px;
+}
+
+#search-options input[type="checkbox"]:focus {
+  outline: 2px solid var(--sky-blue);
+}
+
+#search-options .goto-help {
+  color: var(--link-blue);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#search-options .goto-help:focus {
+  outline: 1px dotted var(--link-blue);
+}
