@@ -1,7 +1,7 @@
 import React from 'react';
 import ColorPicker from './ColorPicker/ColorPicker';
 import GotoHomeButton from '../common/GotoHomeButton/GotoHomeButton';
-import { useSetColorLogic } from '../../hooks';
+import { useSetColorLogic } from '@hooks';
 import './SetColorPage.css';
 
 interface SetColorPageProps {

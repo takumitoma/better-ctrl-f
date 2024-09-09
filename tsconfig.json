@@ -22,7 +22,15 @@
 
     /* to get rid of jest warning */
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    /* Popup Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@hooks": ["src/popup/hooks"],
+      "@context": ["src/popup/context"],
+      "@utils": ["src/popup/utils"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }],
