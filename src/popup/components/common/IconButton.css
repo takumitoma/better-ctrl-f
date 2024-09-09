@@ -22,25 +22,3 @@
   width: 16px;
   color: var(--gray);
 }
-
-.goto-color-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 28px;
-  width: 28px;
-  border: 3px var(--light-gray) solid;
-  border-radius: 4px;
-  transition: opacity 0.2s ease;
-}
-
-.goto-color-button:hover,
-.goto-color-button:focus {
-  border: 3px var(--sky-blue) solid;
-  opacity: 0.5;
-}
-
-.goto-color-button:active {
-  border: 3px var(--light-gray) solid;
-  opacity: 1;
-}

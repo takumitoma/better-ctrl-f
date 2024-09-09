@@ -3,7 +3,7 @@ import SearchBar from './SearchBar';
 import MatchCounter from './MatchCounter';
 import Divider from '../common/Divider';
 import MatchNavigation from './MatchNavigation';
-import Button from '../common/Button';
+import GotoColorButton from '../common/GotoColorButton';
 import { useColorContext, useNavigationContext } from '../../context';
 
 interface QueryRowProps {
@@ -20,14 +20,12 @@ const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
       <MatchCounter index={index} />
       <Divider />
       <MatchNavigation index={index} />
-      <Button
-        className="goto-color-button"
-        style={{ backgroundColor: state.highlightColors[index] }}
+      <GotoColorButton
+        backgroundColor={state.highlightColors[index]}
         onClick={() => setPage(`SetHighlight-${index}`)}
       />
-      <Button
-        className="goto-color-button"
-        style={{ backgroundColor: state.focusColors[index] }}
+      <GotoColorButton
+        backgroundColor={state.focusColors[index]}
         onClick={() => setPage(`SetFocus-${index}`)}
       />
     </div>
