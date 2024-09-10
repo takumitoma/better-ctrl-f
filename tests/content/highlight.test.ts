@@ -4,7 +4,7 @@ import {
   getTotalMatches,
   setIsDiacriticsSensitive,
   setIsCaseSensitive,
-} from '../src/content/highlightManager';
+} from '../../src/content/highlightManager';
 
 describe('Content script, highlight function', () => {
   let state: ReturnType<typeof initializeHighlightState>;

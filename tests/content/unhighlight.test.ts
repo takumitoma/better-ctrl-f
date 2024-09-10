@@ -1,4 +1,4 @@
-import { unhighlight } from '../src/content/highlightManager';
+import { unhighlight } from '../../src/content/highlightManager';
 
 describe('Content script, unhighlight function', () => {
   beforeEach(() => {

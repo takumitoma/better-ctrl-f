@@ -1,4 +1,4 @@
-import { findTextNodes } from '../src/content/utils';
+import { findTextNodes } from '../../src/content/utils';
 
 describe('Content script, findTextNodes function', () => {
   beforeEach(() => {
