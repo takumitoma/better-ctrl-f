@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 const CHECK_INTERVAL = 3000;
 
 export function useContentScriptChecker(): boolean {
+  const isFirstRender = useRef<boolean>(true);
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -28,10 +29,14 @@ export function useContentScriptChecker(): boolean {
   }
 
   useEffect(() => {
-    checkContentScript();
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
 
-    if (!contentLoaded) {
-      intervalRef.current = setInterval(checkContentScript, CHECK_INTERVAL);
+      checkContentScript();
+
+      if (!contentLoaded) {
+        intervalRef.current = setInterval(checkContentScript, CHECK_INTERVAL);
+      }
     }
 
     return () => {

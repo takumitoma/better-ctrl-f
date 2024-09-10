@@ -5,16 +5,24 @@ import './LoadingPage.css';
 const LoadingPage: React.FC = () => {
   return (
     <div id="loading">
-      <h2>Wait for content script to load</h2>
+      <h2>Loading Scripts</h2>
       <ClipLoader color="#123abc" loading={true} size={50} />
       <p>Some reasons you might be seeing this</p>
       <ul>
-        <li>You just downloaded the extension. Please reload the page.</li>
+        <li>You recently installed the extension: Please refresh the page.</li>
         <li>
-          This extension only works in websites with the url http://*/* or
-          https://*/*.
+          You are viewing a chrome:// URL: Content and background scripts are
+          not operational in this environment.
         </li>
-        <li>The website has not fully loaded yet.</li>
+        <li>
+          You are accessing a specialized web application (e.g., PDF viewers or
+          Microsoft Office online): This extension is designed for standard web
+          pages only.
+        </li>
+        <li>
+          Website loading is incomplete: Please allow additional time for full
+          page rendering.
+        </li>
       </ul>
     </div>
   );

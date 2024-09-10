@@ -4,19 +4,21 @@ import SetColorPage from './components/SetColorPage/SetColorPage';
 import LoadingPage from './components/LoadingPage/LoadingPage';
 import HelpPage from './components/HelpPage/HelpPage';
 import { useNavigationContext } from '@context';
-import { useContentScriptChecker } from '@hooks';
+import { useContentScriptChecker, useBackgroundScriptChecker } from '@hooks';
 import './reset.css';
 import './base.css';
 
 const Popup: React.FC = () => {
-  const { page } = useNavigationContext();
   const contentScriptLoaded = useContentScriptChecker();
+  const isValid = useBackgroundScriptChecker();
 
+  if (!contentScriptLoaded || !isValid) {
+    return <LoadingPage />;
+  }
+  const { page } = useNavigationContext();
   let child = null;
 
-  if (!contentScriptLoaded) {
-    child = <LoadingPage />;
-  } else if (page === 'Main') {
+  if (page === 'Main') {
     child = <MainPage />;
   } else if (page === 'Help') {
     child = <HelpPage />;

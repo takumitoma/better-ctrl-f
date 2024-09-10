@@ -1,3 +1,4 @@
+export { useBackgroundScriptChecker } from './useBackgroundScriptChecker';
 export { useContentScriptChecker } from './useContentScriptChecker';
 export { useMessageListener } from './useMessageListener';
 export { useSearchBarLogic } from './useSearchBarLogic';
