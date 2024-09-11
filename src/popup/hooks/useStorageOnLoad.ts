@@ -8,11 +8,8 @@ import {
 export function useStorageOnLoad(): void {
   const { dispatch: searchDispatch } = useSearchContext();
   const { dispatch: colorDispatch } = useColorContext();
-  const {
-    setIsCaseSensitive,
-    setIsDiacriticsSensitive,
-    setTheme
-  } = useSettingsContext();
+  const { setIsCaseSensitive, setIsDiacriticsSensitive, setTheme } =
+    useSettingsContext();
 
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 

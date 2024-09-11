@@ -4,7 +4,7 @@ import {
   storeFocusColor,
   storeIsCaseSensitive,
   storeIsDiacriticsSensitive,
-  storeTheme
+  storeTheme,
 } from './storage';
 import { sendMessageToActiveTab } from './tabs';
 import { checkIsSpecialized } from './urlChecker';

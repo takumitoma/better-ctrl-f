@@ -4,7 +4,7 @@ import MatchCounter from './MatchCounter/MatchCounter';
 import MatchNavigation from './MatchNavigation/MatchNavigation';
 import Divider from '../../common/Divider/Divider';
 import GotoColorButton from '../../common/GotoColorButton/GotoColorButton';
-import { useColorContext, useNavigationContext } from '@context';
+import { useColorContext } from '@context';
 import './QueryRow.css';
 
 interface QueryRowProps {
@@ -13,7 +13,6 @@ interface QueryRowProps {
 
 const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
   const { state } = useColorContext();
-  const { setPage } = useNavigationContext();
 
   return (
     <div className="search-query-row">
@@ -23,11 +22,11 @@ const QueryRow: React.FC<QueryRowProps> = ({ index }) => {
       <MatchNavigation index={index} />
       <GotoColorButton
         backgroundColor={state.highlightColors[index]}
-        onClick={() => setPage(`SetHighlight-${index}`)}
+        page={`SetHighlight-${index}`}
       />
       <GotoColorButton
         backgroundColor={state.focusColors[index]}
-        onClick={() => setPage(`SetFocus-${index}`)}
+        page={`SetFocus-${index}`}
       />
     </div>
   );

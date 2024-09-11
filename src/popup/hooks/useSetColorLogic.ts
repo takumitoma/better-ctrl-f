@@ -20,7 +20,7 @@ export const useSetColorLogic = (index: number, type: ColorType) => {
       [type + 'Color']: colors[index],
       queryIndex: index,
     });
-  }, [colors, index, type, action]);
+  }, [colors[index]]);
 
   const handleChange = (newColor: string) => {
     dispatch({
