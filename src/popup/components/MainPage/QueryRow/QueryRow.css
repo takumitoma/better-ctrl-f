@@ -6,3 +6,13 @@
   margin-bottom: 10px;
   width: 100%;
 }
+
+.search-query-row > *:not(.search-bar) {
+  flex-shrink: 0;
+}
+
+.search-bar {
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+}
