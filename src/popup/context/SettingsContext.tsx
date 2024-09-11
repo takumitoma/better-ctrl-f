@@ -12,6 +12,8 @@ interface SettingsContextProps {
   setIsCaseSensitive: Dispatch<SetStateAction<boolean>>;
   isDiacriticsSensitive: boolean;
   setIsDiacriticsSensitive: Dispatch<SetStateAction<boolean>>;
+  theme: 'light' | 'dark';
+  setTheme: Dispatch<SetStateAction<'light' | 'dark'>>;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -24,6 +26,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
   const [isCaseSensitive, setIsCaseSensitive] = useState<boolean>(false);
   const [isDiacriticsSensitive, setIsDiacriticsSensitive] =
     useState<boolean>(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   return (
     <SettingsContext.Provider
@@ -32,6 +35,8 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
         setIsCaseSensitive,
         isDiacriticsSensitive,
         setIsDiacriticsSensitive,
+        theme,
+        setTheme,
       }}
     >
       {children}

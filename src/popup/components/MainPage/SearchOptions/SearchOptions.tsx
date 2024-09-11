@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSettingsContext, useNavigationContext } from '@context';
 import { useSearchOptionsLogic } from '@hooks';
+import ThemeToggleButton from './ThemeToggleButton/ThemeToggleButton';
 import './SearchOptions.css';
 
 const SearchOptions: React.FC = () => {
@@ -9,10 +10,16 @@ const SearchOptions: React.FC = () => {
     setIsCaseSensitive,
     isDiacriticsSensitive,
     setIsDiacriticsSensitive,
+    theme,
+    setTheme,
   } = useSettingsContext();
   const { setPage } = useNavigationContext();
 
   useSearchOptionsLogic({ isCaseSensitive, isDiacriticsSensitive });
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
 
   return (
     <div id="search-options">
@@ -41,6 +48,7 @@ const SearchOptions: React.FC = () => {
       >
         <p>Help</p>
       </button>
+      <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
     </div>
   );
 };

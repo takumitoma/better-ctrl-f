@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainPage from './components/MainPage/MainPage';
 import SetColorPage from './components/SetColorPage/SetColorPage';
 import LoadingPage from './components/LoadingPage/LoadingPage';
 import HelpPage from './components/HelpPage/HelpPage';
-import { useNavigationContext } from '@context';
+import { useNavigationContext, useSettingsContext } from '@context';
 import { useContentScriptChecker, useBackgroundScriptChecker } from '@hooks';
 import './reset.css';
 import './base.css';
@@ -11,6 +11,11 @@ import './base.css';
 const Popup: React.FC = () => {
   const contentScriptLoaded = useContentScriptChecker();
   const isValid = useBackgroundScriptChecker();
+  const { theme } = useSettingsContext();
+
+  useEffect(() => {
+    document.body.className = `${theme}-theme`;
+  }, [theme]);
 
   if (!contentScriptLoaded || !isValid) {
     return <LoadingPage />;

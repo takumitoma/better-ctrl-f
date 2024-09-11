@@ -20,11 +20,30 @@
   margin: 0;
 }
 
-.goto-home:hover,
-.goto-home:focus {
+.light-theme .goto-home {
+  color: var(--light-text);
+}
+
+.dark-theme .goto-home {
+  color: var(--dark-text);
+}
+
+.light-theme .goto-home:hover,
+.light-theme .goto-home:focus {
   background-color: var(--light-gray);
 }
 
-.goto-home:active {
-  background-color: white;
+.dark-theme .goto-home:hover,
+.dark-theme .goto-home:focus {
+  background-color: var(--dark-hover);
+}
+
+.light-theme .goto-home,
+.light-theme .goto-home:active {
+  background-color: var(--light-bg);
+}
+
+.dark-theme .goto-home,
+.dark-theme .goto-home:active {
+  background-color: var(--dark-elevate);
 }

@@ -17,6 +17,25 @@
   user-select: auto;
 }
 
-.search-bar:hover:not(:focus-within) {
+.light-theme .search-bar {
+  background-color: var(--light-bg);
+  border: 1px solid var(--light-border);
+  color: var(--light-text);
+}
+
+.dark-theme .search-bar {
+  background-color: var(--dark-elevate);
+  border: 1px solid var(--dark-border);
+}
+
+.dark-theme .search-bar > input {
+  color: var(--dark-text);
+}
+
+.light-theme .search-bar:hover:not(:focus-within) {
   background-color: var(--light-gray);
+}
+
+.dark-theme .search-bar:hover:not(:focus-within) {
+  background-color: var(--dark-hover);
 }

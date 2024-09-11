@@ -8,17 +8,33 @@
   transition: background-color 0.2s ease;
 }
 
-.icon-button:not([disabled]):hover,
-.icon-button:not([disabled]):focus {
-  background-color: var(--light-gray);
-}
-
-.icon-button:active {
-  background-color: white;
-}
-
 .icon-button .icon {
   height: 16px;
   width: 16px;
+}
+
+.light-theme .icon-button:not([disabled]):hover,
+.light-theme .icon-button:not([disabled]):focus {
+  background-color: var(--light-gray);
+}
+
+.light-theme .icon-button:active {
+  background-color: white;
+}
+
+.light-theme .icon-button .icon {
   color: var(--gray);
+}
+
+.dark-theme .icon-button:not([disabled]):hover,
+.dark-theme .icon-button:not([disabled]):focus {
+  background-color: var(--dark-hover);
+}
+
+.dark-theme .icon-button:active {
+  background-color: var(--dark-bg);
+}
+
+.dark-theme .icon-button .icon {
+  color: var(--dark-text);
 }
