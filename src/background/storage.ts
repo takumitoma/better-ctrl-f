@@ -4,6 +4,7 @@ interface StorageState {
   focusColors: string[];
   isCaseSensitive: boolean;
   isDiacriticsSensitive: boolean;
+  theme: 'light' | 'dark';
 }
 
 let storageState: StorageState = {
@@ -12,6 +13,7 @@ let storageState: StorageState = {
   focusColors: Array(5).fill('#FFA500'),
   isCaseSensitive: false,
   isDiacriticsSensitive: false,
+  theme: 'light',
 };
 
 const DEBOUNCE_TIME = 300;
@@ -21,6 +23,7 @@ const debounceHighlight: NodeJS.Timeout[] = Array(5).fill(null);
 const debounceFocus: NodeJS.Timeout[] = Array(5).fill(null);
 let debounceCaseSensitive: NodeJS.Timeout | null = null;
 let debounceDiacritics: NodeJS.Timeout | null = null;
+let debounceTheme: NodeJS.Timeout | null = null;
 
 chrome.storage.local.get(Object.keys(storageState), (result) => {
   storageState = { ...storageState, ...result };
@@ -77,5 +80,15 @@ export function storeIsDiacriticsSensitive(bool: boolean): void {
   debounceDiacritics = setTimeout(() => {
     storageState.isDiacriticsSensitive = bool;
     saveToStorage('isDiacriticsSensitive', bool);
+  }, DEBOUNCE_TIME);
+}
+
+export function storeTheme(theme: 'light' | 'dark'): void {
+  if (debounceTheme) {
+    clearTimeout(debounceTheme);
+  }
+  debounceTheme = setTimeout(() => {
+    storageState.theme = theme;
+    saveToStorage('theme', theme);
   }, DEBOUNCE_TIME);
 }

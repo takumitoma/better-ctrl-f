@@ -4,6 +4,7 @@ import {
   storeFocusColor,
   storeIsCaseSensitive,
   storeIsDiacriticsSensitive,
+  storeTheme
 } from './storage';
 import { sendMessageToActiveTab } from './tabs';
 import { checkIsSpecialized } from './urlChecker';
@@ -21,6 +22,7 @@ interface Message {
   highlightColors?: string[];
   focusColors?: string[];
   url?: string;
+  theme?: 'light' | 'dark';
 }
 
 export function handleMessage(
@@ -56,6 +58,9 @@ export function handleMessage(
     case 'checkUrl':
       handleCheckUrl(sendResponse);
       return;
+    case 'updateTheme':
+      handleUpdateTheme(message.theme);
+      break;
   }
 
   sendResponse();
@@ -158,4 +163,8 @@ function handleCheckUrl(sendResponse: (response?: any) => void): void {
       sendResponse({ isSpecialized: false });
     }
   });
+}
+
+function handleUpdateTheme(theme: 'light' | 'dark' = 'light'): void {
+  storeTheme(theme);
 }
