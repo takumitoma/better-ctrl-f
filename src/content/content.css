@@ -9,44 +9,55 @@
   --better-ctrl-f-focus-color-3: #FFA500;
   --better-ctrl-f-highlight-color-4: #FFFF00;
   --better-ctrl-f-focus-color-4: #FFA500;
+  --better-ctrl-f-text-color: #000000;
 }
 
 span.better-ctrl-f-highlight-0 {
   background-color: var(--better-ctrl-f-highlight-color-0) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-focus-0 {
   background-color: var(--better-ctrl-f-focus-color-0) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-highlight-1 {
   background-color: var(--better-ctrl-f-highlight-color-1) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-focus-1 {
   background-color: var(--better-ctrl-f-focus-color-1) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-highlight-2 {
   background-color: var(--better-ctrl-f-highlight-color-2) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-focus-2 {
   background-color: var(--better-ctrl-f-focus-color-2) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-highlight-3 {
   background-color: var(--better-ctrl-f-highlight-color-3) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-focus-3 {
   background-color: var(--better-ctrl-f-focus-color-3) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-highlight-4 {
   background-color: var(--better-ctrl-f-highlight-color-4) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
 
 span.better-ctrl-f-focus-4 {
   background-color: var(--better-ctrl-f-focus-color-4) !important;
+  color: var(--better-ctrl-f-text-color) !important;
 }
