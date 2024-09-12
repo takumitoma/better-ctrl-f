@@ -1,6 +1,5 @@
 #search-options .theme-toggle {
   margin-left: auto;
-  background: none;
   border: none;
   cursor: pointer;
   font-size: 18px;
@@ -12,15 +11,12 @@
   transition: background-color 0.2s;
 }
 
-.theme-toggle:hover,
-.theme-toggle:focus {
+.light-theme .theme-toggle:hover,
+.light-theme .theme-toggle:focus {
   background-color: var(--light-gray);
 }
 
 .dark-theme .theme-toggle:hover,
 .dark-theme .theme-toggle:focus {
-  background-color: var(--dark-gray);
-}
-.theme-toggle:focus {
-  outline: 2px solid var(--sky-blue);
+  background-color: var(--dark-hover);
 }

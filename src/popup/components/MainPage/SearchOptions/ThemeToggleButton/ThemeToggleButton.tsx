@@ -1,16 +1,15 @@
 import React from 'react';
+import { useSettingsContext } from '@context';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import './ThemeToggleButton.css';
 
-interface ThemeToggleButtonProps {
-  theme: string;
-  toggleTheme: () => void;
-}
+const ThemeToggleButton: React.FC = () => {
+  const { theme, setTheme } = useSettingsContext();
 
-const ThemeToggleButton: React.FC<ThemeToggleButtonProps> = ({
-  theme,
-  toggleTheme,
-}) => {
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <button
       className="theme-toggle"
