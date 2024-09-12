@@ -17,12 +17,12 @@ function escapeSpecialChars(string: string): string {
 
 export function getSearchRegex(
   searchQuery: string,
-  searchDiacritics: boolean,
+  isDiacriticsSensitive: boolean,
   isCaseSensitive: boolean,
 ): RegExp {
   const escapedQuery = escapeSpecialChars(searchQuery);
   const flags = isCaseSensitive ? 'g' : 'gi';
-  if (searchDiacritics) {
+  if (!isDiacriticsSensitive) {
     const diacriticInsensitiveQuery = removeDiacritics(escapedQuery);
     return new RegExp(diacriticInsensitiveQuery, flags);
   }

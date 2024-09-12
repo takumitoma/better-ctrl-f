@@ -127,10 +127,27 @@ describe('Content script, highlight function', () => {
     expect(document.body.innerHTML).toBe(expected);
   });
 
-  test('highlights diacritics when isDiacriticsSensitive is false', () => {
+  test('highlights diacritics when searchQuery has diacritics', () => {
     document.body.innerHTML = `<div>Àgréément Àgréément</div>`;
     setIsDiacriticsSensitive(false);
-    highlight(state, 'agree', 0);
+    highlight(state, 'Àgréé', 0);
+    const totalMatches: number = getTotalMatches(state);
+
+    expect(totalMatches).toBe(2);
+
+    const expected =
+      `<div>` +
+      `<span class="better-ctrl-f-highlight-0 better-ctrl-f-1 better-ctrl-f-focus-0">Àgréé</span>` +
+      `ment ` +
+      `<span class="better-ctrl-f-highlight-0 better-ctrl-f-2">Àgréé</span>` +
+      `ment</div>`;
+    expect(document.body.innerHTML).toBe(expected);
+  });
+
+  test('highlights diacritics when isDiacriticsSensitive is false and query has no diacritics', () => {
+    document.body.innerHTML = `<div>Àgréément Àgréément</div>`;
+    setIsDiacriticsSensitive(false);
+    highlight(state, 'Àgréé', 0);
     const totalMatches: number = getTotalMatches(state);
 
     expect(totalMatches).toBe(2);
