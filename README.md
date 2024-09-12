@@ -1,30 +1,36 @@
 # Better Ctrl+F
 
-<code><b>Better Ctrl+F</b></code> is a Chrome extension that enhances the default Ctrl+F functionality, providing a more powerful and flexible search experience within web pages.
+<code><b>Better Ctrl+F</b></code> is a Chrome extension that enhances the default Ctrl+F functionality, providing a more flexible search experience within web pages.
 
-## Features
+![Project Example Image](public/assets/extension-light-theme.jpg)
 
-- Multiple search queries: Search for up to 5 different terms simultaneously
-- Customizable highlighting: Set different colors for each search term and focused result
-- Case-sensitive and diacritics-sensitive search options
-- Persistent settings across browser sessions
+## 🔍 Key Features
 
-## Usage Limitations
+- **Multi-term Search**: Simultaneously search for up to 5 different terms
+- **Custom Highlighting**: Personalize colors for each search term and focused result
+- **Advanced Search Options**: Toggle case-sensitive and diacritics-sensitive searches
+- **Efficient Navigation**: Quickly move through search results with keyboard shortcuts
+- **Theme Options**: Choose between light and dark mode for your preference
+- **Persistent Settings**: Your preferences are saved across browser sessions
 
-Please note that Better Ctrl+F is designed to work with standard web pages. The extension does not function with certain document types or specialized web applications, including but not limited to:
+## ⚠️ Compatibility Notice
 
-- PDF files viewed in the browser
-- Microsoft Office documents (e.g., Word, Excel, PowerPoint)
-- Google Docs, Sheets, or Slides
-- Other web-based document viewers or editors with custom rendering
+Better Ctrl+F is designed to work with standard web pages. It is not compatible with certain document types or specialized web applications, including but not limited to:
 
-For these types of documents, please rely on the native search functionality provided by their respective applications or viewers.
+- PDF viewers in browsers
+- Microsoft Office online documents (Word, Excel, PowerPoint)
+- Google Workspace apps (Docs, Sheets, Slides)
+- Specialized web-based document editors
 
-## Installation from Chrome Web Store
+For these document types, please use their native search functions.
 
-Coming soon...
+## 📥 Installation
 
-## Installation from source
+### Chrome Web Store
+
+Coming soon... (Hopefully)
+
+### From Source
 
 1. Clone the repository:
    ```
@@ -47,36 +53,36 @@ Coming soon...
 6. Click "Load unpacked" and select the `dist` directory from the project folder
 7. The extension should now be visible in your Chrome toolbar
 
-## Technologies Used
+## 🛠️ Technologies
 
-- React: A JavaScript library for building user interfaces
-- TypeScript: A typed superset of JavaScript
-- Vite: A build tool that provides a faster and leaner development experience
-- Chrome Extension API: For integrating with the Chrome browser
-- Jest: For unit testing
+- React
+- TypeScript
+- Vite
+- Chrome Extension API
+- Jest
 
-## Project Structure
+## 📁 Project Structure
 
 - `src/`: Source code for the extension
   - `background/`: Background script (service worker)
   - `content/`: Content script injected into web pages
   - `popup/`: Popup UI for the extension
 - `public/`: Static assets
-- `tests/`: Unit tests for the content script
+- `tests/`: Unit tests 
 - `manifest.json`: Extension manifest file
 
-## Privacy and Data Handling
+## 🔒 Privacy & Data Handling
 
-Better Ctrl+F operates with a strong commitment to user privacy. During the highlighting process, the extension analyzes the content of web pages accessed by users. However, this analysis is performed entirely locally within the user's browser. The extension does not store, transmit, or process any page content or user data on external servers. The only data persistently stored are user preferences, such as search queries and highlight colors, which are kept locally in the browser's storage for the purpose of maintaining user settings between sessions.
+During the highlighting process, the extension analyzes the content of web pages accessed by users. However, this analysis is performed entirely locally within the user's browser. The extension does not store, transmit, or process any page content or user data on external servers. The only data persistently stored are user preferences, such as search queries and highlight colors, which are kept locally in the browser's storage for the purpose of maintaining user settings between sessions.
 
-## Contributing
+<!-- ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. Have to set up CI/CD first -->
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
-Boilerplate code credits to Himalaya Gupta: [chrome-extension-boilerplate-react-vite-typescript](https://github.com/himalaya0035/chrome-extension-boilerplate-react-vite-typescript)
+Boilerplate code: [chrome-extension-boilerplate-react-vite-typescript](https://github.com/himalaya0035/chrome-extension-boilerplate-react-vite-typescript) by Himalaya Gupta
