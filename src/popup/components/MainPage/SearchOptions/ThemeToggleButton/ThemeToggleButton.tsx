@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSettingsContext } from '@context';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import './ThemeToggleButton.css';
@@ -9,6 +9,16 @@ const ThemeToggleButton: React.FC = () => {
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
+
+  useEffect(() => {
+    console.log('HELLO');
+    document.body.className = `${theme}-theme`;
+    chrome.runtime.sendMessage({
+      target: 'background',
+      action: 'updateTheme',
+      theme,
+    });
+  }, [theme]);
 
   return (
     <button
