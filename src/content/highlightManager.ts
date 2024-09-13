@@ -154,15 +154,6 @@ export function focusHighlight(
     inline: 'nearest',
   });
 
-  if (state.nodes[index]) {
-    const range = document.createRange();
-    const selection = window.getSelection();
-    range.setStart(state.nodes[index], 0);
-    range.collapse(true);
-    selection?.removeAllRanges();
-    selection?.addRange(range);
-  }
-
   state.focusIndex = index;
 }
 
