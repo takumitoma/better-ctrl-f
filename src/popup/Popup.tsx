@@ -4,13 +4,18 @@ import SetColorPage from './components/SetColorPage/SetColorPage';
 import LoadingPage from './components/LoadingPage/LoadingPage';
 import HelpPage from './components/HelpPage/HelpPage';
 import { useNavigationContext, useSettingsContext } from '@context';
-import { useContentScriptChecker, useBackgroundScriptChecker } from '@hooks';
+import {
+  useContentScriptChecker,
+  useBackgroundScriptChecker,
+  useStorageOnLoad,
+} from '@hooks';
 import './reset.css';
 import './base.css';
 
 const Popup: React.FC = () => {
   const contentScriptLoaded = useContentScriptChecker();
   const isValid = useBackgroundScriptChecker();
+  useStorageOnLoad(contentScriptLoaded, isValid);
   const { theme } = useSettingsContext();
 
   useEffect(() => {

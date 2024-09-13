@@ -5,7 +5,10 @@ import {
   useSettingsContext,
 } from '../context';
 
-export function useStorageOnLoad(): void {
+export function useStorageOnLoad(
+  contentScriptLoaded: boolean,
+  isValid: boolean,
+): void {
   const { dispatch: searchDispatch } = useSearchContext();
   const { dispatch: colorDispatch } = useColorContext();
   const { setIsCaseSensitive, setIsDiacriticsSensitive, setTheme } =
@@ -14,31 +17,18 @@ export function useStorageOnLoad(): void {
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 
   useEffect(() => {
+    if (!contentScriptLoaded || !isValid) return;
+
     chrome.storage.local.get(
       ['isCaseSensitive', 'isDiacriticsSensitive', 'theme'],
       (res) => {
         setIsCaseSensitive(res.isCaseSensitive || false);
         setIsDiacriticsSensitive(res.isDiacriticsSensitive || false);
         setTheme(res.theme || 'light');
-        chrome.runtime.sendMessage({
-          target: 'background',
-          action: 'updateIsCaseSensitive',
-          isCaseSensitive: res.isCaseSensitive,
-        });
-        chrome.runtime.sendMessage({
-          target: 'background',
-          action: 'updateIsDiacriticsSensitive',
-          isDiacriticsSensitive: res.isDiacriticsSensitive,
-        });
-        chrome.runtime.sendMessage({
-          target: 'background',
-          action: 'updateTheme',
-          theme: res.theme,
-        });
         setSearchOptionsLoaded(true);
       },
     );
-  }, []);
+  }, [contentScriptLoaded, isValid]);
 
   useEffect(() => {
     if (!searchOptionsLoaded) {
