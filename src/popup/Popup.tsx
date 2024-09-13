@@ -8,6 +8,7 @@ import {
   useContentScriptChecker,
   useBackgroundScriptChecker,
   useStorageOnLoad,
+  usePopupSingleton,
 } from '@hooks';
 import './reset.css';
 import './base.css';
@@ -16,11 +17,14 @@ const Popup: React.FC = () => {
   const contentScriptLoaded = useContentScriptChecker();
   const isValid = useBackgroundScriptChecker();
   useStorageOnLoad(contentScriptLoaded, isValid);
+  usePopupSingleton();
 
   if (!contentScriptLoaded || !isValid) {
     return <LoadingPage />;
   }
+
   const { page } = useNavigationContext();
+
   let child = null;
 
   if (page === 'Main') {
