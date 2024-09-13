@@ -11,8 +11,8 @@ const LoadingPage: React.FC = () => {
       <ul>
         <li>You recently installed the extension: Please refresh the page.</li>
         <li>
-          You are viewing a chrome:// URL: Content and background scripts are
-          not operational in this environment.
+          You are viewing a chrome:// URL: Content scripts are not operational
+          in this environment.
         </li>
         <li>
           You are accessing a specialized web application (e.g., PDF viewers or

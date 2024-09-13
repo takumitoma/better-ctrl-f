@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
   ReactNode,
   Dispatch,
   SetStateAction,
@@ -28,14 +27,6 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({
   const [isDiacriticsSensitive, setIsDiacriticsSensitive] =
     useState<boolean>(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    chrome.runtime.sendMessage({
-      target: 'background',
-      action: 'updateTheme',
-      theme,
-    });
-  }, [theme]);
 
   return (
     <SettingsContext.Provider

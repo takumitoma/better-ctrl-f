@@ -10,10 +10,10 @@ const SearchOptions: React.FC = () => {
     setIsCaseSensitive,
     isDiacriticsSensitive,
     setIsDiacriticsSensitive,
+    theme,
   } = useSettingsContext();
   const { setPage } = useNavigationContext();
-
-  useSearchOptionsLogic({ isCaseSensitive, isDiacriticsSensitive });
+  useSearchOptionsLogic(isCaseSensitive, isDiacriticsSensitive, theme);
 
   return (
     <div id="search-options">

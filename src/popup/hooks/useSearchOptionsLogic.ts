@@ -1,37 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-interface SearchOptionsProps {
-  isCaseSensitive: boolean;
-  isDiacriticsSensitive: boolean;
-}
-
-export function useSearchOptionsLogic({
-  isCaseSensitive,
-  isDiacriticsSensitive,
-}: SearchOptionsProps): void {
-  const isMounted = useRef(false);
-
+export function useSearchOptionsLogic(
+  isCaseSensitive: boolean,
+  isDiacriticsSensitive: boolean,
+  theme: 'light' | 'dark',
+): void {
   useEffect(() => {
-    if (isMounted.current) {
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateIsCaseSensitive',
-        isCaseSensitive,
-      });
-    }
+    chrome.runtime.sendMessage({
+      target: 'background',
+      action: 'updateIsCaseSensitive',
+      isCaseSensitive,
+    });
   }, [isCaseSensitive]);
 
   useEffect(() => {
-    if (isMounted.current) {
-      chrome.runtime.sendMessage({
-        target: 'background',
-        action: 'updateIsDiacriticsSensitive',
-        isDiacriticsSensitive,
-      });
-    }
+    chrome.runtime.sendMessage({
+      target: 'background',
+      action: 'updateIsDiacriticsSensitive',
+      isDiacriticsSensitive,
+    });
   }, [isDiacriticsSensitive]);
 
   useEffect(() => {
-    isMounted.current = true;
-  }, []);
+    chrome.runtime.sendMessage({
+      target: 'background',
+      action: 'updateTheme',
+      theme,
+    });
+  }, [theme]);
 }
