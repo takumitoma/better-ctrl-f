@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 
 const CHECK_INTERVAL = 3000;
 
+// ensures the main contents of this extension/popup is only displayed if the
+// content script is loaded
 export function useContentScriptChecker(): boolean {
   const isFirstRender = useRef<boolean>(true);
   const [contentLoaded, setContentLoaded] = useState<boolean>(false);

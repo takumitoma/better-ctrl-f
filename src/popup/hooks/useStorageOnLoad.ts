@@ -5,6 +5,7 @@ import {
   useSettingsContext,
 } from '../context';
 
+// retrieves data from chrome.local.storage on popup initial load
 export function useStorageOnLoad(
   contentScriptLoaded: boolean,
   isValid: boolean,

@@ -11,7 +11,6 @@ const ThemeToggleButton: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('HELLO');
     document.body.className = `${theme}-theme`;
     chrome.runtime.sendMessage({
       target: 'background',
