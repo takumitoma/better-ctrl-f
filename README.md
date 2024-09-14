@@ -2,14 +2,14 @@
 
 <code><b>Better Ctrl+F</b></code> is a Chrome extension that is an enhanced version of the default Ctrl+F, providing a more flexible search experience within web pages.
 
-<img src="https://github.com/takumitoma/better-ctrl-f/blob/master/public/assets/extension-light-theme.JPG" />
+<img src="https://github.com/takumitoma/better-ctrl-f/blob/master/docs/extension-light-theme.JPG" />
 
 ## 🔍 Key Features
 
 - **Multi-term Search**: Simultaneously search for up to 5 different terms
 - **Custom Highlighting**: Personalize colors for each search term and focused result
 - **Advanced Search Options**: Toggle case-sensitive and diacritics-sensitive searches
-- **Efficient Navigation**: Quickly move through search results with keyboard shortcuts
+- **Efficient Navigation**: Quickly move through search results using intuitive controls
 - **Theme Options**: Choose between light and dark mode for your preference
 - **Persistent Settings**: Your preferences are saved across browser sessions
 
