@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Better Ctrl+F",
-  "description": "An enhanced search feature that improves the default Ctrl+F functionality.",
+  "description": "An enhanced version of the default Ctrl+F.",
   "version": "1.0.0",
   "icons": {
     "16": "public/icons/16.png",

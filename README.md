@@ -1,6 +1,6 @@
 # Better Ctrl+F
 
-<code><b>Better Ctrl+F</b></code> is a Chrome extension that enhances the default Ctrl+F functionality, providing a more flexible search experience within web pages.
+<code><b>Better Ctrl+F</b></code> is a Chrome extension that is an enhanced version of the default Ctrl+F, providing a more flexible search experience within web pages.
 
 ![Project Example Image](public/assets/extension-light-theme.jpg)
 
