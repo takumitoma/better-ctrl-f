@@ -6,10 +6,7 @@ import {
 } from '../context';
 
 // retrieves data from chrome.local.storage on popup initial load
-export function useStorageOnLoad(
-  contentScriptLoaded: boolean,
-  isValid: boolean,
-): void {
+export function useStorageOnLoad(contentScriptLoaded: boolean): void {
   const { dispatch: searchDispatch } = useSearchContext();
   const { dispatch: colorDispatch } = useColorContext();
   const { setIsCaseSensitive, setIsDiacriticsSensitive, setTheme } =
@@ -18,7 +15,7 @@ export function useStorageOnLoad(
   const [searchOptionsLoaded, setSearchOptionsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!contentScriptLoaded || !isValid) return;
+    if (!contentScriptLoaded) return;
 
     chrome.storage.local.get(
       ['isCaseSensitive', 'isDiacriticsSensitive', 'theme'],
@@ -29,7 +26,7 @@ export function useStorageOnLoad(
         setSearchOptionsLoaded(true);
       },
     );
-  }, [contentScriptLoaded, isValid]);
+  }, [contentScriptLoaded]);
 
   useEffect(() => {
     if (!searchOptionsLoaded) {

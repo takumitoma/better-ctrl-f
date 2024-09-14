@@ -1,4 +1,3 @@
-export { useBackgroundScriptChecker } from './useBackgroundScriptChecker';
 export { useContentScriptChecker } from './useContentScriptChecker';
 export { useMessageListener } from './useMessageListener';
 export { usePopupSingleton } from './usePopupSingleton';

@@ -7,7 +7,6 @@ import {
   storeTheme,
 } from './storage';
 import { sendMessageToActiveTab } from './tabs';
-import { checkIsSpecialized } from './urlChecker';
 
 interface Message {
   target: string;
@@ -55,9 +54,6 @@ export function handleMessage(
     case 'batchUpdateColors':
       handleBatchUpdateColors(message.highlightColors, message.focusColors);
       break;
-    case 'checkUrl':
-      handleCheckUrl(sendResponse);
-      return;
     case 'updateTheme':
       handleUpdateTheme(message.theme);
       break;
@@ -152,17 +148,6 @@ function handleUpdateIsDiacriticsSensitive(
     isDiacriticsSensitive,
   });
   storeIsDiacriticsSensitive(isDiacriticsSensitive);
-}
-
-function handleCheckUrl(sendResponse: (response?: any) => void): void {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs[0]?.url) {
-      const isSpecialized = checkIsSpecialized(tabs[0].url);
-      sendResponse({ isSpecialized });
-    } else {
-      sendResponse({ isSpecialized: false });
-    }
-  });
 }
 
 function handleUpdateTheme(theme: 'light' | 'dark' = 'light'): void {

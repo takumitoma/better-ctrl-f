@@ -8,7 +8,7 @@
     "32": "public/icons/32.png",
     "64": "public/icons/64.png",
     "128": "public/icons/128.png"
-	},
+  },
   "permissions": [
     "activeTab",
     "storage"
@@ -32,6 +32,24 @@
       "matches": [
         "http://*/*",
         "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*/*.doc",
+        "*://*/*.docx",
+        "*://*/*.xls",
+        "*://*/*.xlsx",
+        "*://*/*.ppt",
+        "*://*/*.pptx",
+        "*://docs.google.com/document/*",
+        "*://docs.google.com/spreadsheets/*",
+        "*://docs.google.com/presentation/*",
+        "*://office.com/launch/word*",
+        "*://office.com/launch/excel*",
+        "*://office.com/launch/powerpoint*",
+        "*://office.live.com/word*",
+        "*://office.live.com/excel*",
+        "*://office.live.com/powerpoint*",
+        "*://acrobat.adobe.com/link/review*"
       ]
     }
   ],

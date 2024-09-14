@@ -6,7 +6,6 @@ import HelpPage from './components/HelpPage/HelpPage';
 import { useNavigationContext } from '@context';
 import {
   useContentScriptChecker,
-  useBackgroundScriptChecker,
   useStorageOnLoad,
   usePopupSingleton,
 } from '@hooks';
@@ -15,11 +14,10 @@ import './base.css';
 
 const Popup: React.FC = () => {
   const contentScriptLoaded = useContentScriptChecker();
-  const isValid = useBackgroundScriptChecker();
-  useStorageOnLoad(contentScriptLoaded, isValid);
+  useStorageOnLoad(contentScriptLoaded);
   usePopupSingleton();
 
-  if (!contentScriptLoaded || !isValid) {
+  if (!contentScriptLoaded) {
     return <LoadingPage />;
   }
 
