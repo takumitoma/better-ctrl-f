@@ -5,7 +5,7 @@ import LoadingPage from './components/LoadingPage/LoadingPage';
 import HelpPage from './components/HelpPage/HelpPage';
 import { useNavigationContext } from '@context';
 import {
-  useContentScriptChecker,
+  useContentScriptInject,
   useStorageOnLoad,
   usePopupSingleton,
 } from '@hooks';
@@ -13,7 +13,7 @@ import './reset.css';
 import './base.css';
 
 const Popup: React.FC = () => {
-  const contentScriptLoaded = useContentScriptChecker();
+  const contentScriptLoaded = useContentScriptInject();
   useStorageOnLoad(contentScriptLoaded);
   usePopupSingleton();
 

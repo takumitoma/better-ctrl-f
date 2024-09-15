@@ -1,4 +1,4 @@
-export { useContentScriptChecker } from './useContentScriptChecker';
+export { useContentScriptInject } from './useContentScriptInject';
 export { useMessageListener } from './useMessageListener';
 export { usePopupSingleton } from './usePopupSingleton';
 export { useSearchBarLogic } from './useSearchBarLogic';

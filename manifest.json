@@ -11,7 +11,8 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "action": { 
     "default_popup": "index.html",
@@ -26,33 +27,6 @@
   "background": {
     "service_worker": "src/background/background.ts"
   },
-  "content_scripts": [
-    {
-      "js": ["src/content/content.ts"],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "exclude_matches": [
-        "*://*/*.doc",
-        "*://*/*.docx",
-        "*://*/*.xls",
-        "*://*/*.xlsx",
-        "*://*/*.ppt",
-        "*://*/*.pptx",
-        "*://docs.google.com/document/*",
-        "*://docs.google.com/spreadsheets/*",
-        "*://docs.google.com/presentation/*",
-        "*://office.com/launch/word*",
-        "*://office.com/launch/excel*",
-        "*://office.com/launch/powerpoint*",
-        "*://office.live.com/word*",
-        "*://office.live.com/excel*",
-        "*://office.live.com/powerpoint*",
-        "*://acrobat.adobe.com/link/review*"
-      ]
-    }
-  ],
   "commands": {
     "_execute_action": {
       "suggested_key": {
