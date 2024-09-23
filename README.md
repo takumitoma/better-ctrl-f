@@ -28,7 +28,7 @@ For these document types, please use their native search functions.
 
 ### Chrome Web Store
 
-Coming soon... (Hopefully)
+https://chromewebstore.google.com/detail/better-ctrl+f/gplkloamjcmhfnchiefogpjijhiehpij
 
 ### From Source
 
