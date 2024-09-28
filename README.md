@@ -77,7 +77,7 @@ During the highlighting process, the extension analyzes the content of web pages
 
 <!-- ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. Have to set up CI/CD first -->
+Contributions are welcome! Please feel free to submit a Pull Request. -->
 
 ## 📄 License
 
