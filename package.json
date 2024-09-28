@@ -37,7 +37,7 @@
     "prettier": "3.3.3",
     "ts-jest": "^29.2.4",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.5.5"
   },
   "jest": {
     "preset": "ts-jest",
